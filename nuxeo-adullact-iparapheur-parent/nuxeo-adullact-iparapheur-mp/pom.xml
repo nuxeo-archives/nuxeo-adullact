@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.nuxeo.adullact</groupId>
+    <artifactId>nuxeo-adullact-iparapheur-parent</artifactId>
+    <version>5.6-SNAPSHOT</version>
+  </parent>
+  <groupId>org.nuxeo.adullact</groupId>
+  <artifactId>nuxeo-adullact-iparapheur-mp</artifactId>
+  <packaging>zip</packaging>
+  <name>Market Place Package for iParapheur integration to Nuxeo</name>
+  <description/>
+  <dependencies>
+    <!-- WS -->
+    <dependency>
+      <groupId>org.nuxeo.adullact</groupId>
+      <artifactId>nuxeo-adullact-iparapheur</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>nuxeo-studio</groupId>
+      <artifactId>NXSCRUM</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.axis</groupId>
+      <artifactId>axis</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.axis</groupId>
+      <artifactId>axis-jaxrpc</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.axis</groupId>
+      <artifactId>axis-saaj</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>axis</groupId>
+      <artifactId>axis-wsdl4j</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>commons-discovery</groupId>
+      <artifactId>commons-discovery</artifactId>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.nuxeo.build</groupId>
+        <artifactId>nuxeo-distribution-tools</artifactId>
+        <configuration>
+          <buildFile>${basedir}/src/main/assemble/assembly.xml</buildFile>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

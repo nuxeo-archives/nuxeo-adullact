@@ -1,0 +1,22 @@
+<package type="addon" name="nuxeo-adullact-iparapheur" version="@VERSION@">
+  <title>Nuxeo Adullact iParapheur</title>
+  <description>
+    <p>This addon adds an integration to the iParapheur application.</p>
+    <p>iParapheur from Adullact is a system that let users sign document with certificates stored into their browser. The Nuxeo integration let appear to Document that implements file schema a button to prepare a signature workflow into Adullact. When clicked a new Tab appear with a form to let the user define parameters for this external workflow. The form filled, a new Workflow is created into iParapheur. When the document is validated into iParapheur. The file signed is stored back to the initial document with the signature.</p>
+  </description>
+  <home-page>TO FILL</home-page>
+  <vendor>Nuxeo</vendor>
+  <installer restart="true" />
+  <uninstaller restart="true" />
+  <!-- <hotreload-support>false</hotreload-support> -->
+  <!-- <require-terms-and-conditions-acceptance>false -->
+  <!-- </require-terms-and-conditions-acceptance> -->
+  <nuxeo-validation>waiting_nuxeo_certified</nuxeo-validation>
+  <production-state>development</production-state>
+  <supported>false</supported>
+  <platforms>
+    <platform>cap-@VERSION@</platform>
+  </platforms>
+  <license>LGPL</license>
+  <license-url>http://www.gnu.org/licenses/lgpl.html</license-url>
+</package>

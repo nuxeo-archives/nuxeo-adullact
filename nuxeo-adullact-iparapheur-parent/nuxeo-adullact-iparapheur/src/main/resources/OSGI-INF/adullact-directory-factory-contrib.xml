@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<component name="org.nuxeo.adullact.directory.factory.contrib">
+
+  <extension target="org.nuxeo.ecm.directory.DirectoryServiceImpl"
+      point="factoryDescriptor">
+    <factoryDescriptor
+        component="org.nuxeo.adullact.directory.AdullactDirectory"/>
+  </extension>
+</component>

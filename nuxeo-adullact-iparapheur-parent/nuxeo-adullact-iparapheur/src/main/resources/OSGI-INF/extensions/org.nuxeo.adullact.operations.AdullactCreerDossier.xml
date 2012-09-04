@@ -1,0 +1,8 @@
+<component name="org.nuxeo.adullact.operations.AdullactCreerDossier">
+
+  <extension target="org.nuxeo.ecm.core.operation.OperationServiceComponent"
+    point="operations" >
+      <operation class="org.nuxeo.adullact.operations.AdullactCreerDossier" />
+   </extension>
+    
+</component>

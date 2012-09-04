@@ -1,0 +1,31 @@
+<component name="org.nuxeo.adullact.AdullactAdapterFactory">
+
+  <extension target="org.nuxeo.ecm.core.api.DocumentAdapterService"
+    point="adapters">
+    <adapter
+      class="org.adullact.www.spring_ws.iparapheur._1_0.ArchiverDossierRequest"
+      factory="org.nuxeo.adullact.AdullactAdapterFactory" />
+    <adapter
+      class="org.adullact.www.spring_ws.iparapheur._1_0.CreerDossierRequest"
+      factory="org.nuxeo.adullact.AdullactAdapterFactory" />
+    <adapter
+      class="org.adullact.www.spring_ws.iparapheur._1_0.GetCircuitRequest"
+      factory="org.nuxeo.adullact.AdullactAdapterFactory" />
+    <adapter
+      class="org.adullact.www.spring_ws.iparapheur._1_0.RechercherDossiersRequest"
+      factory="org.nuxeo.adullact.AdullactAdapterFactory" />
+    <adapter
+      class="org.adullact.www.spring_ws.iparapheur._1_0.CreerDossierPESRequest"
+      factory="org.nuxeo.adullact.AdullactAdapterFactory" />
+    <adapter
+      class="org.adullact.www.spring_ws.iparapheur._1_0.ForcerEtapeRequest"
+      factory="org.nuxeo.adullact.AdullactAdapterFactory" />
+    <adapter
+      class="org.adullact.www.spring_ws.iparapheur._1_0.GetClassificationActesTdtRequest"
+      factory="org.nuxeo.adullact.AdullactAdapterFactory" />
+    <adapter
+      class="org.nuxeo.adullact.AdullactDossier"
+      factory="org.nuxeo.adullact.AdullactAdapterFactory" />
+  </extension>
+
+</component>
