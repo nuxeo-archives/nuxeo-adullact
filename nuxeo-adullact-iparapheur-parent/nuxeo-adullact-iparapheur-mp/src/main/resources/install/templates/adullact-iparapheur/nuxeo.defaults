@@ -5,4 +5,3 @@ nuxeo.adullact.security.dir=./security
 nuxeo.adullact.iparapheur.login=webservice@nuxeo.com
 nuxeo.adullact.iparapheur.password=webservice123
 nuxeo.adullact.iparapheur.keystore.password=bjalon
-#{!currentDocument.hasSchema("adullact_dossier")}
