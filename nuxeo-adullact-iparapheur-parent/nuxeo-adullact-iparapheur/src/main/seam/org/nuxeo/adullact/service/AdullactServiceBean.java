@@ -18,6 +18,8 @@
 package org.nuxeo.adullact.service;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Factory;
@@ -27,6 +29,7 @@ import org.jboss.seam.annotations.Scope;
 import org.nuxeo.adullact.AdullactDossier;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.DocumentModelList;
+import org.nuxeo.ecm.platform.query.api.PageSelection;
 import org.nuxeo.ecm.platform.ui.web.api.NavigationContext;
 import org.nuxeo.runtime.api.Framework;
 
@@ -49,10 +52,16 @@ public class AdullactServiceBean implements Serializable {
     }
 
     @Factory(value = "histogrammeDossier", scope = ScopeType.EVENT)
-    public DocumentModelList getHistogrammeDossier() throws Exception {
+    public List<PageSelection<DocumentModel>> getHistogrammeDossier() throws Exception {
+        List<PageSelection<DocumentModel>> items = new ArrayList<PageSelection<DocumentModel>>();
+
         DocumentModel document = navigationContext.getCurrentDocument();
 
-        return getService().getHistogrammeDossier(document);
+        DocumentModelList docs = getService().getHistogrammeDossier(document);
+        for (DocumentModel doc : docs) {
+            items.add(new PageSelection<DocumentModel>(doc, false));
+        }
+        return items;
     }
 
     @Factory(value = "adullactDossier", scope = ScopeType.EVENT)

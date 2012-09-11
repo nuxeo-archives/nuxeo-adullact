@@ -16,6 +16,7 @@
   <supported>false</supported>
   <platforms>
     <platform>cap-@VERSION@</platform>
+    <platform>cap-5.6</platform>
   </platforms>
   <license>LGPL</license>
   <license-url>http://www.gnu.org/licenses/lgpl.html</license-url>

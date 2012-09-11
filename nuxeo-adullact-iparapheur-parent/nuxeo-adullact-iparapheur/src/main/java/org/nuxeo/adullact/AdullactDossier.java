@@ -124,7 +124,7 @@ public class AdullactDossier {
     }
 
     public String getUrl() throws ClientException {
-        return "http://iparapheur.demonstrations.adullact.org/alfresco/navigate/browse/workspace/SpacesStore/" + getDossierID();
+        return "https://iparapheur.demonstrations.adullact.org/alfresco/navigate/browse/workspace/SpacesStore/" + getDossierID();
     }
 
     public void setMainFile(Blob mainFile) throws ClientException {

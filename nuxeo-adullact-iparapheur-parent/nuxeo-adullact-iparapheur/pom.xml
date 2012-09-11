@@ -121,12 +121,10 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.nuxeo.ecm.platform</groupId>
       <artifactId>nuxeo-platform-directory-api</artifactId>
-      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.nuxeo.ecm.platform</groupId>
@@ -156,10 +154,10 @@
       <artifactId>hsqldb</artifactId>
       <scope>test</scope>
     </dependency>
-    <dependency>
+    <!--dependency>
       <groupId>axis</groupId>
       <artifactId>axis</artifactId>
-    </dependency>
+    </dependency-->
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-util</artifactId>
