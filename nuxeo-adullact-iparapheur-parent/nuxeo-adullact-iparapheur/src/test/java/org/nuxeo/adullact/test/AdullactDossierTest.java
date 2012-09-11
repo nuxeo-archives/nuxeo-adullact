@@ -16,13 +16,17 @@
  */
 package org.nuxeo.adullact.test;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNull;
+import static junit.framework.Assert.fail;
 import static org.nuxeo.adullact.test.AdullactTestHelper.loadProperties;
-import static junit.framework.Assert.*;
-import org.adullact.www.spring_ws.iparapheur._1_0.CreerDossierRequest;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.nuxeo.adullact.AdullactDossier;
+import org.nuxeo.adullact.axis.iparapheur.xml.CreerDossierRequest;
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;

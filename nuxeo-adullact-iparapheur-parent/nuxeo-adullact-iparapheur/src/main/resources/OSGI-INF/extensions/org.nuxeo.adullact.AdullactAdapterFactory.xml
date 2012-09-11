@@ -3,25 +3,25 @@
   <extension target="org.nuxeo.ecm.core.api.DocumentAdapterService"
     point="adapters">
     <adapter
-      class="org.adullact.www.spring_ws.iparapheur._1_0.ArchiverDossierRequest"
+      class="org.nuxeo.adullact.axis.iparapheur.xml.ArchiverDossierRequest"
       factory="org.nuxeo.adullact.AdullactAdapterFactory" />
     <adapter
-      class="org.adullact.www.spring_ws.iparapheur._1_0.CreerDossierRequest"
+      class="org.nuxeo.adullact.axis.iparapheur.xml.CreerDossierRequest"
       factory="org.nuxeo.adullact.AdullactAdapterFactory" />
     <adapter
-      class="org.adullact.www.spring_ws.iparapheur._1_0.GetCircuitRequest"
+      class="org.nuxeo.adullact.axis.iparapheur.xml.GetCircuitRequest"
       factory="org.nuxeo.adullact.AdullactAdapterFactory" />
     <adapter
-      class="org.adullact.www.spring_ws.iparapheur._1_0.RechercherDossiersRequest"
+      class="org.nuxeo.adullact.axis.iparapheur.xml.RechercherDossiersRequest"
       factory="org.nuxeo.adullact.AdullactAdapterFactory" />
     <adapter
-      class="org.adullact.www.spring_ws.iparapheur._1_0.CreerDossierPESRequest"
+      class="org.nuxeo.adullact.axis.iparapheur.xml.CreerDossierPESRequest"
       factory="org.nuxeo.adullact.AdullactAdapterFactory" />
     <adapter
-      class="org.adullact.www.spring_ws.iparapheur._1_0.ForcerEtapeRequest"
+      class="org.nuxeo.adullact.axis.iparapheur.xml.ForcerEtapeRequest"
       factory="org.nuxeo.adullact.AdullactAdapterFactory" />
     <adapter
-      class="org.adullact.www.spring_ws.iparapheur._1_0.GetClassificationActesTdtRequest"
+      class="org.nuxeo.adullact.axis.iparapheur.xml.GetClassificationActesTdtRequest"
       factory="org.nuxeo.adullact.AdullactAdapterFactory" />
     <adapter
       class="org.nuxeo.adullact.AdullactDossier"

@@ -17,10 +17,11 @@
 
 package org.nuxeo.adullact.service;
 
+
 import java.util.List;
 
-import org.adullact.www.spring_ws.iparapheur._1_0.MetaDonneeDefinition;
 import org.nuxeo.adullact.AdullactDossier;
+import org.nuxeo.adullact.axis.iparapheur.xml.MetaDonneeDefinition;
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.DocumentModelList;

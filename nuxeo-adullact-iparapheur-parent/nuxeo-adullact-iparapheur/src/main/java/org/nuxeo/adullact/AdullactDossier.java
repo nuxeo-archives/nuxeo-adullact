@@ -3,9 +3,9 @@ package org.nuxeo.adullact;
 import java.io.IOException;
 import java.io.Serializable;
 
-import org.adullact.www.spring_ws.iparapheur._1_0.CreerDossierRequest;
-import org.adullact.www.spring_ws.iparapheur._1_0.TypeDoc;
-import org.adullact.www.spring_ws.iparapheur._1_0.Visibilite;
+import org.nuxeo.adullact.axis.iparapheur.xml.CreerDossierRequest;
+import org.nuxeo.adullact.axis.iparapheur.xml.TypeDoc;
+import org.nuxeo.adullact.axis.iparapheur.xml.Visibilite;
 import org.nuxeo.ecm.core.api.Blob;
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.DocumentModel;

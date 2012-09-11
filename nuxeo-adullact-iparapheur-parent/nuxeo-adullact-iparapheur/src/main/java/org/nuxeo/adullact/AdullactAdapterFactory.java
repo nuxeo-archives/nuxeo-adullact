@@ -17,12 +17,12 @@
 
 package org.nuxeo.adullact;
 
-import org.adullact.www.spring_ws.iparapheur._1_0.EtapeCircuit;
-import org.adullact.www.spring_ws.iparapheur._1_0.GetCircuitResponse;
-import org.adullact.www.spring_ws.iparapheur._1_0.GetDossierResponse;
-import org.adullact.www.spring_ws.iparapheur._1_0.LogDossier;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.nuxeo.adullact.axis.iparapheur.xml.EtapeCircuit;
+import org.nuxeo.adullact.axis.iparapheur.xml.GetCircuitResponse;
+import org.nuxeo.adullact.axis.iparapheur.xml.GetDossierResponse;
+import org.nuxeo.adullact.axis.iparapheur.xml.LogDossier;
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.DocumentModelList;

@@ -16,24 +16,18 @@
  */
 package org.nuxeo.adullact.test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 import static org.nuxeo.adullact.test.AdullactTestHelper.loadProperties;
 
-import java.util.List;
-
-import org.adullact.www.spring_ws.iparapheur._1_0.GetDossierResponse;
 import org.eclipse.jetty.util.log.Log;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.nuxeo.adullact.AdullactDossier;
+import org.nuxeo.adullact.axis.iparapheur.xml.GetDossierResponse;
 import org.nuxeo.adullact.service.AdullactService;
 import org.nuxeo.adullact.service.AdullactServiceImpl;
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
-import org.nuxeo.ecm.core.api.DocumentModelList;
 import org.nuxeo.ecm.core.test.CoreFeature;
 import org.nuxeo.runtime.api.Framework;
 import org.nuxeo.runtime.test.runner.Deploy;
