@@ -1,5 +1,7 @@
 package org.nuxeo.adullact.test;
 
+import static junit.framework.Assert.assertNotNull;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,9 +11,6 @@ import org.nuxeo.ecm.directory.DirectoryException;
 import org.nuxeo.ecm.directory.api.DirectoryService;
 import org.nuxeo.runtime.api.Framework;
 import org.nuxeo.runtime.test.NXRuntimeTestCase;
-
-import static junit.framework.Assert.*;
-
 
 public class AdullactDirectoryTestCase extends NXRuntimeTestCase {
 
@@ -46,7 +45,7 @@ public class AdullactDirectoryTestCase extends NXRuntimeTestCase {
     }
 
     @Test
-    public void shouldVocabularyCreated() throws DirectoryException {
+    public void testshouldVocabularyCreated() throws DirectoryException {
         Directory directory = dirService.getDirectory("adu_visibilite");
         assertNotNull(directory);
         directory = dirService.getDirectory("adu_type_technique");
