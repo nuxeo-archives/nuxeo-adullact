@@ -29,4 +29,6 @@ dependency-tree.log
 global-groovy.log
 soapui-errors.log
 soapui.log
+.*.jks
+.*.p12
 
