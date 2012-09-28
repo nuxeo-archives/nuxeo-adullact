@@ -17,7 +17,7 @@ target
 *-new
 *.rej
 *.orig
-.DS_Store
+.*DS_Store
 .pydevproject
 *.pyc
 *.iml
