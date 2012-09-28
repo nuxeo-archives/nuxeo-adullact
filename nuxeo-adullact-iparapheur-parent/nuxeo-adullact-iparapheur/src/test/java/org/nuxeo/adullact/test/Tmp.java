@@ -27,7 +27,6 @@ import org.nuxeo.adullact.service.AdullactService;
 import org.nuxeo.adullact.service.AdullactServiceImpl;
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.CoreSession;
-import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.test.CoreFeature;
 import org.nuxeo.runtime.api.Framework;
 import org.nuxeo.runtime.test.runner.Deploy;
@@ -48,8 +47,6 @@ public class Tmp {
 
     private AdullactServiceImpl service;
 
-    private DocumentModel file;
-
     @Inject
     public RuntimeHarness runtimeHarness;
 
@@ -67,7 +64,6 @@ public class Tmp {
         runtimeHarness.deployContrib("nuxeo-adullact-iparapheur-integration",
                 "OSGI-INF/extensions/org.nuxeo.adullact.AdullactAdapterFactory.xml");
 
-        file = null;
         service = (AdullactServiceImpl) Framework.getService(AdullactService.class);
     }
 

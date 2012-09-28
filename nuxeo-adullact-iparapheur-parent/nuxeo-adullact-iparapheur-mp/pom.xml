@@ -19,7 +19,7 @@
     </dependency>
     <dependency>
       <groupId>nuxeo-studio</groupId>
-      <artifactId>NXSCRUM</artifactId>
+      <artifactId>adullact-nux</artifactId>
     </dependency>
     <dependency>
       <groupId>org.apache.axis</groupId>

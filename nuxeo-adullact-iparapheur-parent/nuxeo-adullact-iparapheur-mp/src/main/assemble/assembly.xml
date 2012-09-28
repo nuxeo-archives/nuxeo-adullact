@@ -31,7 +31,7 @@
 
     <copy todir="${marketplace}/install/bundles" overwrite="true">
       <artifact:resolveFile key="org.nuxeo.adullact:nuxeo-adullact-iparapheur::jar" />
-      <artifact:resolveFile key="nuxeo-studio:NXSCRUM::jar" />
+      <artifact:resolveFile key="nuxeo-studio:adullact-nux::jar" />
     </copy>
 
     <copy todir="${marketplace}/install/lib" overwrite="true">

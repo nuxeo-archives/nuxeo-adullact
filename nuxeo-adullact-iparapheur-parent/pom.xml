@@ -24,7 +24,7 @@
     <dependencies>
     <dependency>
       <groupId>nuxeo-studio</groupId>
-      <artifactId>NXSCRUM</artifactId>
+      <artifactId>adullact-nux</artifactId>
       <version>${nuxeo.adullact.iparapheur.studio.version}</version>
     </dependency>
     <dependency>
