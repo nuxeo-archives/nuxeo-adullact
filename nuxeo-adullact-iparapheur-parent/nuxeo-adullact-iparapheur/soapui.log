@@ -1,8 +1,0 @@
-2012-07-15 02:58:01,098 INFO  [DefaultSoapUICore] initialized soapui-settings from [/Users/bjalon/Downloads/soapui-4.5.0/soapui-settings.xml]
-2012-07-15 02:58:03,882 INFO  [DefaultSoapUICore] Forcing Native L&F for mac OSX Lion!
-2012-07-15 02:58:03,942 INFO  [SoapUI] Used java version: 1.6.0_33
-2012-07-15 02:58:08,056 INFO  [FrameLoadEvents] Did Start Provisional Load
-2012-07-15 02:58:08,131 INFO  [FrameLoadEvents] Did Finished Load
-2012-07-15 02:58:08,131 INFO  [FrameLoadEvents] Did Load Complete
-2012-07-15 02:58:08,346 INFO  [FrameLoadEvents] Did Start Provisional Load
-2012-07-15 02:58:12,004 INFO  [FrameLoadEvents] Did Receive Title
