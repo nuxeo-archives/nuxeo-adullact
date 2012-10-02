@@ -1,0 +1,4 @@
+id, label, obsolete, ordering
+"PUBLIC","publique","0","0"
+"SERVICE","Service","0","1"
+"CONFIDENTIEL","Confidentiel","0","2"

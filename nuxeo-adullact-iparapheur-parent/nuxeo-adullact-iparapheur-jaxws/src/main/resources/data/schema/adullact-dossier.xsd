@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<xs:schema
+  targetNamespace="http://www.nuxeo.org/ecm/schemas/adullact/dossier"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:adu="http://www.nuxeo.org/ecm/schemas/adullact/dossier">
+
+  <xs:include schemaLocation="core-types.xsd" />
+
+  <xs:element name="typeTechnique" type="xs:string"/>
+  <xs:element name="sousType" type="xs:string"/>
+  <xs:element name="emailEmetteur" type="xs:string"/>
+  <xs:element name="dossierID" type="xs:string"/>
+
+  <!-- wait for PDF -->
+  <xs:element name="visuelPDF" type="adu:content"/>
+
+  <xs:element name="xPathPourSignatureXML" type="xs:string"/>
+  <xs:element name="annotationPublique" type="xs:string"/>
+  <xs:element name="annotationPrivee" type="xs:string"/>
+  <!-- publique | service | confidentiel -->
+  <xs:element name="visibilite" type="xs:string"/>
+  <xs:element name="dateLimite" type="xs:date"/>
+
+  <xs:element name="currentState" type="xs:string" default="notSent"/>
+  <xs:element name="finalURLAfterArchiving" type="xs:string"/>
+  <xs:element name="urlIntoIParapheur" type="xs:string"/>
+<!--  <xs:element name="DocumentsAnnexes" maxOccurs="1" minOccurs="0" type="iph:TypeDocAnnexes"/>
+      <xs:element name="MetaData" maxOccurs="1" minOccurs="0" type="iph:TypeMetaDonnees"/>
+
+      <xs:element name="MetaDataTdtACTES" nillable="true" type="iph:metaDataTdtACTES"/>
+      <xs:element name="CircuitObligatoire" maxOccurs="1" minOccurs="0" type="iph:TypeCircuit"/>
+      <xs:element name="DocumentPrincipal" type="iph:TypeDoc" xmime:expectedContentTypes="application/pdf, application/xml, text/xml, text/plain, application/rtf, application/vnd.oasis.opendocument.text, application/vnd.oasis.opendocument.spreadsheet, application/vnd.oasis.opendocument.presentation, application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, image/jpeg, image/png, image/gif"/>
+      <xs:element name="NomDocPrincipal" maxOccurs="1" minOccurs="0"  type="xs:string"/>
+      <xs:element name="SignatureDocPrincipal" maxOccurs="1" minOccurs="0" type="iph:TypeDoc" xmime:expectedContentTypes="application/x-pkcs7-signature, application/zip"/>
+ -->
+ </xs:schema>

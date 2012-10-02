@@ -1,0 +1,24 @@
+Manifest-Version: 1.0
+Bundle-Vendor: Nuxeo
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: .
+Bundle-Version: 1.0.qualifier
+Bundle-Name: nuxeo-adullact-iparapheur-integration
+Nuxeo-Component: OSGI-INF/extensions/org.nuxeo.adullact.operations.Adu
+ llactInitDossier.xml,OSGI-INF/extensions/org.nuxeo.adullact.service.A
+ dullactService.xml,OSGI-INF/adullact-coretype-contrib.xml,OSGI-INF/ex
+ tensions/org.nuxeo.adullact.AdullactAdapterFactory.xml,OSGI-INF/adull
+ act-vocabularies-contrib.xml,OSGI-INF/extensions/org.nuxeo.adullact.o
+ perations.AdullactArchiverDossier.xml,OSGI-INF/extensions/org.nuxeo.a
+ dullact.operations.AdullactExercerDroitRemordDossier.xml,OSGI-INF/ext
+ ensions/org.nuxeo.adullact.listener.AdullactDossierWaitingForArchivin
+ gListener.xml,OSGI-INF/extensions/org.nuxeo.adullact.operations.Adull
+ actGetDossier.xml,OSGI-INF/extensions/org.nuxeo.adullact.operations.A
+ dullactForcerEtape.xml,OSGI-INF/extensions/org.nuxeo.adullact.operati
+ ons.AdullactCreerDossier.xml,OSGI-INF/extensions/org.nuxeo.adullact.o
+ perations.AdullactArchiverDossierFromDocument.xml,OSGI-INF/extensions
+ /org.nuxeo.adullact.operations.AdullactAttachFileToDocument.xml
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: nuxeo-adullact-iparapheur-integration
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+

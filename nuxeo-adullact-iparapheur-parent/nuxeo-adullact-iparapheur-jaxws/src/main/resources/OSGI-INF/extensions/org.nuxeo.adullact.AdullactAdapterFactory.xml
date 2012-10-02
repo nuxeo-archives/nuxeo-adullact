@@ -1,0 +1,31 @@
+<component name="org.nuxeo.adullact.AdullactAdapterFactory">
+
+  <extension target="org.nuxeo.ecm.core.api.DocumentAdapterService"
+    point="adapters">
+    <adapter
+      class="org.nuxeo.adullact.jaxws.ArchiverDossierRequest"
+      factory="org.nuxeo.adullact.AdullactAdapterFactory" />
+    <adapter
+      class="org.nuxeo.adullact.jaxws.CreerDossierRequest"
+      factory="org.nuxeo.adullact.AdullactAdapterFactory" />
+    <adapter
+      class="org.nuxeo.adullact.jaxws.GetCircuitRequest"
+      factory="org.nuxeo.adullact.AdullactAdapterFactory" />
+    <adapter
+      class="org.nuxeo.adullact.jaxws.RechercherDossiersRequest"
+      factory="org.nuxeo.adullact.AdullactAdapterFactory" />
+    <adapter
+      class="org.nuxeo.adullact.jaxws.CreerDossierPESRequest"
+      factory="org.nuxeo.adullact.AdullactAdapterFactory" />
+    <adapter
+      class="org.nuxeo.adullact.jaxws.ForcerEtapeRequest"
+      factory="org.nuxeo.adullact.AdullactAdapterFactory" />
+    <adapter
+      class="org.nuxeo.adullact.jaxws.GetClassificationActesTdtRequest"
+      factory="org.nuxeo.adullact.AdullactAdapterFactory" />
+    <adapter
+      class="org.nuxeo.adullact.AdullactDossier"
+      factory="org.nuxeo.adullact.AdullactAdapterFactory" />
+  </extension>
+
+</component>

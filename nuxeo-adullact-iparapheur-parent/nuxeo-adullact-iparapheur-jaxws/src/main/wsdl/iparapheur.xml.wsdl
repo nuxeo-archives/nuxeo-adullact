@@ -1,0 +1,1025 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is JAX-WS RI 2.1.4-b01-. --><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://www.adullact.org/spring-ws/iparapheur/1.0" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.adullact.org/spring-ws/iparapheur/1.0" targetNamespace="http://www.adullact.org/spring-ws/iparapheur/1.0">
+  <wsdl:types>
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:iph="http://www.adullact.org/spring-ws/iparapheur/1.0" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://www.adullact.org/spring-ws/iparapheur/1.0">
+
+    <xsd:import namespace="http://www.w3.org/2005/05/xmlmime" schemaLocation="http://www.w3.org/2005/05/xmlmime" />
+
+
+    <xsd:annotation>
+    	<xsd:documentation>
+    		Web-Services pour i-Parapheur, version 3.1.
+    	</xsd:documentation>
+    </xsd:annotation>
+
+	<!-- -->
+	<!-- Web Service : Interrogation des Types disponibles -->
+	<!-- -->
+
+    <xsd:element name="GetListeTypesRequest" />
+
+    <xsd:element name="GetListeTypesResponse">
+	<xsd:annotation>
+	    <xsd:documentation>Interrogation des Types disponibles</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element maxOccurs="unbounded" minOccurs="0" name="TypeTechnique" type="iph:TypeTechnique" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+	<!-- -->
+	<!-- Web Service : Interrogation des Sous-Types disponibles -->
+	<!-- -->
+
+    <xsd:element name="GetListeSousTypesRequest" type="iph:TypeTechnique" />
+
+    <xsd:element name="GetListeSousTypesResponse">
+	<xsd:annotation>
+	    <xsd:documentation>Interrogation des Sous-Types disponibles</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element maxOccurs="unbounded" minOccurs="0" name="SousType" type="iph:SousType" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+	<!-- -->
+	<!-- Web Service : Interrogation du circuit selon Type + Sous-Type fourni -->
+	<!-- -->
+
+    <xsd:element name="GetCircuitRequest">
+	<xsd:annotation>
+	    <xsd:documentation>Interrogation du contenu du circuit par défaut selon Type + Sous-Type fournis</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:all>
+                <xsd:element name="TypeTechnique" type="iph:TypeTechnique" />
+                <xsd:element name="SousType" type="iph:SousType" />
+            </xsd:all>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="GetCircuitResponse">
+	<xsd:annotation>
+	    <xsd:documentation>Interrogation du contenu du circuit selon Type + Sous-Type fournis</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element maxOccurs="unbounded" minOccurs="0" name="EtapeCircuit" type="iph:EtapeCircuit" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+	<!-- -->
+	<!-- Web Service : Interrogation des méta-données disponibles en dictionnaire -->
+	<!-- -->
+
+    <xsd:element name="GetListeMetaDonneesRequest" />
+
+    <xsd:element name="GetListeMetaDonneesResponse">
+	<xsd:annotation>
+	    <xsd:documentation>Interrogation des méta-données disponibles en dictionnaire personnalisé</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element maxOccurs="unbounded" minOccurs="0" name="MetaDonnee" type="iph:MetaDonneeDefinition" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+	<!-- -->
+	<!-- [Deprecated] Web Service : Creation d'un nouveau dossier PES -->
+	<!-- -->
+
+    <xsd:element name="CreerDossierPESRequest">
+	<xsd:annotation>
+	    <xsd:documentation>[Deprecated: utilisez CreerDossier] Création d'un nouveau dossier PES.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:all>
+                <xsd:element name="TypeTechnique" type="iph:TypeTechnique" />
+                <xsd:element name="SousType" type="iph:SousType" />
+                <xsd:element name="EmailEmetteur" type="xsd:string" />
+                <xsd:element name="DossierID" type="iph:DossierID" />
+                <xsd:element name="FichierPES" type="iph:TypeDoc" xmime:expectedContentTypes="text/xml" />
+                <xsd:element name="VisuelPDF" type="iph:TypeDoc" xmime:expectedContentTypes="application/pdf" />
+                <xsd:element name="XPathPourSignaturePES" type="xsd:string" />
+                <xsd:element name="AnnotationPublique" nillable="true" type="xsd:string" />
+                <xsd:element name="AnnotationPrivee" nillable="true" type="xsd:string" />
+                <xsd:element name="Visibilite" type="iph:Visibilite" />
+                <xsd:element name="DateLimite" nillable="true" type="iph:date_AAAA-MM-JJ" />
+          </xsd:all>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="CreerDossierPESResponse">
+	<xsd:annotation>
+	    <xsd:documentation>[Deprecated: utilisez CreerDossier] Réponse à la création d'un nouveau dossier PES.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element maxOccurs="1" minOccurs="0" name="MessageRetour" type="iph:MessageRetour" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+	<!-- -->
+	<!-- Web Service : Creation d'un dossier -->
+	<!-- -->
+
+    <xsd:element name="CreerDossierRequest">
+        <xsd:annotation>
+            <xsd:documentation>Création d'un dossier.
+              MetaData: permet de caractériser le dossier avec des propriétés supplémentaires définies dans le dictionnaire de méta-données.
+              MetaDataTdTACTES: ne sert que pour les dossiers à télétransmettre sur plateforme ACTES par WebServices.
+              CircuitObligatoire: a eviter, utiliser de preference le routage parametre par TypeTechnique/SousType.
+              NomDocPrincipal: optionnel, a fournir si different du nom du dossier DossierID
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:all>
+                <xsd:element name="TypeTechnique" type="iph:TypeTechnique" />
+                <xsd:element name="SousType" type="iph:SousType" />
+                <xsd:element name="EmailEmetteur" maxOccurs="1" minOccurs="0" type="xsd:string" />
+                <xsd:element name="DossierID" type="iph:DossierID" />
+                <xsd:element name="DocumentPrincipal" type="iph:TypeDoc" xmime:expectedContentTypes="application/pdf, application/xml, text/xml, text/plain, application/rtf, application/vnd.oasis.opendocument.text, application/vnd.oasis.opendocument.spreadsheet, application/vnd.oasis.opendocument.presentation, application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, image/jpeg, image/png, image/gif" />
+                <xsd:element name="NomDocPrincipal" maxOccurs="1" minOccurs="0" type="xsd:string" />
+                <xsd:element name="SignatureDocPrincipal" maxOccurs="1" minOccurs="0" type="iph:TypeDoc" xmime:expectedContentTypes="application/x-pkcs7-signature, application/zip" />
+                <xsd:element name="VisuelPDF" nillable="true" type="iph:TypeDoc" xmime:expectedContentTypes="application/pdf" />
+                <xsd:element name="DocumentsAnnexes" maxOccurs="1" minOccurs="0" type="iph:TypeDocAnnexes" />
+                <xsd:element name="MetaData" maxOccurs="1" minOccurs="0" type="iph:TypeMetaDonnees" />
+                <xsd:element name="XPathPourSignatureXML" nillable="true" type="xsd:string" />
+                <xsd:element name="MetaDataTdtACTES" nillable="true" type="iph:metaDataTdtACTES" />
+                <xsd:element name="AnnotationPublique" nillable="true" type="xsd:string" />
+                <xsd:element name="AnnotationPrivee" nillable="true" type="xsd:string" />
+                <xsd:element name="Visibilite" type="iph:Visibilite" />
+                <xsd:element name="DateLimite" nillable="true" type="iph:date_AAAA-MM-JJ" />
+                
+                <xsd:element name="CircuitObligatoire" maxOccurs="1" minOccurs="0" type="iph:TypeCircuit" />
+            </xsd:all>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="CreerDossierResponse">
+	<xsd:annotation>
+	    <xsd:documentation>Réponse à la création d'un nouveau dossier.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element maxOccurs="1" minOccurs="0" name="MessageRetour" type="iph:MessageRetour" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+	<!-- -->
+	<!-- Web Service : Interrogation de l'histogramme d'un dossier PES -->
+	<!-- -->
+
+    <xsd:element name="GetHistoDossierRequest" nillable="true" type="iph:DossierID" />
+
+    <xsd:element name="GetHistoDossierResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element maxOccurs="unbounded" minOccurs="0" name="LogDossier" type="iph:LogDossier" />
+                <xsd:element maxOccurs="1" minOccurs="0" name="MessageRetour" type="iph:MessageRetour" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+	<!-- -->
+	<!-- Web Service : Effacement de dossier rejeté -->
+	<!-- -->
+
+    <xsd:element name="EffacerDossierRejeteRequest" type="iph:DossierID" />
+
+    <xsd:element name="EffacerDossierRejeteResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element maxOccurs="1" minOccurs="0" name="MessageRetour" type="iph:MessageRetour" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+	<!-- -->
+	<!-- Web Service : Recherche de dossiers -->
+	<!-- -->
+
+    <xsd:element name="RechercherDossiersRequest">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element maxOccurs="1" minOccurs="0" name="TypeTechnique" type="iph:TypeTechnique" />
+                <xsd:element maxOccurs="1" minOccurs="0" name="SousType" type="iph:SousType" />
+                <xsd:element maxOccurs="1" minOccurs="0" name="Status" type="xsd:string" />
+                <xsd:element maxOccurs="1" minOccurs="0" name="NombreDossiers" type="xsd:integer" />
+                <xsd:element maxOccurs="unbounded" minOccurs="0" name="DossierID" type="iph:DossierID" />
+           </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="RechercherDossiersResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element maxOccurs="unbounded" minOccurs="0" name="LogDossier" type="iph:LogDossier" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+	<!-- -->
+	<!-- [Deprecated] Web Service : Envoi au TdT d'un dossier PES signé (HELIOS) -->
+	<!-- -->
+
+    <xsd:element name="EnvoyerDossierPESRequest" type="iph:DossierID" />
+
+    <xsd:element name="EnvoyerDossierPESResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element maxOccurs="1" minOccurs="0" name="LogDossier" type="iph:LogDossier" />
+                <xsd:element maxOccurs="1" minOccurs="0" name="MessageRetour" type="iph:MessageRetour" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+	<!-- -->
+	<!-- Web Service : Envoi au TdT d'un dossier signé -->
+	<!-- -->
+
+    <xsd:element name="EnvoyerDossierTdTRequest" type="iph:DossierID" />
+
+    <xsd:element name="EnvoyerDossierTdTResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element maxOccurs="1" minOccurs="0" name="LogDossier" type="iph:LogDossier" />
+                <xsd:element maxOccurs="1" minOccurs="0" name="MessageRetour" type="iph:MessageRetour" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+	<!-- -->
+	<!-- Web Service : Forcer la transition vers l'étape suivante -->
+	<!-- -->
+
+    <xsd:element name="ForcerEtapeRequest">
+        <xsd:annotation>
+        <xsd:documentation>Force la transition d'une étape (VISA, TDT pour le moment) dans un circuit de validation, avec le paramètre CodeTransition=OK ou KO.
+		OK: passe à l'étape suivante, KO: rejette le dossier.
+	    Pour une étape TDT: permet de passer à l'étape suivante, au cas où la télétransmission a été exceptionnellement réalisée par un autre canal que i-Parapheur (envoi manuel,...).
+	    Pre-requis: détenir le dossier dans son parapheur, sur une étape de TDT ou de VISA.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:all>
+                <xsd:element name="DossierID" type="iph:DossierID" />
+                <xsd:element name="CodeTransition" type="iph:codeRetour" />
+                <xsd:element name="AnnotationPublique" nillable="true" type="xsd:string" />
+                <xsd:element name="AnnotationPrivee" nillable="true" type="xsd:string" />
+            </xsd:all>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="ForcerEtapeResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element maxOccurs="1" minOccurs="0" name="LogDossier" type="iph:LogDossier" />
+                <xsd:element maxOccurs="1" minOccurs="0" name="MessageRetour" type="iph:MessageRetour" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+	<!-- -->
+	<!-- Web Service : Envoi au TdT d'un lot de dossiers (HELIOS, ACTES,...) -->
+	<!--      Autres contextes métier: Pas prévu pour le moment (ws 2.0)   -->
+	<!-- -->
+
+	<!-- -->
+	<!-- Web Service : Recuperation classification ACTES TdT -->
+	<!-- -->
+
+    <xsd:element name="GetClassificationActesTdtRequest">
+        <xsd:annotation>
+            <xsd:documentation>TypeTechnique = type qui utilise le protocole ACTES visé. Si absent, on suppose que il s'agit du connecteur S²LOW/ACTES.
+DemanderMiseAJourTdt : si "OUI", alors iParapheur initie une transaction de mise a jour de la classification aupres du TDT.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element maxOccurs="1" minOccurs="0" name="TypeTechnique" type="iph:TypeTechnique" />
+                <xsd:element maxOccurs="1" minOccurs="0" name="DemanderMiseAJourTdt" type="xsd:string" />
+           </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="GetClassificationActesTdtResponse">
+        <xsd:annotation>
+            <xsd:documentation>La classification est au format XML, voir specifications du protocole ACTES.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element maxOccurs="1" minOccurs="0" name="classification" type="iph:TypeDoc" xmime:expectedContentTypes="text/xml, application/xml" />
+                <xsd:element maxOccurs="1" minOccurs="0" name="MessageRetour" type="iph:MessageRetour" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+
+	<!-- -->
+	<!-- Web Service : Interrogation statut TdT d'un dossier -->
+	<!-- -->
+
+    <xsd:element name="GetStatutTdTRequest" type="iph:DossierID" />
+
+    <xsd:element name="GetStatutTdTResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element maxOccurs="1" minOccurs="0" name="LogDossier" type="iph:LogDossier" />
+                <xsd:element maxOccurs="1" minOccurs="0" name="MessageRetour" type="iph:MessageRetour" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+	<!-- -->
+	<!-- Web Service : Récupération d'un dossier -->
+	<!-- -->
+
+    <xsd:element name="GetDossierRequest" type="iph:DossierID" />
+
+    <xsd:element name="GetDossierResponse">
+	<xsd:annotation>
+	    <xsd:documentation>Récupération d'un dossier. Il reste à déterminer précisément ce qu'il convient de récupérer (Doc principal / Visuel PDF / Signature(s) / Docs Annexes) dans d'autres cas d'utilisation: ACTES (signature PKCS7), formulaires,...</xsd:documentation>
+        </xsd:annotation>
+         <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="TypeTechnique" type="iph:TypeTechnique" />
+                <xsd:element name="SousType" type="iph:SousType" />
+                <xsd:element maxOccurs="1" minOccurs="0" name="EmailEmetteur" type="xsd:string" />
+                <xsd:element name="DossierID" type="iph:DossierID" />
+                <xsd:element maxOccurs="1" minOccurs="0" name="FichierPES" type="iph:TypeDoc" xmime:expectedContentTypes="text/xml, application/xml" />
+                <xsd:element maxOccurs="1" minOccurs="0" name="VisuelPDF" type="iph:TypeDoc" xmime:expectedContentTypes="application/pdf" />
+                <xsd:element maxOccurs="1" minOccurs="0" name="XPathPourSignaturePES" type="xsd:string" />
+                <xsd:element maxOccurs="1" minOccurs="0" name="AnnotationPublique" type="xsd:string" />
+                <xsd:element maxOccurs="1" minOccurs="0" name="AnnotationPrivee" type="xsd:string" />
+                <xsd:element name="Visibilite" type="iph:Visibilite" />
+                <xsd:element name="DateLimite" nillable="true" type="iph:date_AAAA-MM-JJ" />
+
+                <xsd:element maxOccurs="1" minOccurs="0" name="DocPrincipal" type="iph:TypeDoc" xmime:expectedContentTypes="text/*, application/*, image/*" />
+                <xsd:element maxOccurs="1" minOccurs="0" name="NomDocPrincipal" type="xsd:string" />
+                <xsd:element maxOccurs="1" minOccurs="0" name="SignatureDocPrincipal" type="iph:TypeDoc" xmime:expectedContentTypes="application/x-pkcs7-signature, application/zip" />
+
+                <xsd:element maxOccurs="1" minOccurs="0" name="DocumentsAnnexes" type="iph:TypeDocAnnexes" />
+                <xsd:element maxOccurs="1" minOccurs="0" name="MetaDonnees" type="iph:TypeMetaDonnees" />
+
+                <xsd:element maxOccurs="1" minOccurs="0" name="MessageRetour" type="iph:MessageRetour" />
+            </xsd:sequence>
+        </xsd:complexType>
+     </xsd:element>
+
+	<!-- -->
+	<!-- Web Service : Exercice du droit de remord sur un dossier -->
+	<!-- -->
+
+    <xsd:element name="ExercerDroitRemordDossierRequest" type="iph:DossierID" />
+
+    <xsd:element name="ExercerDroitRemordDossierResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element maxOccurs="1" minOccurs="0" name="MessageRetour" type="iph:MessageRetour" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+	<!-- -->
+	<!-- Web Service : Archivage d'un dossier -->
+	<!-- -->
+
+    <xsd:element name="ArchiverDossierRequest">
+        <xsd:complexType>
+            <xsd:all>
+                <xsd:element name="DossierID" type="iph:DossierID" />
+                <xsd:element maxOccurs="1" minOccurs="0" name="ArchivageAction" type="iph:ArchivageAction" />
+          </xsd:all>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="ArchiverDossierResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element minOccurs="0" name="URL" nillable="true" type="xsd:string" />
+                <xsd:element maxOccurs="1" minOccurs="0" name="MessageRetour" type="iph:MessageRetour" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+	<!-- -->
+	<!-- Web Service : ECHO (exemple simpliste pour tests initiaux) -->
+	<!-- -->
+
+    <xsd:element name="echoRequest">
+        <xsd:simpleType>
+            <xsd:restriction base="xsd:string">
+                <xsd:pattern value="([A-Z]|[a-z])+" />
+            </xsd:restriction>
+        </xsd:simpleType>
+    </xsd:element>
+
+    <xsd:element name="echoResponse" type="xsd:string" />
+  
+  <!-- -->
+	<!-- Web Service : EnvoyerDossierMailSecurise -->
+	<!-- -->
+
+  <xsd:element name="EnvoyerDossierMailSecuriseRequest">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="dossier" type="xsd:string" />
+        <xsd:element name="rcptTo" type="xsd:string" />
+        <xsd:element name="subject" type="xsd:string" />
+        <xsd:element name="message" type="xsd:string" />
+        <xsd:element name="password" minOccurs="0" maxOccurs="1" type="xsd:string" />
+        <xsd:element name="sendPassword" minOccurs="0" maxOccurs="1" type="xsd:boolean" />
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="EnvoyerDossierMailSecuriseResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <!-- xsd:element minOccurs="0" name="URL" nillable="true" type="xsd:integer"/-->
+        <xsd:element maxOccurs="1" minOccurs="0" name="MessageRetour" type="iph:MessageRetour" />
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+	<!-- -->
+	<!-- TYPES définis pour les WebServices -->
+	<!-- -->
+
+    <xsd:simpleType name="TypeTechnique">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="([A-Za-z])([A-Za-z0-9]|[:blank:]){0,31}" />
+	    <xsd:whiteSpace value="collapse" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="SousType">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="([A-Za-z])([A-Za-z0-9]|[:blank:]){0,63}" />
+	    <xsd:whiteSpace value="collapse" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="TypeCircuit">
+        <xsd:annotation>
+	        <xsd:documentation>Définition dynamique de circuit</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="EtapeCircuit" type="iph:EtapeCircuit" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="MetaDonneeDefinition">
+        <xsd:annotation>
+	        <xsd:documentation>Définition de méta donnée dans le dictionnaire du modèle de contenu dynamique.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="nomCourt" type="iph:TypeNomCourt" />
+            <xsd:element name="nomLong" type="xsd:string" />
+            <xsd:element name="nature" type="iph:NatureMetaDonnee" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:simpleType name="TypeNomCourt">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="([A-Za-z])([A-Za-z0-9]){0,31}" />
+	    <xsd:whiteSpace value="collapse" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="TypeMetaDonnees">
+       <xsd:sequence>
+           <xsd:element maxOccurs="unbounded" minOccurs="0" name="MetaDonnee" type="iph:MetaDonnee" />
+       </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="MetaDonnee">
+	   <xsd:annotation>
+	       <xsd:documentation>Contenu d'une méta-donnée
+           </xsd:documentation>
+       </xsd:annotation>
+       <xsd:sequence>
+           <xsd:element name="nom" type="iph:TypeNomCourt" />
+           <xsd:element name="valeur" type="xsd:string" />
+       </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="EtapeCircuit">
+        <xsd:annotation>
+            <xsd:documentation>Role = VISEUR | SIGNATAIRE | TDT | ARCHIVAGE. Dans le futur: EMETTEUR(?), EMAIL,... </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="Parapheur" type="xsd:string" />
+            <xsd:element name="Prenom" type="xsd:string" />
+            <xsd:element name="Nom" type="xsd:string" />
+            <xsd:element name="Role" type="xsd:string" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+	    <!--                (^[\\\&amp;\&quot;\£\*\/\&lt;\&gt;\?\%\|\+\;\:])+ -->
+            <!-- Ok, mais incomplet ="[:alnum:][^\\\*\?%\|\+;:]{0,200}"  -->
+    <xsd:simpleType name="DossierID">
+       <xsd:annotation>
+           <xsd:documentation>Un nom de dossier n'a pratiquement pas de limite de longueur dans Alfresco. Cependant, cela peut nuire à l'affichage, d'où une longueur limite applicative à 600. ATTENTION: sur caractères interdits par Alfresco: \ &amp; " £ * / &lt; > ? % | + ; : </xsd:documentation>
+       </xsd:annotation>
+       <xsd:restriction base="xsd:string">
+           <xsd:pattern value="\w([\w@\.\(\)\{\}\-_éèêàùçëïü]){0,600}" />
+           <xsd:whiteSpace value="collapse" />
+       </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="TypeDoc">
+       <xsd:simpleContent>
+           <xsd:restriction base="xmime:base64Binary">
+               <xsd:attribute ref="xmime:contentType" use="required" />
+           </xsd:restriction>
+       </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="TypeDocAnnexes">
+       <xsd:sequence>
+           <xsd:element maxOccurs="unbounded" minOccurs="0" name="DocAnnexe" type="iph:DocAnnexe" />
+       </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="DocAnnexe">
+	   <xsd:annotation>
+	       <xsd:documentation>mimetype: par exemple "application/pdf".  encoding: par exemple "UTF-8".
+            Et maintenant, possibilité d'y definir une signature detachee CMS/PKCS7.
+           </xsd:documentation>
+       </xsd:annotation>
+       <xsd:sequence>
+           <xsd:element name="nom" type="iph:DossierID" />
+           <xsd:element name="fichier" type="iph:TypeDoc" />
+           <xsd:element name="mimetype" type="xsd:string" />
+           <xsd:element name="encoding" type="xsd:string" />
+           <xsd:element minOccurs="0" name="signature" type="iph:TypeDoc" xmime:expectedContentTypes="application/x-pkcs7-signature, application/zip" />
+       </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="metaDataTdtACTES">
+	   <xsd:annotation>
+	       <xsd:documentation>Donnees necessaires pour la teletransmission des ACTES au controle de legalite. Le numero d'ACTE ne fait pas partie des parametres, c'est dossierID.</xsd:documentation>
+       </xsd:annotation>
+       <xsd:sequence>
+           <xsd:element name="nature" type="xsd:string" />
+           <xsd:element name="classification" type="xsd:string" />
+           <xsd:element name="date" type="xsd:string" />
+           <xsd:element name="objet" type="xsd:string" />
+       </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:simpleType name="Visibilite">
+        <xsd:restriction base="xsd:string">
+	    <xsd:whiteSpace value="collapse" />
+	    <xsd:enumeration value="PUBLIC" />
+	    <xsd:enumeration value="SERVICE" />
+	    <xsd:enumeration value="CONFIDENTIEL" />
+        </xsd:restriction>
+    </xsd:simpleType>
+    
+    <xsd:simpleType name="date_AAAA-MM-JJ">
+        <xsd:restriction base="xsd:string">
+	    <xsd:whiteSpace value="collapse" />
+	    <xsd:pattern value="[0-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="codeRetour">
+        <xsd:restriction base="xsd:string">
+	    <xsd:whiteSpace value="collapse" />
+	    <xsd:enumeration value="" />
+	    <xsd:enumeration value="OK" />
+	    <xsd:enumeration value="KO" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="LogDossier">
+	    <xsd:annotation>
+	        <xsd:documentation>definition precise d'un enregistrement histogramme d'un dossier: 
+              date/heure, nom(=ID), état(non-lu, lu, signé, rejeté..., états TdT), annotation publique?, + flag d'accessibilite "OK/KO/Recuperable" positionné si utilisation via "RechercherDossier"
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="timestamp" type="xsd:dateTime" />
+            <xsd:element name="nom" type="iph:DossierID" />
+            <xsd:element name="status" type="xsd:string" />
+            <xsd:element name="annotation" type="xsd:string" />
+            <xsd:element name="accessible" type="xsd:string" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="MessageRetour">
+        <xsd:sequence>
+            <xsd:element name="codeRetour" type="iph:codeRetour" />
+            <xsd:element name="message" type="xsd:string" />
+            <xsd:element name="severite" type="xsd:string" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:simpleType name="ArchivageAction">
+        <xsd:restriction base="xsd:string">
+	    <xsd:whiteSpace value="collapse" />
+	    <xsd:enumeration value="ARCHIVER" />
+	    <xsd:enumeration value="EFFACER" />
+        </xsd:restriction>
+    </xsd:simpleType>
+    
+    <xsd:simpleType name="NatureMetaDonnee">
+        <xsd:restriction base="xsd:string">
+            <xsd:whiteSpace value="collapse" />
+            <xsd:enumeration value="STRING" />
+            <xsd:enumeration value="INT" />
+            <xsd:enumeration value="FLOAT" />
+            <xsd:enumeration value="DATE" />
+        </xsd:restriction>
+    </xsd:simpleType>
+    
+</xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="echoRequest">
+    <wsdl:part element="tns:echoRequest" name="echoRequest" />
+  </wsdl:message>
+  <wsdl:message name="EffacerDossierRejeteResponse">
+    <wsdl:part element="tns:EffacerDossierRejeteResponse" name="EffacerDossierRejeteResponse" />
+  </wsdl:message>
+  <wsdl:message name="ArchiverDossierRequest">
+    <wsdl:part element="tns:ArchiverDossierRequest" name="ArchiverDossierRequest" />
+  </wsdl:message>
+  <wsdl:message name="GetListeSousTypesResponse">
+    <wsdl:part element="tns:GetListeSousTypesResponse" name="GetListeSousTypesResponse" />
+  </wsdl:message>
+  <wsdl:message name="RechercherDossiersResponse">
+    <wsdl:part element="tns:RechercherDossiersResponse" name="RechercherDossiersResponse" />
+  </wsdl:message>
+  <wsdl:message name="EnvoyerDossierTdTRequest">
+    <wsdl:part element="tns:EnvoyerDossierTdTRequest" name="EnvoyerDossierTdTRequest" />
+  </wsdl:message>
+  <wsdl:message name="ForcerEtapeRequest">
+    <wsdl:part element="tns:ForcerEtapeRequest" name="ForcerEtapeRequest" />
+  </wsdl:message>
+  <wsdl:message name="GetClassificationActesTdtRequest">
+    <wsdl:part element="tns:GetClassificationActesTdtRequest" name="GetClassificationActesTdtRequest" />
+  </wsdl:message>
+  <wsdl:message name="EnvoyerDossierPESRequest">
+    <wsdl:part element="tns:EnvoyerDossierPESRequest" name="EnvoyerDossierPESRequest" />
+  </wsdl:message>
+  <wsdl:message name="GetCircuitResponse">
+    <wsdl:part element="tns:GetCircuitResponse" name="GetCircuitResponse" />
+  </wsdl:message>
+  <wsdl:message name="EnvoyerDossierTdTResponse">
+    <wsdl:part element="tns:EnvoyerDossierTdTResponse" name="EnvoyerDossierTdTResponse" />
+  </wsdl:message>
+  <wsdl:message name="ForcerEtapeResponse">
+    <wsdl:part element="tns:ForcerEtapeResponse" name="ForcerEtapeResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetClassificationActesTdtResponse">
+    <wsdl:part element="tns:GetClassificationActesTdtResponse" name="GetClassificationActesTdtResponse" />
+  </wsdl:message>
+  <wsdl:message name="EnvoyerDossierPESResponse">
+    <wsdl:part element="tns:EnvoyerDossierPESResponse" name="EnvoyerDossierPESResponse" />
+  </wsdl:message>
+  <wsdl:message name="RechercherDossiersRequest">
+    <wsdl:part element="tns:RechercherDossiersRequest" name="RechercherDossiersRequest" />
+  </wsdl:message>
+  <wsdl:message name="GetHistoDossierRequest">
+    <wsdl:part element="tns:GetHistoDossierRequest" name="GetHistoDossierRequest" />
+  </wsdl:message>
+  <wsdl:message name="CreerDossierPESResponse">
+    <wsdl:part element="tns:CreerDossierPESResponse" name="CreerDossierPESResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreerDossierResponse">
+    <wsdl:part element="tns:CreerDossierResponse" name="CreerDossierResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetStatutTdTRequest">
+    <wsdl:part element="tns:GetStatutTdTRequest" name="GetStatutTdTRequest" />
+  </wsdl:message>
+  <wsdl:message name="ExercerDroitRemordDossierRequest">
+    <wsdl:part element="tns:ExercerDroitRemordDossierRequest" name="ExercerDroitRemordDossierRequest" />
+  </wsdl:message>
+  <wsdl:message name="GetDossierResponse">
+    <wsdl:part element="tns:GetDossierResponse" name="GetDossierResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreerDossierPESRequest">
+    <wsdl:part element="tns:CreerDossierPESRequest" name="CreerDossierPESRequest" />
+  </wsdl:message>
+  <wsdl:message name="CreerDossierRequest">
+    <wsdl:part element="tns:CreerDossierRequest" name="CreerDossierRequest" />
+  </wsdl:message>
+  <wsdl:message name="GetCircuitRequest">
+    <wsdl:part element="tns:GetCircuitRequest" name="GetCircuitRequest" />
+  </wsdl:message>
+  <wsdl:message name="GetDossierRequest">
+    <wsdl:part element="tns:GetDossierRequest" name="GetDossierRequest" />
+  </wsdl:message>
+  <wsdl:message name="ExercerDroitRemordDossierResponse">
+    <wsdl:part element="tns:ExercerDroitRemordDossierResponse" name="ExercerDroitRemordDossierResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetListeSousTypesRequest">
+    <wsdl:part element="tns:GetListeSousTypesRequest" name="GetListeSousTypesRequest" />
+  </wsdl:message>
+  <wsdl:message name="EffacerDossierRejeteRequest">
+    <wsdl:part element="tns:EffacerDossierRejeteRequest" name="EffacerDossierRejeteRequest" />
+  </wsdl:message>
+  <wsdl:message name="GetListeTypesRequest">
+    <wsdl:part element="tns:GetListeTypesRequest" name="GetListeTypesRequest" />
+  </wsdl:message>
+  <wsdl:message name="GetListeMetaDonneesRequest">
+    <wsdl:part element="tns:GetListeMetaDonneesRequest" name="GetListeMetaDonneesRequest" />
+  </wsdl:message>
+  <wsdl:message name="GetHistoDossierResponse">
+    <wsdl:part element="tns:GetHistoDossierResponse" name="GetHistoDossierResponse" />
+  </wsdl:message>
+  <wsdl:message name="echoResponse">
+    <wsdl:part element="tns:echoResponse" name="echoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetStatutTdTResponse">
+    <wsdl:part element="tns:GetStatutTdTResponse" name="GetStatutTdTResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetListeTypesResponse">
+    <wsdl:part element="tns:GetListeTypesResponse" name="GetListeTypesResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetListeMetaDonneesResponse">
+    <wsdl:part element="tns:GetListeMetaDonneesResponse" name="GetListeMetaDonneesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ArchiverDossierResponse">
+    <wsdl:part element="tns:ArchiverDossierResponse" name="ArchiverDossierResponse" />
+  </wsdl:message>
+  
+  <wsdl:message name="EnvoyerDossierMailSecuriseResponse">
+    <wsdl:part element="tns:EnvoyerDossierMailSecuriseResponse" name="EnvoyerDossierMailSecuriseResponse" />
+  </wsdl:message>
+
+  <wsdl:message name="EnvoyerDossierMailSecuriseRequest">
+    <wsdl:part element="tns:EnvoyerDossierMailSecuriseRequest" name="EnvoyerDossierMailSecuriseRequest" />
+  </wsdl:message>
+  
+  <wsdl:portType name="InterfaceParapheur">
+    <wsdl:operation name="EffacerDossierRejete">
+      <wsdl:input message="tns:EffacerDossierRejeteRequest" name="EffacerDossierRejeteRequest" />
+      <wsdl:output message="tns:EffacerDossierRejeteResponse" name="EffacerDossierRejeteResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetListeTypes">
+      <wsdl:input message="tns:GetListeTypesRequest" name="GetListeTypesRequest" />
+      <wsdl:output message="tns:GetListeTypesResponse" name="GetListeTypesResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetListeMetaDonnees">
+      <wsdl:input message="tns:GetListeMetaDonneesRequest" name="GetListeMetaDonneesRequest" />
+      <wsdl:output message="tns:GetListeMetaDonneesResponse" name="GetListeMetaDonneesResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="CreerDossierPES">
+      <wsdl:input message="tns:CreerDossierPESRequest" name="CreerDossierPESRequest" />
+      <wsdl:output message="tns:CreerDossierPESResponse" name="CreerDossierPESResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="CreerDossier">
+      <wsdl:input message="tns:CreerDossierRequest" name="CreerDossierRequest" />
+      <wsdl:output message="tns:CreerDossierResponse" name="CreerDossierResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="RechercherDossiers">
+      <wsdl:input message="tns:RechercherDossiersRequest" name="RechercherDossiersRequest" />
+      <wsdl:output message="tns:RechercherDossiersResponse" name="RechercherDossiersResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDossier">
+      <wsdl:input message="tns:GetDossierRequest" name="GetDossierRequest" />
+      <wsdl:output message="tns:GetDossierResponse" name="GetDossierResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="EnvoyerDossierTdT">
+      <wsdl:input message="tns:EnvoyerDossierTdTRequest" name="EnvoyerDossierTdTRequest" />
+      <wsdl:output message="tns:EnvoyerDossierTdTResponse" name="EnvoyerDossierTdTResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="ForcerEtape">
+      <wsdl:input message="tns:ForcerEtapeRequest" name="ForcerEtapeRequest" />
+      <wsdl:output message="tns:ForcerEtapeResponse" name="ForcerEtapeResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetClassificationActesTdt">
+      <wsdl:input message="tns:GetClassificationActesTdtRequest" name="GetClassificationActesTdtRequest" />
+      <wsdl:output message="tns:GetClassificationActesTdtResponse" name="GetClassificationActesTdtResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="EnvoyerDossierPES">
+      <wsdl:input message="tns:EnvoyerDossierPESRequest" name="EnvoyerDossierPESRequest" />
+      <wsdl:output message="tns:EnvoyerDossierPESResponse" name="EnvoyerDossierPESResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="ArchiverDossier">
+      <wsdl:input message="tns:ArchiverDossierRequest" name="ArchiverDossierRequest" />
+      <wsdl:output message="tns:ArchiverDossierResponse" name="ArchiverDossierResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCircuit">
+      <wsdl:input message="tns:GetCircuitRequest" name="GetCircuitRequest" />
+      <wsdl:output message="tns:GetCircuitResponse" name="GetCircuitResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="echo">
+      <wsdl:input message="tns:echoRequest" name="echoRequest" />
+      <wsdl:output message="tns:echoResponse" name="echoResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetListeSousTypes">
+      <wsdl:input message="tns:GetListeSousTypesRequest" name="GetListeSousTypesRequest" />
+      <wsdl:output message="tns:GetListeSousTypesResponse" name="GetListeSousTypesResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetHistoDossier">
+      <wsdl:input message="tns:GetHistoDossierRequest" name="GetHistoDossierRequest" />
+      <wsdl:output message="tns:GetHistoDossierResponse" name="GetHistoDossierResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="ExercerDroitRemordDossier">
+      <wsdl:input message="tns:ExercerDroitRemordDossierRequest" name="ExercerDroitRemordDossierRequest" />
+      <wsdl:output message="tns:ExercerDroitRemordDossierResponse" name="ExercerDroitRemordDossierResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStatutTdT">
+      <wsdl:input message="tns:GetStatutTdTRequest" name="GetStatutTdTRequest" />
+      <wsdl:output message="tns:GetStatutTdTResponse" name="GetStatutTdTResponse" />
+    </wsdl:operation>
+
+    <wsdl:operation name="EnvoyerDossierMailSecurise">
+      <wsdl:input message="tns:EnvoyerDossierMailSecuriseRequest" name="EnvoyerDossierMailSecuriseRequest" />
+      <wsdl:output message="tns:EnvoyerDossierMailSecuriseResponse" name="EnvoyerDossierMailSecuriseResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="InterfaceParapheurSoap11" type="tns:InterfaceParapheur">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="EffacerDossierRejete">
+      <soap:operation soapAction="" />
+      <wsdl:input name="EffacerDossierRejeteRequest">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="EffacerDossierRejeteResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListeTypes">
+      <soap:operation soapAction="" />
+      <wsdl:input name="GetListeTypesRequest">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GetListeTypesResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListeMetaDonnees">
+      <soap:operation soapAction="" />
+      <wsdl:input name="GetListeMetaDonneesRequest">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GetListeMetaDonneesResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreerDossier">
+      <soap:operation soapAction="" />
+      <wsdl:input name="CreerDossierRequest">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="CreerDossierResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreerDossierPES">
+      <soap:operation soapAction="" />
+      <wsdl:input name="CreerDossierPESRequest">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="CreerDossierPESResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RechercherDossiers">
+      <soap:operation soapAction="" />
+      <wsdl:input name="RechercherDossiersRequest">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="RechercherDossiersResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDossier">
+      <soap:operation soapAction="" />
+      <wsdl:input name="GetDossierRequest">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GetDossierResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EnvoyerDossierTdT">
+      <soap:operation soapAction="" />
+      <wsdl:input name="EnvoyerDossierTdTRequest">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="EnvoyerDossierTdTResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ForcerEtape">
+      <soap:operation soapAction="" />
+      <wsdl:input name="ForcerEtapeRequest">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="ForcerEtapeResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetClassificationActesTdt">
+      <soap:operation soapAction="" />
+      <wsdl:input name="GetClassificationActesTdtRequest">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GetClassificationActesTdtResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EnvoyerDossierPES">
+      <soap:operation soapAction="" />
+      <wsdl:input name="EnvoyerDossierPESRequest">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="EnvoyerDossierPESResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ArchiverDossier">
+      <soap:operation soapAction="" />
+      <wsdl:input name="ArchiverDossierRequest">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="ArchiverDossierResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCircuit">
+      <soap:operation soapAction="" />
+      <wsdl:input name="GetCircuitRequest">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GetCircuitResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="echo">
+      <soap:operation soapAction="" />
+      <wsdl:input name="echoRequest">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="echoResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListeSousTypes">
+      <soap:operation soapAction="" />
+      <wsdl:input name="GetListeSousTypesRequest">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GetListeSousTypesResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHistoDossier">
+      <soap:operation soapAction="" />
+      <wsdl:input name="GetHistoDossierRequest">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GetHistoDossierResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExercerDroitRemordDossier">
+      <soap:operation soapAction="" />
+      <wsdl:input name="ExercerDroitRemordDossierRequest">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="ExercerDroitRemordDossierResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStatutTdT">
+      <soap:operation soapAction="" />
+      <wsdl:input name="GetStatutTdTRequest">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GetStatutTdTResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EnvoyerDossierMailSecurise">
+      <soap:operation soapAction="" />
+      <wsdl:input name="EnvoyerDossierMailSecuriseRequest">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="EnvoyerDossierMailSecuriseResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="InterfaceParapheurService">
+    <wsdl:port binding="tns:InterfaceParapheurSoap11" name="InterfaceParapheurSoap11">
+      <soap:address location="https://iparapheur.demonstrations.adullact.org:443/alfresco/ws-iparapheur" />
+    </wsdl:port>
+  </wsdl:service>
+  <wsdl:service name="InterfaceParapheurServiceNoMTOM">
+    <wsdl:port binding="tns:InterfaceParapheurSoap11" name="InterfaceParapheurSoap11NoMtom">
+      <soap:address location="https://iparapheur.demonstrations.adullact.org:443/alfresco/ws-iparapheur-no-mtom" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
