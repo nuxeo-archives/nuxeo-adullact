@@ -27,7 +27,7 @@
   </category>
 
   <category name="org.nuxeo.adullact">
-    <priority value="TRACE" />
+    <priority value="ERROR" />
   </category>
 
   <root>

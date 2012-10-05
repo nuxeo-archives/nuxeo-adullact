@@ -8,7 +8,7 @@
   </parent>
   <groupId>org.nuxeo.adullact</groupId>
   <artifactId>nuxeo-adullact-iparapheur</artifactId>
-  <name>iParapheur integration to Nuxeo</name>
+  <name>iParapheur integration to Nuxeo using Axis</name>
   <description/>
   <dependencies>
     <!-- WS -->

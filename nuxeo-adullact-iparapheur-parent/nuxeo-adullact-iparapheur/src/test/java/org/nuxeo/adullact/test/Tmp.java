@@ -18,7 +18,8 @@ package org.nuxeo.adullact.test;
 
 import static org.nuxeo.adullact.test.AdullactTestHelper.loadProperties;
 
-import org.eclipse.jetty.util.log.Log;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,6 +45,8 @@ import com.google.inject.Inject;
 @Features(CoreFeature.class)
 @Deploy({ "nuxeo-adullact-iparapheur-integration:OSGI-INF/adullact-coretype-contrib.xml" })
 public class Tmp {
+
+    private static final Log log = LogFactory.getLog(Tmp.class);
 
     private AdullactServiceImpl service;
 
@@ -71,7 +74,7 @@ public class Tmp {
     public void shouldCreateNewFolderAndFetchInformation()
             throws ClientException {
         GetDossierResponse response = service.getDossier("950aeb03-9a47-4663-96b7-420f1a3d271e");
-        Log.info(response.getMessageRetour().getMessage());
+        log.info(response.getMessageRetour().getMessage());
 
 
     }
