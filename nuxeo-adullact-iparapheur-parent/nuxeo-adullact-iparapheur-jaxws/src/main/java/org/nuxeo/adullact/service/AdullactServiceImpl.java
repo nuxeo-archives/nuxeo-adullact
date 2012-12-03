@@ -83,7 +83,7 @@ public class AdullactServiceImpl extends DefaultComponent implements
 
     private static final String PASSWORD = "nuxeo.adullact.iparapheur.password";
 
-    private static final String TRUSTSTORE_PATH = "nuxeo.adullact.ipararpheur.truststore.path";
+    private static final String TRUSTSTORE_PATH = "nuxeo.adullact.iparapheur.truststore.path";
 
     private static final String TRUSTSTORE_TYPE = "nuxeo.adullact.iparapheur.truststore.type";
 
@@ -109,7 +109,7 @@ public class AdullactServiceImpl extends DefaultComponent implements
             throw new ClientException(
                     "Can't initilialize iParapheur service, no target servername set");
         }
-        webServiceBaseURL = new URL(servername);
+        webServiceBaseURL = new URL(servername+"?wsdl");
 
         login = Framework.getProperty(LOGIN);
         if (login == null) {
@@ -210,11 +210,9 @@ public class AdullactServiceImpl extends DefaultComponent implements
     @Override
     public void creerDossier(AdullactDossier doc) throws ClientException {
         CreerDossierRequest dossier = doc.getCreerDossierRequest();
-
+        
         InterfaceParapheur service = serviceSOAPFactory();
-
         CreerDossierResponse response = service.creerDossier(dossier);
-
         if ("KO".equals(response.getMessageRetour().getCodeRetour())) {
             throw new ClientException("request failed: "
                     + response.getMessageRetour().getMessage());
@@ -416,21 +414,21 @@ public class AdullactServiceImpl extends DefaultComponent implements
     private InterfaceParapheur serviceSOAPFactory() throws ClientException {
         // in wsdl definitions target name space
         QName qname = new QName(
-                "http://www.adullact.org/spring-ws/iparapheur/1.0");
+                "http://www.adullact.org/spring-ws/iparapheur/1.0", "InterfaceParapheurService");
+        URL wsdlUrl = AdullactServiceImpl.class.getResource(
+                "/wsdl/iparapheur.xml.wsdl");
+        Service service = Service.create(wsdlUrl, qname);
+        
+        InterfaceParapheurService ifParapheurService = new InterfaceParapheurService(wsdlUrl, qname);
 
-        Service service = Service.create(webServiceBaseURL, qname);
-        InterfaceParapheurService locator = service.getPort(InterfaceParapheurService.class);
-
-        Map<String, Object> ctx = ((BindingProvider) locator).getRequestContext();
-        ctx.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY,
-                webServiceBaseURL.toString());
-
-        Map<String, List<String>> headers = new HashMap<String, List<String>>();
-        headers.put("Username", Collections.singletonList(login));
-        headers.put("Password", Collections.singletonList(password));
-        ctx.put(MessageContext.HTTP_REQUEST_HEADERS, headers);
-
-        InterfaceParapheur ifParapheur = locator.getInterfaceParapheurSoap11();
+        InterfaceParapheur ifParapheur = ifParapheurService.getInterfaceParapheurSoap11();
+        
+        Map<String, Object> requestContext = ((BindingProvider) ifParapheur).getRequestContext();
+        
+        requestContext.put(BindingProvider.SESSION_MAINTAIN_PROPERTY, Boolean.TRUE);
+        requestContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, webServiceBaseURL.toString());
+        requestContext.put(BindingProvider.USERNAME_PROPERTY, login);
+        requestContext.put(BindingProvider.PASSWORD_PROPERTY, password);
         return ifParapheur;
     }
 
