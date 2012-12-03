@@ -88,7 +88,7 @@ public class AdullactServiceTest {
         file.addFacet("AdullactDossier");
         file = session.saveDocument(file);
         session.save();
-        
+
         file.setPropertyValue("adudos:typeTechnique", "Bureautique");
         file.setPropertyValue("adudos:sousType", "Document");
         file.setPropertyValue("adudos:visibilite", "PUBLIC");
@@ -101,7 +101,7 @@ public class AdullactServiceTest {
 
         AdullactDossier adapter = file.getAdapter(AdullactDossier.class);
 
-        
+
         service.creerDossier(adapter);
 
         DocumentModelList histoEntries = service.getHistogrammeDossier(file.getId());
@@ -123,7 +123,7 @@ public class AdullactServiceTest {
                 histoEntries.get(2).getPropertyValue("aduhisto:nom"));
         assertEquals("NonLu",
                 histoEntries.get(2).getPropertyValue("aduhisto:status"));
-        assertEquals("Dossier d√©pos√© chez Non-attribu√© pour signature",
+        assertEquals("Dossier déposé chez Non-attribué pour signature",
                 histoEntries.get(2).getPropertyValue("aduhisto:annotation"));
     }
 
@@ -138,7 +138,7 @@ public class AdullactServiceTest {
             service.exercerDroitRemordDossier(file.getId());
             fail("Waiting exception as droit remord already done");
         } catch (ClientException e) {
-            String responseMsgPattern = "request failed: Le dossierID '%s' n'a pas √©t√© √©mis.";
+            String responseMsgPattern = "request failed: Le dossierID '%s' n'a pas été émis.";
             String responseMsg = String.format(responseMsgPattern, file.getId());
             assertEquals(responseMsg, e.getMessage());
         }
@@ -146,16 +146,16 @@ public class AdullactServiceTest {
 
     @Test
     public void shouldGetDossier() throws ClientException {
-    	shouldRemordRemoveDossier();
-    	GetDossierResponse doc = service.getDossier(file.getId());
-    	assertEquals("Bureautique",
-    			doc.getTypeTechnique());
-    	assertEquals("Document",
-    			doc.getSousType());
-    	assertEquals(Visibilite.PUBLIC,
-    			doc.getVisibilite());
+        shouldRemordRemoveDossier();
+        GetDossierResponse doc = service.getDossier(file.getId());
+        assertEquals("Bureautique",
+                doc.getTypeTechnique());
+        assertEquals("Document",
+                doc.getSousType());
+        assertEquals(Visibilite.PUBLIC,
+                doc.getVisibilite());
     }
-    
+
     @Test
     public void shouldArchiveDossierFailed() throws ClientException {
         shouldCreateNewFolderAndFetchInformation();
