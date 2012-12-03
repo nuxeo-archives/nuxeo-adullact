@@ -21,6 +21,7 @@ package org.nuxeo.adullact.service;
 import java.util.List;
 
 import org.nuxeo.adullact.AdullactDossier;
+import org.nuxeo.adullact.jaxws.GetDossierResponse;
 import org.nuxeo.adullact.jaxws.MetaDonneeDefinition;
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.DocumentModel;
@@ -64,7 +65,7 @@ public interface AdullactService {
     String archiverDossier(String dossierId,
             String archivageAction) throws ClientException;
 
-//    DocumentModel getDossier(String dossierId) throws ClientException;
+    GetDossierResponse getDossier(String dossierId) throws ClientException;
 
     void forcerEtape(String dossierID, String codeTransition,
             String annotationPublique, String annotationPrivee)
