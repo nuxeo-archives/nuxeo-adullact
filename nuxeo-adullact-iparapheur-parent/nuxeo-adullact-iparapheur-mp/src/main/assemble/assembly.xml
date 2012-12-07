@@ -30,17 +30,17 @@
     </copy>
 
     <copy todir="${marketplace}/install/bundles" overwrite="true">
-      <artifact:resolveFile key="org.nuxeo.adullact:nuxeo-adullact-iparapheur::jar" />
+      <artifact:resolveFile key="org.nuxeo.adullact:nuxeo-adullact-iparapheur-jaxws::jar" />
       <artifact:resolveFile key="nuxeo-studio:adullact-nux::jar" />
     </copy>
 
-    <copy todir="${marketplace}/install/lib" overwrite="true">
+    <!--copy todir="${marketplace}/install/lib" overwrite="true">
       <artifact:resolveFile key="commons-discovery:commons-discovery::jar" />
       <artifact:resolveFile key="axis:axis-wsdl4j::jar" />
       <artifact:resolveFile key="org.apache.axis:axis-jaxrpc::jar" />
       <artifact:resolveFile key="org.apache.axis:axis-saaj::jar" />
       <artifact:resolveFile key="org.apache.axis:axis::jar" />
-    </copy>
+    </copy-->
 
     <zip destfile="${outdir}/${maven.project.artifactId}-${maven.project.version}.zip"
          basedir="${marketplace}" />
