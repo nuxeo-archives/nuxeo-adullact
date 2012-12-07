@@ -21,16 +21,15 @@ import static org.junit.Assert.fail;
 import static org.nuxeo.adullact.test.AdullactTestHelper.loadProperties;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.nuxeo.adullact.AdullactDossier;
-import org.nuxeo.adullact.service.AdullactService;
 import org.nuxeo.adullact.jaxws.GetDossierResponse;
 import org.nuxeo.adullact.jaxws.Visibilite;
+import org.nuxeo.adullact.service.AdullactService;
 import org.nuxeo.ecm.core.api.Blob;
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.CoreSession;
@@ -123,7 +122,7 @@ public class AdullactServiceTest {
                 histoEntries.get(2).getPropertyValue("aduhisto:nom"));
         assertEquals("NonLu",
                 histoEntries.get(2).getPropertyValue("aduhisto:status"));
-        assertEquals("Dossier déposé chez Non-attribué pour signature",
+        assertEquals("Dossier d√©pos√© chez Non-attribu√© pour signature",
                 histoEntries.get(2).getPropertyValue("aduhisto:annotation"));
     }
 
@@ -138,7 +137,7 @@ public class AdullactServiceTest {
             service.exercerDroitRemordDossier(file.getId());
             fail("Waiting exception as droit remord already done");
         } catch (ClientException e) {
-            String responseMsgPattern = "request failed: Le dossierID '%s' n'a pas été émis.";
+            String responseMsgPattern = "request failed: Le dossierID '%s' n'a pas √©t√© √©mis.";
             String responseMsg = String.format(responseMsgPattern, file.getId());
             assertEquals(responseMsg, e.getMessage());
         }
