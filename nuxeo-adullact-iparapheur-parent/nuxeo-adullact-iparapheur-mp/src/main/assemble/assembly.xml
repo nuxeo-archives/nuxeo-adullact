@@ -12,40 +12,54 @@
     <property name="init.done" value="true" />
   </target>
 
-  <target name="build" depends="init" description="Build iParapheur integration Markeplace Package">
-    <echo>Building iParapheur integration Markeplace Package</echo>
+  <target name="build" depends="init" description="Build iParapheur integration Markeplace Packages">
+    <echo>Building iParapheur integration Markeplace Packages</echo>
     <delete failonerror="false" dir="${marketplace}" />
     <mkdir dir="${marketplace}" />
-    <antcall target="build-standard" />
+    <antcall target="build-service" />
+    <antcall target="build-gui" />
   </target>
 
-  <target name="build-standard"
+  <target name="build-service"
           depends="init">
 
-    <copy todir="${marketplace}">
-      <fileset dir="src/main/resources" />
+    <copy todir="${marketplace}-service">
+      <fileset dir="src/main/resources/service" />
       <filterset>
         <filter token="VERSION" value="${maven.project.version}" />
       </filterset>
     </copy>
 
-    <copy todir="${marketplace}/install/bundles" overwrite="true">
+    <copy todir="${marketplace}-service/install/bundles" overwrite="true">
       <artifact:resolveFile key="org.nuxeo.adullact:nuxeo-adullact-iparapheur-jaxws::jar" />
+    </copy>
+
+    <zip destfile="${outdir}/${maven.project.artifactId}-service-${maven.project.version}.zip"
+         basedir="${marketplace}-service" />
+    <artifact:attach file="${outdir}/${maven.project.artifactId}-service-${maven.project.version}.zip"
+                     target="${maven.project.groupId}:${maven.project.artifactId}"
+                     type="zip" />
+  </target>
+
+  <target name="build-gui"
+          depends="init">
+
+    <copy todir="${marketplace}-gui">
+      <fileset dir="src/main/resources/gui" />
+      <filterset>
+        <filter token="VERSION" value="${maven.project.version}" />
+      </filterset>
+    </copy>
+
+    <copy todir="${marketplace}-gui/install/bundles" overwrite="true">
       <artifact:resolveFile key="nuxeo-studio:adullact-nux::jar" />
     </copy>
 
-    <!--copy todir="${marketplace}/install/lib" overwrite="true">
-      <artifact:resolveFile key="commons-discovery:commons-discovery::jar" />
-      <artifact:resolveFile key="axis:axis-wsdl4j::jar" />
-      <artifact:resolveFile key="org.apache.axis:axis-jaxrpc::jar" />
-      <artifact:resolveFile key="org.apache.axis:axis-saaj::jar" />
-      <artifact:resolveFile key="org.apache.axis:axis::jar" />
-    </copy-->
-
-    <zip destfile="${outdir}/${maven.project.artifactId}-${maven.project.version}.zip"
-         basedir="${marketplace}" />
-    <artifact:attach file="${outdir}/${maven.project.artifactId}-${maven.project.version}.zip"
+    <zip destfile="${outdir}/${maven.project.artifactId}-gui-${maven.project.version}.zip"
+         basedir="${marketplace}-gui" />
+    <artifact:attach file="${outdir}/${maven.project.artifactId}-gui-${maven.project.version}.zip"
                      target="${maven.project.groupId}:${maven.project.artifactId}"
+                     classifier="gui"
                      type="zip" />
   </target>
 
