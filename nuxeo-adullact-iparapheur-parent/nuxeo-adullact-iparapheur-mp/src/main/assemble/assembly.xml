@@ -31,7 +31,7 @@
     </copy>
 
     <copy todir="${marketplace}-service/install/bundles" overwrite="true">
-      <artifact:resolveFile key="org.nuxeo.adullact:nuxeo-adullact-iparapheur-jaxws::jar" />
+      <artifact:resolveFile key="org.nuxeo.adullact.iparapheur:nuxeo-adullact-iparapheur-jaxws::jar" />
     </copy>
 
     <zip destfile="${outdir}/${maven.project.artifactId}-service-${maven.project.version}.zip"
@@ -52,7 +52,7 @@
     </copy>
 
     <copy todir="${marketplace}-gui/install/bundles" overwrite="true">
-      <artifact:resolveFile key="nuxeo-studio:adullact-nux::jar" />
+      <artifact:resolveFile key="org.nuxeo.adullact.iparapheur:adullact-iparapheur::jar" />
     </copy>
 
     <zip destfile="${outdir}/${maven.project.artifactId}-gui-${maven.project.version}.zip"

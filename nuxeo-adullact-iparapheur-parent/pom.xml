@@ -6,7 +6,7 @@
     <artifactId>nuxeo-features-parent</artifactId>
     <version>5.7-SNAPSHOT</version>
   </parent>
-  <groupId>org.nuxeo.adullact</groupId>
+  <groupId>org.nuxeo.adullact.iparapheur</groupId>
   <artifactId>nuxeo-adullact-iparapheur-parent</artifactId>
   <version>5.7-SNAPSHOT</version>
   <name>Parent Project for adullact iparapheur integration</name>
@@ -23,17 +23,17 @@
   <dependencyManagement>
     <dependencies>
     <dependency>
-      <groupId>nuxeo-studio</groupId>
-      <artifactId>adullact-nux</artifactId>
+      <groupId>org.nuxeo.adullact.iparapheur</groupId>
+      <artifactId>adullact-iparapheur</artifactId>
       <version>${nuxeo.adullact.iparapheur.studio.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.nuxeo.adullact</groupId>
+      <groupId>org.nuxeo.adullact.iparapheur</groupId>
       <artifactId>nuxeo-adullact-iparapheur-mp</artifactId>
       <version>${nuxeo.adullact.iparapheur.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.nuxeo.adullact</groupId>
+      <groupId>org.nuxeo.adullact.iparapheur</groupId>
       <artifactId>nuxeo-adullact-iparapheur-jaxws</artifactId>
       <version>${nuxeo.adullact.iparapheur.version}</version>
     </dependency>

@@ -2,11 +2,10 @@
 <project>
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.nuxeo.adullact</groupId>
+    <groupId>org.nuxeo.adullact.iparapheur</groupId>
     <artifactId>nuxeo-adullact-iparapheur-parent</artifactId>
     <version>5.7-SNAPSHOT</version>
   </parent>
-  <groupId>org.nuxeo.adullact</groupId>
   <artifactId>nuxeo-adullact-iparapheur-mp</artifactId>
   <packaging>zip</packaging>
   <name>Market Place Package for iParapheur integration to Nuxeo</name>
@@ -14,12 +13,12 @@
   <dependencies>
     <!-- WS -->
     <dependency>
-      <groupId>org.nuxeo.adullact</groupId>
+      <groupId>org.nuxeo.adullact.iparapheur</groupId>
       <artifactId>nuxeo-adullact-iparapheur-jaxws</artifactId>
     </dependency>
     <dependency>
-      <groupId>nuxeo-studio</groupId>
-      <artifactId>adullact-nux</artifactId>
+      <groupId>org.nuxeo.adullact.iparapheur</groupId>
+      <artifactId>adullact-iparapheur</artifactId>
     </dependency>
   </dependencies>
   <build>
