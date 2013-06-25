@@ -1,0 +1,47 @@
+<project name="nuxeo-assembly"
+         default="build"
+         xmlns:nx="urn:nuxeo-build"
+         xmlns:artifact="urn:nuxeo-artifact">
+  <taskdef resource="org/nuxeo/build/antlib.xml" uri="urn:nuxeo-build" />
+  <taskdef resource="org/nuxeo/build/artifact/antlib.xml"
+           uri="urn:nuxeo-artifact" />
+
+  <target name="init" unless="init.done">
+    <property name="outdir" value="${maven.project.build.directory}" />
+    <property name="marketplace" value="${outdir}/marketplace" />
+    <property name="init.done" value="true" />
+  </target>
+
+  <target name="build" depends="init" description="Build WebDelib integration Markeplace Packages">
+    <echo>Building WebDelib integration Markeplace Packages</echo>
+    <delete failonerror="false" dir="${marketplace}" />
+    <mkdir dir="${marketplace}" />
+
+    <copy todir="${marketplace}">
+      <fileset dir="src/main/resources" />
+      <filterset>
+        <filter token="VERSION" value="${maven.project.version}" />
+      </filterset>
+    </copy>
+
+    <artifact:nuxeo-expand includeTestScope="false"
+                           groupPrefixes="org.nuxeo.adullact.webdelib" />
+
+    <copy todir="${marketplace}/install/bundles" overwrite="true">
+      <artifact:set>
+        <includes>
+          <artifact groupId="org.nuxeo.adullact.webdelib" scope="!test" type="!pom" />
+        </includes>
+      </artifact:set>
+      <artifact:resolveFile key="org.nuxeo.adullact:nuxeoAdullactImporter::jar" />
+    </copy>
+
+    <zip destfile="${outdir}/${maven.project.artifactId}-${maven.project.version}.zip"
+         basedir="${marketplace}" />
+    <artifact:attach file="${outdir}/${maven.project.artifactId}-${maven.project.version}.zip"
+                     target="${maven.project.groupId}:${maven.project.artifactId}"
+                     type="zip" />
+  </target>
+
+
+</project>
