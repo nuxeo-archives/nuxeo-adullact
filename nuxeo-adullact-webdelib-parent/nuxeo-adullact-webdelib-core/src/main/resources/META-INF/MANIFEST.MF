@@ -4,9 +4,10 @@ Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
 Bundle-Version: 1.0.qualifier
 Bundle-Name: nuxeo-adullact-webdelib-core
-Nuxeo-Component: OSGI-INF/extensions/adullact-webdelib-ImporterMapping
- -contrib.xml
 Bundle-ManifestVersion: 2
+Nuxeo-Component: OSGI-INF/extensions/adullact-webdelib-ImporterMapping
+ -contrib.xml,OSGI-INF/extensions/adullact-webdelib-content-template-c
+ ontrib.xml
 Bundle-SymbolicName: nuxeo-adullact-webdelib-core
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 

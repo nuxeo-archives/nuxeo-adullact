@@ -16,19 +16,20 @@
  */
 package org.nuxeo.adullact.webdelib.test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.nuxeo.adullact.webdelib.WebDelibConstants.DOC_TYPE_ACTE;
-import static org.nuxeo.adullact.webdelib.WebDelibConstants.DOC_TYPE_DOCUMENT;
 import static org.nuxeo.adullact.webdelib.WebDelibConstants.DOC_TYPE_DOMAIN;
-import static org.nuxeo.adullact.webdelib.WebDelibConstants.DOC_TYPE_SEANCE;
-import static org.nuxeo.adullact.webdelib.WebDelibConstants.DOC_TYPE_STRUCTURE;
+import static org.nuxeo.adullact.webdelib.WebDelibConstants.DOMAIN_DESCRIPTION_VALUE;
+import static org.nuxeo.adullact.webdelib.WebDelibConstants.DOMAIN_PATH;
+import static org.nuxeo.adullact.webdelib.WebDelibConstants.DOMAIN_TITLE_VALUE;
 import static org.nuxeo.adullact.webdelib.WebDelibConstants.STUDIO_SYMBOLIC_NAME;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.nuxeo.ecm.core.api.CoreSession;
+import org.nuxeo.ecm.core.api.DocumentModel;
+import org.nuxeo.ecm.core.api.PathRef;
 import org.nuxeo.ecm.core.test.CoreFeature;
-import org.nuxeo.runtime.api.Framework;
 import org.nuxeo.runtime.test.runner.Deploy;
 import org.nuxeo.runtime.test.runner.Features;
 import org.nuxeo.runtime.test.runner.FeaturesRunner;
@@ -37,26 +38,20 @@ import com.google.inject.Inject;
 
 @RunWith(FeaturesRunner.class)
 @Features(CoreFeature.class)
-@Deploy({ STUDIO_SYMBOLIC_NAME })
-public class TestStudioProjectDefinitions {
+@Deploy({ "org.nuxeo.ecm.platform.content.template", "nuxeo-adullact-webdelib-core", STUDIO_SYMBOLIC_NAME })
+public class TestWebDelibDomainInitialization {
 
     @Inject
     CoreSession session;
 
     @Test
-    public void shouldFindStudioProjectComponent() {
-        Object component = Framework.getRuntime().getComponent(
-                STUDIO_SYMBOLIC_NAME);
-        assertNotNull("Studio Project no deployed", component);
-    }
+    public void shouldInitializeWebDelibDomain() throws Exception {
+        DocumentModel domain = session.getDocument(new PathRef(DOMAIN_PATH));
+        assertNotNull(domain);
+        assertEquals(DOC_TYPE_DOMAIN, domain.getType());
+        assertEquals(DOMAIN_TITLE_VALUE, domain.getTitle());
+        assertEquals(DOMAIN_DESCRIPTION_VALUE, domain.getPropertyValue("dc:description"));
 
-    @Test
-    public void shouldCreateDocumentTypes() throws Exception {
-        session.createDocumentModel(DOC_TYPE_DOMAIN);
-        session.createDocumentModel(DOC_TYPE_STRUCTURE);
-        session.createDocumentModel(DOC_TYPE_SEANCE);
-        session.createDocumentModel(DOC_TYPE_ACTE);
-        session.createDocumentModel(DOC_TYPE_DOCUMENT);
     }
 
 }

@@ -14,15 +14,13 @@
 * Contributors:
 *     Benjamin JALON<bjalon@nuxeo.com>
 */
-package org.nuxeo.adullact.webdelib.test;
+package org.nuxeo.adullact.webdelib;
 
 /**
  * @since 5.7.1
  *
  */
-public class WebDelibConstantsForTests {
-
-    public static final String STUDIO_SYMBOLIC_NAME = "studio.extensions.adullact-webdelib";
+public class WebDelibConstants {
 
     public static final String DOC_TYPE_DOMAIN = "WebDelibDomain";
 
@@ -33,5 +31,13 @@ public class WebDelibConstantsForTests {
     public static final String DOC_TYPE_ACTE = "WebDelibActe";
 
     public static final String DOC_TYPE_DOCUMENT = "WebDelibDocument";
+
+    public static final String DOMAIN_PATH = "/webdelib-referentiel";
+
+    public static final String DOMAIN_TITLE_VALUE = "WebDelib";
+
+    public static final String DOMAIN_DESCRIPTION_VALUE = "Référenciel WebDelib";
+
+    public static final String STUDIO_SYMBOLIC_NAME = "studio.extensions.adullact-webdelib";
 
 }

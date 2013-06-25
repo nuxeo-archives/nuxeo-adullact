@@ -16,8 +16,13 @@
  */
 package org.nuxeo.adullact.webdelib.test;
 
-import static org.nuxeo.adullact.webdelib.test.WebDelibConstantsForTests.*;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.nuxeo.adullact.webdelib.WebDelibConstants.DOC_TYPE_ACTE;
+import static org.nuxeo.adullact.webdelib.WebDelibConstants.DOC_TYPE_DOCUMENT;
+import static org.nuxeo.adullact.webdelib.WebDelibConstants.DOC_TYPE_SEANCE;
+import static org.nuxeo.adullact.webdelib.WebDelibConstants.STUDIO_SYMBOLIC_NAME;
 
 import java.io.File;
 import java.util.List;
