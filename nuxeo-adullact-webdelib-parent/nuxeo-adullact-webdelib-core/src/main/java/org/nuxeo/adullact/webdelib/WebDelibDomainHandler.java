@@ -17,11 +17,8 @@
 package org.nuxeo.adullact.webdelib;
 
 import static org.nuxeo.adullact.webdelib.WebDelibConstants.DOC_TYPE_DOMAIN;
-import static org.nuxeo.adullact.webdelib.WebDelibConstants.DOMAIN_DESCRIPTION_VALUE;
-import static org.nuxeo.adullact.webdelib.WebDelibConstants.DOMAIN_PATH;
-import static org.nuxeo.adullact.webdelib.WebDelibConstants.DOMAIN_TITLE_VALUE;
+import static org.nuxeo.adullact.webdelib.WebDelibConstants.*;
 
-import org.nuxeo.common.utils.Path;
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.ClientRuntimeException;
 import org.nuxeo.ecm.core.api.CoreSession;
@@ -36,17 +33,20 @@ import org.nuxeo.ecm.platform.content.template.service.PostContentCreationHandle
  */
 public class WebDelibDomainHandler implements PostContentCreationHandler {
 
+    public static final String DOMAIN_TITLE_VALUE = "WebDelib";
+
+    public static final String DOMAIN_DESCRIPTION_VALUE = "Référenciel WebDelib";
+
     @Override
     public void execute(CoreSession session) {
         try {
-            DocumentRef docRef = new PathRef(DOMAIN_PATH);
-            if (!session.exists(docRef)) {
-                Path path = new Path(DOMAIN_PATH);
-                String parentPath = path.removeLastSegments(1).toString();
-                String name = path.lastSegment();
+            DocumentRef domainRef = new PathRef(DOMAIN_PATH);
 
-                DocumentModel doc = session.createDocumentModel(parentPath,
-                        name, DOC_TYPE_DOMAIN);
+            if (!session.exists(domainRef)) {
+                String domainName = DOMAIN_NAME;
+
+                DocumentModel doc = session.createDocumentModel("/",
+                        domainName, DOC_TYPE_DOMAIN);
                 doc.setPropertyValue("dc:title", DOMAIN_TITLE_VALUE);
                 doc.setPropertyValue("dc:description", DOMAIN_DESCRIPTION_VALUE);
                 session.createDocument(doc);
