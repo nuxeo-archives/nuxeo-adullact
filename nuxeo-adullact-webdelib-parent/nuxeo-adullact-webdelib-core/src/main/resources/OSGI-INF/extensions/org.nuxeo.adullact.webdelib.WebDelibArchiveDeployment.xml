@@ -1,0 +1,14 @@
+<component name="org.nuxeo.adullact.webdelib.listener.contrib.WebDelibArchiveDeployment">
+
+  <extension target="org.nuxeo.ecm.core.event.EventServiceComponent"
+    point="listener">
+
+    <listener name="webdelibarchivedeployment" async="false" postCommit="false"
+      class="org.nuxeo.adullact.webdelib.WebDelibArchiveDeployment" order="100">
+      <event>aboutToCreate</event>
+      <event>beforeDocumentModification </event>
+      <event>aboutToMove</event>
+    </listener>
+  </extension>
+
+</component>

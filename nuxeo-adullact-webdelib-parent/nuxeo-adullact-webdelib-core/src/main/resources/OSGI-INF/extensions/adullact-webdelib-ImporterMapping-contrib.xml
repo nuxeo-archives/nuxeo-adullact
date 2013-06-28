@@ -7,6 +7,9 @@
   <docConfig tagName="seance">
     <docType>WebDelibSeance</docType>
     <name>@IdSeance</name>
+    <parent><![CDATA[ #{String dateStr = currentElement.selectNodes('dateSeance/text()')[0].getText().substring(0,10);
+                        return Fn.mkdir(root,'-',dateStr,'Workspace'); }]]>
+    </parent>
   </docConfig>
 
   <docConfig tagName="dossierActe">
@@ -23,27 +26,73 @@
     </parent>
   </docConfig>
 
-  <docConfig tagName="document">
-    <docType>WebDelibDocument</docType>
+  <docConfig tagName="//document[@type='signature']">
+    <docType>WebDelibSignature</docType>
     <name>@nom</name>
     <parent>..</parent>
   </docConfig>
-
  </extension>
 
  <extension target="org.nuxeo.adullact.importer.ImporterComponent"
     point="attributeMapping">
 
   <!-- SEANCE -->
+  <attributeConfig tagName="titre" docProperty="dc:title" xmlPath="text()"/>
   <attributeConfig tagName="typeSeance" docProperty="webdelibseance:type" xmlPath="text()"/>
-  <!-- <attributeConfig tagName="dateSeance" docProperty="webdelibseance:date_seance" xmlPath="??"/> -->
-  <!-- <attributeConfig tagName="dateConvocation" docProperty="webdelibseance:date_convocation" xmlPath="??"/> -->
+  <attributeConfig tagName="dateSeance" docProperty="webdelibseance:date_seance"
+    xmlPath="#{
+      String date = currentElement.selectNodes('text()')[0].getText().trim();
+      if (date.length() == 10) {
+        return Fn.parseDate(date, 'yyyy-MM-dd')
+      }
+      return Fn.parseDate(date, 'yyyy-MM-dd HH:mm:ss')
+      }"/>
+  <attributeConfig tagName="dateConvocation" docProperty="webdelibseance:date_convocation"
+    xmlPath="#{
+      String date = currentElement.selectNodes('text()')[0].getText().trim();
+      if (date.length() == 10) {
+        return Fn.parseDate(date, 'yyyy-MM-dd')
+      }
+      return Fn.parseDate(date, 'yyyy-MM-dd HH:mm:ss')
+      }"/>
   <attributeConfig tagName="seance" docProperty="webdelibseance:idSeance" xmlPath="@idSeance"/>
+  <attributeConfig tagName="//document[@type='convocation']" docProperty="webdelibseance:convocation_file">
+    <mapping documentProperty="filename">@nom</mapping>
+    <mapping documentProperty="mimetype">mimetype/text()</mapping>
+    <mapping documentProperty="encoding">encoding/text()</mapping>
+    <mapping documentProperty="content">@nom</mapping>
+  </attributeConfig>
+  <attributeConfig tagName="//document[@type='odj']" docProperty="webdelibseance:ordre_du_jour_file">
+    <mapping documentProperty="filename">@nom</mapping>
+    <mapping documentProperty="mimetype">mimetype/text()</mapping>
+    <mapping documentProperty="encoding">encoding/text()</mapping>
+    <mapping documentProperty="content">@nom</mapping>
+  </attributeConfig>
+  <attributeConfig tagName="//document[@type='pv_sommaire']" docProperty="webdelibseance:pv_sommaire_file">
+    <mapping documentProperty="filename">@nom</mapping>
+    <mapping documentProperty="mimetype">mimetype/text()</mapping>
+    <mapping documentProperty="encoding">encoding/text()</mapping>
+    <mapping documentProperty="content">@nom</mapping>
+  </attributeConfig>
+  <attributeConfig tagName="//document[@type='pv_complet']" docProperty="webdelibseance:pv_complet_file">
+    <mapping documentProperty="filename">@nom</mapping>
+    <mapping documentProperty="mimetype">mimetype/text()</mapping>
+    <mapping documentProperty="encoding">encoding/text()</mapping>
+    <mapping documentProperty="content">@nom</mapping>
+  </attributeConfig>
+
 
   <!-- ACTE -->
   <attributeConfig tagName="titre" docProperty="dc:title" xmlPath="text()"/>
   <attributeConfig tagName="description" docProperty="dc:description" xmlPath="text()"/>
-  <attributeConfig tagName="dateACTE" docProperty="webdelibacte:date" xmlPath="text()"/>
+  <attributeConfig tagName="dateACTE" docProperty="webdelibacte:date"
+    xmlPath="#{
+      String date = currentElement.selectNodes('text()')[0].getText().trim();
+      if (date.length() == 10) {
+        return Fn.parseDate(date, 'yyyy-MM-dd')
+      }
+      return Fn.parseDate(date, 'yyyy-MM-dd HH:mm:ss')
+      }"/>
   <attributeConfig tagName="numeroACTE" docProperty="webdelibacte:numero" xmlPath="text()"/>
   <attributeConfig tagName="themeACTE" docProperty="webdelibacte:theme" xmlPath="text()"/>
   <attributeConfig tagName="emetteurACTE" docProperty="webdelibacte:emetteur" xmlPath="text()"/>
@@ -54,30 +103,8 @@
   <attributeConfig tagName="typeseanceACTE" docProperty="webdelibacte:type" xmlPath="text()"/>
   <attributeConfig tagName="listeCommissions" docProperty="webdelibacte:commissions" xmlPath="text()"/>
 
-
-  <!-- DOCUMENT -->
-  <attributeConfig tagName="document" docProperty="dc:title" xmlPath="@nom"/>
-  <attributeConfig tagName="document" docProperty="file:filename" xmlPath="@nom"/>
-  <!-- <attributeConfig tagName="mimetype" docProperty="file:content/mime-type" xmlPath="text()"/>
-  <attributeConfig tagName="encoding" docProperty="file:content/encoding" xmlPath="text()"/> -->
-  <attributeConfig tagName="document" docProperty="webdelibdocument:type" xmlPath="@type"/>
-  <attributeConfig tagName="signature" docProperty="webdelibdocument:format_signature" xmlPath="@formatSignature"/>
-
-
-  <!--  TD EXAMPLES <attributeConfig tagName="titre" docProperty="dc:title" xmlPath="text()"/>
-  attributeConfig tagName="seance" docProperty="dc:title" xmlPath="#{currentDocument.title + ' - ' + currentDocument['dc:created']}"/
-  <attributeConfig tagName="dossierActe" docProperty="dc:source" xmlPath="#{'Seance ' + currentDocument.name}"/>
-  <attributeConfig tagName="document" docProperty="dc:title" xmlPath="@nom"/>
-  <attributeConfig tagName="document" docProperty="dc:source" xmlPath="@type"/>
-
-  <attributeConfig tagName="signature" docProperty="dc:format" xmlPath="@formatSignature"/>
-
-  <attributeConfig tagName="document" docProperty="file:content">
-    <mapping documentProperty="filename">@nom</mapping>
-    <mapping documentProperty="mimetype">mimetype/text()</mapping>
-    <mapping documentProperty="content">@nom</mapping>
-  </attributeConfig>
-  -->
+  <!-- SIGNATURE -->
+  <attributeConfig tagName="//document[@type='signature']" docProperty="dc:source" xmlPath="@refDocument"/>
 
  </extension>
 

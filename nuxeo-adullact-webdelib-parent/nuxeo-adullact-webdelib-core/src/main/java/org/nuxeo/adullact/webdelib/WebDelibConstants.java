@@ -30,7 +30,7 @@ public class WebDelibConstants {
 
     public static final String DOC_TYPE_ACTE = "WebDelibActe";
 
-    public static final String DOC_TYPE_DOCUMENT = "WebDelibDocument";
+    public static final String DOC_TYPE_SIGNATURE = "WebDelibSignature";
 
     public static final String DOC_TYPE_ARCHIVE_CONTAINER = "WebDelibArchiveContainer";
 

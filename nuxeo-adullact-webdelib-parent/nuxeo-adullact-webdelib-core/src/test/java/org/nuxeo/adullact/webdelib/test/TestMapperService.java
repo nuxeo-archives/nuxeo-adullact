@@ -19,21 +19,29 @@ package org.nuxeo.adullact.webdelib.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.nuxeo.adullact.webdelib.WebDelibConstants.DOC_TYPE_ACTE;
-import static org.nuxeo.adullact.webdelib.WebDelibConstants.DOC_TYPE_DOCUMENT;
 import static org.nuxeo.adullact.webdelib.WebDelibConstants.DOC_TYPE_SEANCE;
+import static org.nuxeo.adullact.webdelib.WebDelibConstants.DOC_TYPE_SIGNATURE;
 import static org.nuxeo.adullact.webdelib.WebDelibConstants.STUDIO_SYMBOLIC_NAME;
 
 import java.io.File;
+import java.io.Serializable;
+import java.util.Calendar;
 import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.nuxeo.adullact.importer.XmlImporterSevice;
 import org.nuxeo.common.utils.FileUtils;
+import org.nuxeo.ecm.core.api.Blob;
+import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.test.CoreFeature;
+import org.nuxeo.ecm.core.test.DefaultRepositoryInit;
+import org.nuxeo.ecm.core.test.annotations.Granularity;
+import org.nuxeo.ecm.core.test.annotations.RepositoryConfig;
 import org.nuxeo.runtime.api.Framework;
 import org.nuxeo.runtime.test.runner.Deploy;
 import org.nuxeo.runtime.test.runner.Features;
@@ -43,9 +51,13 @@ import com.google.inject.Inject;
 
 @RunWith(FeaturesRunner.class)
 @Features(CoreFeature.class)
-@Deploy({ "org.nuxeo.adullact.importer", "nuxeo-adullact-webdelib-core",
-        STUDIO_SYMBOLIC_NAME })
+@Deploy({ "org.nuxeo.adullact.importer",
+        "org.nuxeo.ecm.platform.content.template",
+        "nuxeo-adullact-webdelib-core", STUDIO_SYMBOLIC_NAME })
+@RepositoryConfig(cleanup = Granularity.METHOD, init = DefaultRepositoryInit.class)
 public class TestMapperService {
+
+    public static final String DATE_FORMAT = "%d-%02d-%02d %02d:%02d:%02d";
 
     @Inject
     CoreSession session;
@@ -67,32 +79,69 @@ public class TestMapperService {
 
         session.save();
 
+        checkImport();
+    }
+
+
+    @Test
+    public void testImportZip() throws Exception {
+
+        File zip = FileUtils.getResourceFileFromContext("test-export-webdelib.zip");
+        assertNotNull(zip);
+
+        DocumentModel root = session.getRootDocument();
+
+        XmlImporterSevice importer = Framework.getLocalService(XmlImporterSevice.class);
+        assertNotNull(importer);
+        importer.importDocuments(root, zip);
+
+        session.save();
+
+        checkImport();
+    }
+
+
+    public void checkImport() throws ClientException {
         // ****** SEANCES *******
         List<DocumentModel> docs = session.query("select * from "
                 + DOC_TYPE_SEANCE);
         assertEquals("we should have only one Seance", 1, docs.size());
         DocumentModel seanceDoc = docs.get(0);
-        assertEquals("/WebDelibSeance-1", seanceDoc.getPathAsString());
+        assertEquals("/2013/02/07/WebDelibSeance-1",
+                seanceDoc.getPathAsString());
         assertEquals("Conseil Général",
                 seanceDoc.getPropertyValue("webdelibseance:type"));
-        // assertEquals("",
-        // seanceDoc.getPropertyValue("webdelibseance:date_seance"));
-        // assertEquals("",
-        // seanceDoc.getPropertyValue("webdelibseance:date_convocation"));
+        assertEqualsDate("2013-02-07 14:00:00",
+                seanceDoc.getPropertyValue("webdelibseance:date_seance"));
+        assertEqualsDate("2012-11-30 18:16:01",
+                seanceDoc.getPropertyValue("webdelibseance:date_convocation"));
         assertEquals("12",
                 seanceDoc.getPropertyValue("webdelibseance:idSeance"));
+        assertEqualsFile("convocation.pdf", "application/pdf", "utf-8",
+                seanceDoc.getPropertyValue("webdelibseance:convocation_file"));
+        assertEqualsFile("odj.pdf", "application/pdf", "utf-8",
+                seanceDoc.getPropertyValue("webdelibseance:ordre_du_jour_file"));
+        assertEqualsFile("pv.pdf", "application/pdf", "utf-8",
+                seanceDoc.getPropertyValue("webdelibseance:pv_sommaire_file"));
+        assertEqualsFile("pvcomplet.pdf", "application/pdf", "utf-8",
+                seanceDoc.getPropertyValue("webdelibseance:pv_complet_file"));
 
         // ****** ACTES *******
         docs = session.query("select * from " + DOC_TYPE_ACTE
                 + " ORDER BY dc:created");
         assertEquals("we should have 5 actes", 5, docs.size());
         DocumentModel acte = docs.get(0);
-        assertEquals("/WebDelibSeance-1/Acte-38", acte.getPathAsString());
+        docs = session.query("select * from " + DOC_TYPE_ACTE
+                + " WHERE ecm:name = 'Acte-38' ORDER BY dc:created");
+        acte = docs.get(0);
+        assertEquals("/2013/02/07/WebDelibSeance-1/Acte-38",
+                acte.getPathAsString());
         assertEquals("Changement des horaires d'ouverture de la mairie",
                 acte.getPropertyValue("dc:title"));
         assertEquals("Projet chambre des notaires",
                 acte.getPropertyValue("dc:description"));
-        // assertEquals("", acte.getPropertyValue("webdelibacte:date"));
+         assertEqualsDate("2013-02-07 14:00:00",
+                acte.getPropertyValue("webdelibacte:date"));
         assertNull(acte.getPropertyValue("webdelibacte:numero"));
         assertEquals("Administration Generale",
                 acte.getPropertyValue("webdelibacte:theme"));
@@ -112,15 +161,14 @@ public class TestMapperService {
                         + " : 2013-03-29 16:00:00, test FD : 2013-04-05 17:17:00, ",
                 acte.getPropertyValue("webdelibacte:commissions"));
 
-        assertEquals("/WebDelibSeance-1/Acte-59", docs.get(1).getPathAsString());
-        assertEquals("/WebDelibSeance-1/Acte-37", docs.get(2).getPathAsString());
-
         // Acte sans seance
-        acte = docs.get(3);
+        docs = session.query("select * from " + DOC_TYPE_ACTE
+                + " WHERE ecm:name = 'Acte-149' ORDER BY dc:created");
+        acte = docs.get(0);
         assertEquals("Tu le verras celui-là ?",
                 acte.getPropertyValue("dc:title"));
         assertNull(acte.getPropertyValue("dc:description"));
-        // assertEquals("", acte.getPropertyValue("webdelibacte:date"));
+        assertEqualsDate("2013-02-09 00:00:00", acte.getPropertyValue("webdelibacte:date"));
         assertNull(acte.getPropertyValue("webdelibacte:numero"));
         assertNull(acte.getPropertyValue("webdelibacte:theme"));
         assertEquals("DGS", acte.getPropertyValue("webdelibacte:emetteur"));
@@ -132,25 +180,48 @@ public class TestMapperService {
         assertNull(acte.getPropertyValue("webdelibacte:type"));
         assertEquals("/Acte-149", acte.getPathAsString());
 
-        assertEquals("/WebDelibSeance-1/Acte-205",
-                docs.get(4).getPathAsString());
 
         // ****** DOCUMENTS *******
-        docs = session.query("select * from " + DOC_TYPE_DOCUMENT
+        docs = session.query("select * from " + DOC_TYPE_SIGNATURE
                 + " ORDER BY dc:created");
-        assertEquals("we should have 18 files", 18, docs.size());
-        DocumentModel document = docs.get(0);
-        assertEquals("convocation.pdf", document.getPropertyValue("dc:title"));
-        assertEquals("convocation", document.getPropertyValue("webdelibdocument:type"));
-//        assertEquals("application/pdf", document.getPropertyValue("file:content/mime-type"));
-//        assertEquals("utf-8", document.getPropertyValue("file:content/encoding"));
-        assertEquals("p7s", document.getPropertyValue("webdelibdocument:format_signature"));
-        assertEquals("/WebDelibSeance-1/convocation.pdf", document.getPathAsString());
-
-        docs = session.query("select * from " + DOC_TYPE_DOCUMENT
-                + " where ecm:parentId='" + seanceDoc.getId() + "'");
-        assertEquals("we should have only 4 files in the seance", 4,
-                docs.size());
+        assertEquals("we should have 2 files", 2, docs.size());
+        DocumentModel signature = docs.get(0);
+        assertEquals("1", signature.getPropertyValue("dc:source"));
+        signature = docs.get(1);
+        assertEquals("2", signature.getPropertyValue("dc:source"));
     }
 
+    private void assertEqualsFile(String filename, String mimetype,
+            String encoding, Serializable serializable) {
+        assertNotNull(serializable);
+        assertTrue("Waiting value as Blob , but was "
+                + serializable.getClass().toString(),
+                serializable instanceof Blob);
+        Blob blob = (Blob) serializable;
+        assertNotNull(blob);
+        assertEquals(filename, blob.getFilename());
+        assertEquals(mimetype, blob.getMimeType());
+        // assertEquals(encoding, blob.getEncoding());
+
+    }
+
+    private void assertEqualsDate(String expected, Serializable serializable) {
+        assertNotNull(serializable);
+        assertTrue("Waiting value as Calendar , but was "
+                + serializable.getClass().toString(),
+                serializable instanceof Calendar);
+        Calendar date = (Calendar) serializable;
+        String current = String.format(DATE_FORMAT, date.get(Calendar.YEAR),
+                date.get(Calendar.MONTH) + 1, date.get(Calendar.DAY_OF_MONTH),
+                date.get(Calendar.HOUR_OF_DAY), date.get(Calendar.MINUTE),
+                date.get(Calendar.SECOND));
+        assertEquals(expected, current);
+        // assertEquals(year, date.get(Calendar.YEAR));
+        // assertEquals(month, date.get(Calendar.MONTH));
+        // assertEquals(day, date.get(Calendar.DAY_OF_MONTH));
+        // assertEquals(hour, date.get(Calendar.HOUR_OF_DAY));
+        // assertEquals(minute, date.get(Calendar.MINUTE));
+        // assertEquals(seconde, date.get(Calendar.SECOND));
+
+    }
 }

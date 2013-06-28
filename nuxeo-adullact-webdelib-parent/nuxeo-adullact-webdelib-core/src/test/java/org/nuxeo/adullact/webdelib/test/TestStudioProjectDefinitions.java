@@ -18,7 +18,7 @@ package org.nuxeo.adullact.webdelib.test;
 
 import static org.junit.Assert.assertNotNull;
 import static org.nuxeo.adullact.webdelib.WebDelibConstants.DOC_TYPE_ACTE;
-import static org.nuxeo.adullact.webdelib.WebDelibConstants.DOC_TYPE_DOCUMENT;
+import static org.nuxeo.adullact.webdelib.WebDelibConstants.DOC_TYPE_SIGNATURE;
 import static org.nuxeo.adullact.webdelib.WebDelibConstants.DOC_TYPE_DOMAIN;
 import static org.nuxeo.adullact.webdelib.WebDelibConstants.DOC_TYPE_SEANCE;
 import static org.nuxeo.adullact.webdelib.WebDelibConstants.DOC_TYPE_STRUCTURE;
@@ -56,7 +56,7 @@ public class TestStudioProjectDefinitions {
         session.createDocumentModel(DOC_TYPE_STRUCTURE);
         session.createDocumentModel(DOC_TYPE_SEANCE);
         session.createDocumentModel(DOC_TYPE_ACTE);
-        session.createDocumentModel(DOC_TYPE_DOCUMENT);
+        session.createDocumentModel(DOC_TYPE_SIGNATURE);
     }
 
 }
