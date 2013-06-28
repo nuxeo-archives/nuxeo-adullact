@@ -14,7 +14,7 @@
  * Contributors:
  *     Benjamin JALON<bjalon@nuxeo.com>
  */
-package org.nuxeo.adullact.webdelib.test;
+package org.nuxeo.adullact.webdelib;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

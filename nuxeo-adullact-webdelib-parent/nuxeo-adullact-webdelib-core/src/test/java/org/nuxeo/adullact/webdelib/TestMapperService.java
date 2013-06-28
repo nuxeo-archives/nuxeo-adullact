@@ -14,7 +14,7 @@
  * Contributors:
  *     Benjamin JALON<bjalon@nuxeo.com>
  */
-package org.nuxeo.adullact.webdelib.test;
+package org.nuxeo.adullact.webdelib;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -30,6 +30,7 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.nuxeo.adullact.importer.XmlImporterSevice;
@@ -65,6 +66,7 @@ public class TestMapperService {
     @Inject
     XmlImporterSevice importerService;
 
+    @Ignore
     @Test
     public void testImportXML() throws Exception {
 
@@ -99,6 +101,27 @@ public class TestMapperService {
 
         checkImport();
     }
+
+
+    @Test
+    public void testReImportXML() throws Exception {
+
+        File xml = FileUtils.getResourceFileFromContext("test-export-webdelib.xml");
+        assertNotNull(xml);
+
+        DocumentModel root = session.getRootDocument();
+
+        XmlImporterSevice importer = Framework.getLocalService(XmlImporterSevice.class);
+        assertNotNull(importer);
+        importer.importDocuments(root, xml);
+        session.save();
+
+        importer.importDocuments(root, xml);
+        session.save();
+
+        checkImport();
+    }
+
 
 
     public void checkImport() throws ClientException {

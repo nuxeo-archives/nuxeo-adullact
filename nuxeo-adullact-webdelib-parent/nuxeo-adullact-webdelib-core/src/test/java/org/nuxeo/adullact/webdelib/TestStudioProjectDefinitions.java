@@ -14,7 +14,7 @@
  * Contributors:
  *     Benjamin JALON<bjalon@nuxeo.com>
  */
-package org.nuxeo.adullact.webdelib.test;
+package org.nuxeo.adullact.webdelib;
 
 import static org.junit.Assert.assertNotNull;
 import static org.nuxeo.adullact.webdelib.WebDelibConstants.DOC_TYPE_ACTE;
