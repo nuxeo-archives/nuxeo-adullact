@@ -31,6 +31,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.nuxeo.adullact.importer.XmlImporterSevice;
 import org.nuxeo.common.utils.ZipUtils;
+import org.nuxeo.ecm.core.api.Blob;
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
@@ -39,15 +40,11 @@ import org.nuxeo.ecm.core.api.impl.blob.FileBlob;
 import org.nuxeo.ecm.core.event.Event;
 import org.nuxeo.ecm.core.event.EventListener;
 import org.nuxeo.ecm.core.event.impl.DocumentEventContext;
-import org.nuxeo.ecm.core.storage.sql.coremodel.SQLBlob;
 import org.nuxeo.runtime.api.Framework;
 
-/**
- *
- */
-public class WebDelibArchiveDeployment implements EventListener {
+public class WebDelibArchiveExtraction implements EventListener {
 
-    private static final Log log = LogFactory.getLog(WebDelibArchiveDeployment.class);
+    private static final Log log = LogFactory.getLog(WebDelibArchiveExtraction.class);
 
     @Override
     public void handleEvent(Event event) throws ClientException {
@@ -70,15 +67,13 @@ public class WebDelibArchiveDeployment implements EventListener {
                     "WebDelib Archive can't be moved or updated");
         }
 
-        source = session.getDocument(source.getRef());
-
         Serializable object = source.getPropertyValue(ARCHIVE_ZIP_FIELD);
         File zipFile = null;
         if (object instanceof FileBlob) {
             FileBlob zip = (FileBlob) source.getPropertyValue(ARCHIVE_ZIP_FIELD);
             zipFile = zip.getFile();
         } else {
-            SQLBlob zip = (SQLBlob) source.getPropertyValue(ARCHIVE_ZIP_FIELD);
+            Blob zip = (Blob) source.getPropertyValue(ARCHIVE_ZIP_FIELD);
             File tmp = new File(System.getProperty("java.io.tmpdir"));
             File directory = new File(tmp, zip.getFilename()
                     + System.currentTimeMillis());
@@ -112,4 +107,5 @@ public class WebDelibArchiveDeployment implements EventListener {
 
         session.save();
     }
+
 }
