@@ -23,7 +23,14 @@ import static org.nuxeo.adullact.webdelib.WebDelibConstants.DOMAIN_PATH;
 import static org.nuxeo.ecm.core.api.event.DocumentEventTypes.ABOUT_TO_MOVE;
 import static org.nuxeo.ecm.core.api.event.DocumentEventTypes.BEFORE_DOC_UPDATE;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.Serializable;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.nuxeo.adullact.importer.XmlImporterSevice;
+import org.nuxeo.common.utils.ZipUtils;
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
@@ -32,12 +39,15 @@ import org.nuxeo.ecm.core.api.impl.blob.FileBlob;
 import org.nuxeo.ecm.core.event.Event;
 import org.nuxeo.ecm.core.event.EventListener;
 import org.nuxeo.ecm.core.event.impl.DocumentEventContext;
+import org.nuxeo.ecm.core.storage.sql.coremodel.SQLBlob;
 import org.nuxeo.runtime.api.Framework;
 
 /**
  *
  */
 public class WebDelibArchiveDeployment implements EventListener {
+
+    private static final Log log = LogFactory.getLog(WebDelibArchiveDeployment.class);
 
     @Override
     public void handleEvent(Event event) throws ClientException {
@@ -60,12 +70,42 @@ public class WebDelibArchiveDeployment implements EventListener {
                     "WebDelib Archive can't be moved or updated");
         }
 
-        FileBlob zip = (FileBlob) source.getPropertyValue(ARCHIVE_ZIP_FIELD);
+        source = session.getDocument(source.getRef());
+
+        Serializable object = source.getPropertyValue(ARCHIVE_ZIP_FIELD);
+        File zipFile = null;
+        if (object instanceof FileBlob) {
+            FileBlob zip = (FileBlob) source.getPropertyValue(ARCHIVE_ZIP_FIELD);
+            zipFile = zip.getFile();
+        } else {
+            SQLBlob zip = (SQLBlob) source.getPropertyValue(ARCHIVE_ZIP_FIELD);
+            File tmp = new File(System.getProperty("java.io.tmpdir"));
+            File directory = new File(tmp, zip.getFilename()
+                    + System.currentTimeMillis());
+            directory.mkdir();
+            try {
+                ZipUtils.unzip(zip.getStream(), directory);
+            } catch (IOException e) {
+                throw new ClientException(e);
+            }
+            for (File child : directory.listFiles()) {
+                log.debug("File found in zip archive: "
+                        + child.getAbsolutePath());
+                if (child.getName().endsWith(".xml")) {
+                    zipFile = child;
+                }
+            }
+            if (zipFile == null) {
+                throw new ClientException(
+                        "Can not find XML file inside the zip archive");
+            }
+
+        }
         DocumentModel root = session.getDocument(new PathRef(DOMAIN_PATH));
 
         XmlImporterSevice importer = Framework.getLocalService(XmlImporterSevice.class);
         try {
-            importer.importDocuments(root, zip.getFile());
+            importer.importDocuments(root, zipFile);
         } catch (Exception e) {
             throw new ClientException(e);
         }
