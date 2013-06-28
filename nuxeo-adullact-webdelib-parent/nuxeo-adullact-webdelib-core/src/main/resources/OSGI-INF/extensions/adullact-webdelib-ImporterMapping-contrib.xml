@@ -8,7 +8,7 @@
     <docType>WebDelibSeance</docType>
     <name>@IdSeance</name>
     <parent><![CDATA[ #{String dateStr = currentElement.selectNodes('dateSeance/text()')[0].getText().substring(0,10);
-                        return Fn.mkdir(root,'-',dateStr,'Workspace'); }]]>
+                        return Fn.mkdir(root,'-',dateStr,'WebDelibStructure'); }]]>
     </parent>
   </docConfig>
 
@@ -21,7 +21,9 @@
                           String parentRef = '//seance[@idSeance=\"' + seanceRef + '\"]';
                           return xml.selectNodes(parentRef).get(0);
                         } else {
-                          return root.getPathAsString();
+                          String dateStr = currentElement.selectNodes('dateACTE/text()')[0].getText().substring(0,10);
+                          Fn.mkdir(root,'-',dateStr,'WebDelibStructure');
+                          return Fn.mkdir(root,'-',dateStr + '-Autres','WebDelibStructureOthers');
                         }}]]>
     </parent>
   </docConfig>
