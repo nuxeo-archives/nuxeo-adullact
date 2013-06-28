@@ -39,6 +39,7 @@
     point="attributeMapping">
 
   <!-- SEANCE -->
+  <attributeConfig tagName="seance" docProperty="webdelib_common:adu_id" xmlPath="../@idDepot"/>
   <attributeConfig tagName="titre" docProperty="dc:title" xmlPath="text()"/>
   <attributeConfig tagName="typeSeance" docProperty="webdelibseance:type" xmlPath="text()"/>
   <attributeConfig tagName="dateSeance" docProperty="webdelibseance:date_seance"
@@ -85,6 +86,7 @@
 
 
   <!-- ACTE -->
+  <attributeConfig tagName="dossierActe" docProperty="webdelib_common:adu_id" xmlPath="../@idDepot"/>
   <attributeConfig tagName="titre" docProperty="dc:title" xmlPath="text()"/>
   <attributeConfig tagName="description" docProperty="dc:description" xmlPath="text()"/>
   <attributeConfig tagName="dateACTE" docProperty="webdelibacte:date"

@@ -111,6 +111,8 @@ public class TestMapperService {
                 seanceDoc.getPathAsString());
         assertEquals("Conseil Général",
                 seanceDoc.getPropertyValue("webdelibseance:type"));
+        assertEquals("3",
+                seanceDoc.getPropertyValue("webdelib_common:adu_id"));
         assertEqualsDate("2013-02-07 14:00:00",
                 seanceDoc.getPropertyValue("webdelibseance:date_seance"));
         assertEqualsDate("2012-11-30 18:16:01",
@@ -130,12 +132,13 @@ public class TestMapperService {
         docs = session.query("select * from " + DOC_TYPE_ACTE
                 + " ORDER BY dc:created");
         assertEquals("we should have 5 actes", 5, docs.size());
-        DocumentModel acte = docs.get(0);
         docs = session.query("select * from " + DOC_TYPE_ACTE
                 + " WHERE ecm:name = 'Acte-38' ORDER BY dc:created");
-        acte = docs.get(0);
+        DocumentModel acte = docs.get(0);
         assertEquals("/2013/02/07/WebDelibSeance-1/Acte-38",
                 acte.getPathAsString());
+        assertEquals("3",
+                acte.getPropertyValue("webdelib_common:adu_id"));
         assertEquals("Changement des horaires d'ouverture de la mairie",
                 acte.getPropertyValue("dc:title"));
         assertEquals("Projet chambre des notaires",
@@ -165,6 +168,8 @@ public class TestMapperService {
         docs = session.query("select * from " + DOC_TYPE_ACTE
                 + " WHERE ecm:name = 'Acte-149' ORDER BY dc:created");
         acte = docs.get(0);
+        assertEquals("3",
+                acte.getPropertyValue("webdelib_common:adu_id"));
         assertEquals("Tu le verras celui-là ?",
                 acte.getPropertyValue("dc:title"));
         assertNull(acte.getPropertyValue("dc:description"));
