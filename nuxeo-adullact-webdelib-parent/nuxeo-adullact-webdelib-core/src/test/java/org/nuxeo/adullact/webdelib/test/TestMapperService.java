@@ -178,7 +178,7 @@ public class TestMapperService {
         assertNull(acte.getPropertyValue("webdelibacte:canton"));
         assertEquals("Valence", acte.getPropertyValue("webdelibacte:commune"));
         assertNull(acte.getPropertyValue("webdelibacte:type"));
-        assertEquals("/Acte-149", acte.getPathAsString());
+        assertEquals("/2013/02/09/Autres/Acte-149", acte.getPathAsString());
 
 
         // ****** DOCUMENTS *******
