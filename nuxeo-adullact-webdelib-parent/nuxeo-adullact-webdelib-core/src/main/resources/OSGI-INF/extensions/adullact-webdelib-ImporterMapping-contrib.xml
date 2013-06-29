@@ -45,10 +45,7 @@
 
 		<docConfig tagName="//document[@type='signature']">
 			<docType>WebDelibSignature</docType>
-			<name><![CDATA[ #{return currentElement.selectNodes('@nom')
-			                 + '-' + currentElement.selectNodes('@idDocument');
-                        }]]>
-			</name>
+			<name>@nom</name>
 			<parent>..</parent>
 		</docConfig>
 
