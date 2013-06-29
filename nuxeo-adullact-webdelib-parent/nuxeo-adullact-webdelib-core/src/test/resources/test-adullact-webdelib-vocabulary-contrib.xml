@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="test-adullact-webdelib-vocabulary-contrib">
+
+
+  <extension target="org.nuxeo.adullact.webdelib.vocabulary.WebDelibVocabularyManager"
+    point="vocabularyMapping">
+
+    <mapping schema="dublincore" field="dc:title" directory="voca"/>
+
+  </extension>
+
+  <extension target="org.nuxeo.ecm.directory.sql.SQLDirectoryFactory"
+    point="directories">
+
+    <directory name="voca">
+      <dbDriver>${nuxeo.test.vcs.driver}</dbDriver>
+      <dbUrl>${nuxeo.test.vcs.url};DB_CLOSE_ON_EXIT=FALSE</dbUrl>
+      <dbUser>${nuxeo.test.vcs.user}</dbUser>
+      <dbPassword>${nuxeo.test.vcs.password}</dbPassword>
+
+      <schema>vocabulary</schema>
+
+      <cacheTimeout>3600</cacheTimeout>
+      <cacheMaxSize>1000</cacheMaxSize>
+      <table>voca</table>
+      <idField>id</idField>
+      <autoincrementIdField>false</autoincrementIdField>
+      <createTablePolicy>on_missing_columns</createTablePolicy>
+    </directory>
+  </extension>
+
+</component>

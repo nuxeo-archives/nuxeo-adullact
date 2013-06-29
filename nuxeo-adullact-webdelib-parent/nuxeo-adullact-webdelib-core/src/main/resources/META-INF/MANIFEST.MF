@@ -7,7 +7,9 @@ Bundle-Name: nuxeo-adullact-webdelib-core
 Nuxeo-Component: OSGI-INF/extensions/adullact-webdelib-ImporterMapping
  -contrib.xml,OSGI-INF/extensions/adullact-webdelib-content-template-c
  ontrib.xml,OSGI-INF/extensions/org.nuxeo.adullact.webdelib.WebDelibAr
- chiveExtraction.xml
+ chiveExtraction.xml,OSGI-INF/extensions/org.nuxeo.adullact.webdelib.v
+ ocabulary.WebDelibVocabularyManager.xml,OSGI-INF/extensions/org.nuxeo
+ .adullact.webdelib.vocabulary.WebDelibVocabularyManagerListener.xml,OSGI-INF/extensions/org.nuxeo.adullact.webdelib.vocabulary.WebDelibVocabularyManager-contrib.xml
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: nuxeo-adullact-webdelib-core
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6

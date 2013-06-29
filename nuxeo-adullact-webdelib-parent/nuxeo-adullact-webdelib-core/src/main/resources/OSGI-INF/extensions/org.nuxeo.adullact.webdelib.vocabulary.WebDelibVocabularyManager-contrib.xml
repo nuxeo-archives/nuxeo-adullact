@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<component
+	name="org.nuxeo.adullact.webdelib.vocabulary.WebDelibVocabularyManager.contrib"
+	version="1.0">
+
+	<extension
+		target="org.nuxeo.adullact.webdelib.vocabulary.WebDelibVocabularyManager"
+		point="vocabularyMapping">
+		<mapping schema="webdelibacte" field="webdelibacte:nature"
+			directory="wbdlibNatAct" enabled="true" />
+		<mapping schema="webdelibacte" field="webdelibacte:theme"
+			directory="wbdlibThemAc" enabled="true" />
+		<mapping schema="webdelibacte" field="webdelibacte:type"
+			directory="wdlibTypeAct" enabled="true" />
+		<mapping schema="webdelibdocument" field="webdelibdocument:type"
+			directory="wbdlibTypeDo" enabled="true" />
+		<mapping schema="webdelibseance" field="webdelibseance:type"
+			directory="wdlibTypeSc" enabled="true" />
+	</extension>
+
+
+</component>

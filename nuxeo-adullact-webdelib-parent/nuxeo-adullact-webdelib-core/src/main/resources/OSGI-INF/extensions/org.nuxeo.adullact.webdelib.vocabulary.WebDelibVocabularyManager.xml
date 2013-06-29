@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+
+<component name="org.nuxeo.adullact.webdelib.vocabulary.WebDelibVocabularyManager" version="1.0">
+
+  <implementation class="org.nuxeo.adullact.webdelib.vocabulary.WebDelibVocabularyManagerImpl" />
+
+  <service>
+      <provide interface="org.nuxeo.adullact.webdelib.vocabulary.WebDelibVocabularyManager" />
+  </service>
+
+    <extension-point name="vocabularyMapping">
+    <documentation>
+      This service manage vocabulary entries usage associated to a field.
+      You define through this extension point mapping between a field and a vocabulary.
+      Each time a new document is created implementing the field associated in this extension point:
+	  <ul>
+	    <li>the value set never appeared before, a new entry is created
+	    into the vocabulary with the id set as the value and with the same label, ordering equals 1 and obsolete false</li>
+	    <li>the value set already exists in vocabulary: the existing entry is changed : ordering is incremented and obsolete is set as false</li>
+      </ul>
+
+      Each time a new document is removed implementing the field associated in this extension point:
+      <ul>
+        <li>Ordering Entry is decremented and if ordering is equals 0, obsolete equals true</li>
+      </ul>
+
+      Example :
+      <code>
+        <mapping schema="dublincore" field="dc:title" directory="voca" enabled="true"/>
+      </code>
+
+      The key name to disable the configuration is the field value.
+
+      Example :
+      <code>
+        <mapping field="dc:title" enabled="false"/>
+      </code>
+
+      @author Benjamin JALON (bjalon@nuxeo.com)
+    </documentation>
+    <object class="org.nuxeo.adullact.webdelib.vocabulary.WebDelibVocabularyMappingConfiguration" />
+  </extension-point>
+
+</component>

@@ -1,0 +1,13 @@
+<component name="org.nuxeo.adullact.webdelib.vocabulary.listener.contrib.WebDelibVocabularyManagerListener">
+
+  <extension target="org.nuxeo.ecm.core.event.EventServiceComponent"
+    point="listener">
+
+    <listener name="webdelibvocabularymanagerlistener" async="false" postCommit="false"
+      class="org.nuxeo.adullact.webdelib.vocabulary.WebDelibVocabularyManagerListener" order="100">
+      <event>beforeDocumentModification</event>
+      <event>aboutToRemove</event>
+    </listener>
+  </extension>
+
+</component>

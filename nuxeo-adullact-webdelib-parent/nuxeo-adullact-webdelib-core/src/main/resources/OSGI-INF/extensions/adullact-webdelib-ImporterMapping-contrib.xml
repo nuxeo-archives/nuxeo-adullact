@@ -1,21 +1,36 @@
 <?xml version="1.0"?>
-<component name="org.nuxeo.adullact.importer.ImporterComponent.adullact.contrib" version="1.0">
+<component
+	name="org.nuxeo.adullact.importer.ImporterComponent.adullact.contrib"
+	version="1.0">
 
- <extension target="org.nuxeo.adullact.importer.ImporterComponent"
-    point="documentMapping">
+	<extension target="org.nuxeo.adullact.importer.ImporterComponent"
+		point="documentMapping">
 
-  <docConfig tagName="seance">
-    <docType>WebDelibSeance</docType>
-    <name>@IdSeance</name>
-    <parent><![CDATA[ #{String dateStr = currentElement.selectNodes('dateSeance/text()')[0].getText().substring(0,10);
-                        return Fn.mkdir(root,'-',dateStr,'WebDelibStructure'); }]]>
-    </parent>
-  </docConfig>
+		<docConfig tagName="seance">
+			<docType>WebDelibSeance</docType>
+			<name>@IdSeance</name>
+			<parent><![CDATA[ #{
+        String idDepot = xml.selectNodes('//@idDepot')[0].getText();
+        org.nuxeo.ecm.core.api.DocumentModelList previousVersionActes = session.query('SELECT * FROM WebDelibActe WHERE webdelib_common:adu_id = \'' + idDepot + '\'');
+        for (org.nuxeo.ecm.core.api.DocumentModel previousVersionActe : previousVersionActes) {
+          session.removeDocument(previousVersionActe.getRef());
+        }
 
-  <docConfig tagName="dossierActe">
-    <docType>WebDelibActe</docType>
-    <name>Acte-{{@idActe}}</name>
-    <parent><![CDATA[ #{nodes = currentElement.selectNodes('@refSeance');
+        org.nuxeo.ecm.core.api.DocumentModelList previousVersionSeances = session.query('SELECT * FROM WebDelibSeance WHERE webdelib_common:adu_id = \'' + idDepot + '\'');
+        for (org.nuxeo.ecm.core.api.DocumentModel previousVersionSeance : previousVersionSeances) {
+          session.removeDocument(previousVersionSeance.getRef());
+        }
+
+        String dateStr = currentElement.selectNodes('dateSeance/text()')[0].getText().substring(0,10);
+        return Fn.mkdir(root,'-',dateStr,'WebDelibStructure');
+      }]]>
+			</parent>
+		</docConfig>
+
+		<docConfig tagName="dossierActe">
+			<docType>WebDelibActe</docType>
+			<name>Acte-{{@idActe}}</name>
+			<parent><![CDATA[ #{nodes = currentElement.selectNodes('@refSeance');
                         if (nodes.size()>0) {
                           String seanceRef = nodes.get(0).getText();
                           String parentRef = '//seance[@idSeance=\"' + seanceRef + '\"]';
@@ -25,91 +40,163 @@
                           Fn.mkdir(root,'-',dateStr,'WebDelibStructure');
                           return Fn.mkdir(root,'-',dateStr + '-Autres','WebDelibStructureOthers');
                         }}]]>
-    </parent>
-  </docConfig>
+			</parent>
+		</docConfig>
 
-  <docConfig tagName="//document[@type='signature']">
-    <docType>WebDelibSignature</docType>
-    <name>@nom</name>
-    <parent>..</parent>
-  </docConfig>
- </extension>
+		<docConfig tagName="//document[@type='signature']">
+			<docType>WebDelibSignature</docType>
+			<name><![CDATA[ #{return currentElement.selectNodes('@nom')
+			                 + '-' + currentElement.selectNodes('@idDocument');
+                        }]]>
+			</name>
+			<parent>..</parent>
+		</docConfig>
 
- <extension target="org.nuxeo.adullact.importer.ImporterComponent"
-    point="attributeMapping">
+		<docConfig tagName="//document[@type='Annexe']">
+			<docType>WebDelibDocument</docType>
+			<name>@nom</name>
+			<parent>..</parent>
+		</docConfig>
 
-  <!-- SEANCE -->
-  <attributeConfig tagName="seance" docProperty="webdelib_common:adu_id" xmlPath="../@idDepot"/>
-  <attributeConfig tagName="titre" docProperty="dc:title" xmlPath="text()"/>
-  <attributeConfig tagName="typeSeance" docProperty="webdelibseance:type" xmlPath="text()"/>
-  <attributeConfig tagName="dateSeance" docProperty="webdelibseance:date_seance"
-    xmlPath="#{
+		<docConfig tagName="//document[@type='Annexe']">
+			<docType>WebDelibDocument</docType>
+			<name>@nom</name>
+			<parent>..</parent>
+		</docConfig>
+
+	</extension>
+
+	<extension target="org.nuxeo.adullact.importer.ImporterComponent"
+		point="attributeMapping">
+
+		<!-- SEANCE -->
+		<attributeConfig tagName="seance" docProperty="webdelib_common:adu_id"
+			xmlPath="../@idDepot" />
+		<attributeConfig tagName="titre" docProperty="dc:title"
+			xmlPath="text()" />
+		<attributeConfig tagName="typeSeance" docProperty="webdelibseance:type"
+			xmlPath="text()" />
+		<attributeConfig tagName="dateSeance" docProperty="webdelibseance:date_seance"
+			xmlPath="#{
       String date = currentElement.selectNodes('text()')[0].getText().trim();
       if (date.length() == 10) {
         return Fn.parseDate(date, 'yyyy-MM-dd')
       }
       return Fn.parseDate(date, 'yyyy-MM-dd HH:mm:ss')
-      }"/>
-  <attributeConfig tagName="dateConvocation" docProperty="webdelibseance:date_convocation"
-    xmlPath="#{
+      }" />
+		<attributeConfig tagName="dateConvocation"
+			docProperty="webdelibseance:date_convocation"
+			xmlPath="#{
       String date = currentElement.selectNodes('text()')[0].getText().trim();
       if (date.length() == 10) {
         return Fn.parseDate(date, 'yyyy-MM-dd')
       }
       return Fn.parseDate(date, 'yyyy-MM-dd HH:mm:ss')
-      }"/>
-  <attributeConfig tagName="seance" docProperty="webdelibseance:idSeance" xmlPath="@idSeance"/>
-  <attributeConfig tagName="//document[@type='convocation']" docProperty="webdelibseance:convocation_file">
-    <mapping documentProperty="filename">@nom</mapping>
-    <mapping documentProperty="mimetype">mimetype/text()</mapping>
-    <mapping documentProperty="encoding">encoding/text()</mapping>
-    <mapping documentProperty="content">@nom</mapping>
-  </attributeConfig>
-  <attributeConfig tagName="//document[@type='odj']" docProperty="webdelibseance:ordre_du_jour_file">
-    <mapping documentProperty="filename">@nom</mapping>
-    <mapping documentProperty="mimetype">mimetype/text()</mapping>
-    <mapping documentProperty="encoding">encoding/text()</mapping>
-    <mapping documentProperty="content">@nom</mapping>
-  </attributeConfig>
-  <attributeConfig tagName="//document[@type='pv_sommaire']" docProperty="webdelibseance:pv_sommaire_file">
-    <mapping documentProperty="filename">@nom</mapping>
-    <mapping documentProperty="mimetype">mimetype/text()</mapping>
-    <mapping documentProperty="encoding">encoding/text()</mapping>
-    <mapping documentProperty="content">@nom</mapping>
-  </attributeConfig>
-  <attributeConfig tagName="//document[@type='pv_complet']" docProperty="webdelibseance:pv_complet_file">
-    <mapping documentProperty="filename">@nom</mapping>
-    <mapping documentProperty="mimetype">mimetype/text()</mapping>
-    <mapping documentProperty="encoding">encoding/text()</mapping>
-    <mapping documentProperty="content">@nom</mapping>
-  </attributeConfig>
+      }" />
+		<attributeConfig tagName="seance" docProperty="webdelibseance:idSeance"
+			xmlPath="@idSeance" />
+		<attributeConfig tagName="//document[@type='convocation']"
+			docProperty="webdelibseance:convocation_file">
+			<mapping documentProperty="filename">@nom</mapping>
+			<mapping documentProperty="mimetype">mimetype/text()</mapping>
+			<mapping documentProperty="encoding">encoding/text()</mapping>
+			<mapping documentProperty="content">@nom</mapping>
+		</attributeConfig>
+		<attributeConfig tagName="//document[@type='odj']"
+			docProperty="webdelibseance:ordre_du_jour_file">
+			<mapping documentProperty="filename">@nom</mapping>
+			<mapping documentProperty="mimetype">mimetype/text()</mapping>
+			<mapping documentProperty="encoding">encoding/text()</mapping>
+			<mapping documentProperty="content">@nom</mapping>
+		</attributeConfig>
+		<attributeConfig tagName="//document[@type='pv_sommaire']"
+			docProperty="webdelibseance:pv_sommaire_file">
+			<mapping documentProperty="filename">@nom</mapping>
+			<mapping documentProperty="mimetype">mimetype/text()</mapping>
+			<mapping documentProperty="encoding">encoding/text()</mapping>
+			<mapping documentProperty="content">@nom</mapping>
+		</attributeConfig>
+		<attributeConfig tagName="//document[@type='pv_complet']"
+			docProperty="webdelibseance:pv_complet_file">
+			<mapping documentProperty="filename">@nom</mapping>
+			<mapping documentProperty="mimetype">mimetype/text()</mapping>
+			<mapping documentProperty="encoding">encoding/text()</mapping>
+			<mapping documentProperty="content">@nom</mapping>
+		</attributeConfig>
 
 
-  <!-- ACTE -->
-  <attributeConfig tagName="dossierActe" docProperty="webdelib_common:adu_id" xmlPath="../@idDepot"/>
-  <attributeConfig tagName="titre" docProperty="dc:title" xmlPath="text()"/>
-  <attributeConfig tagName="description" docProperty="dc:description" xmlPath="text()"/>
-  <attributeConfig tagName="dateACTE" docProperty="webdelibacte:date"
-    xmlPath="#{
+		<!-- ACTE -->
+		<attributeConfig tagName="dossierActe" docProperty="webdelib_common:adu_id"
+			xmlPath="../@idDepot" />
+		<attributeConfig tagName="titre" docProperty="dc:title"
+			xmlPath="text()" />
+		<attributeConfig tagName="description" docProperty="dc:description"
+			xmlPath="text()" />
+		<attributeConfig tagName="dateACTE" docProperty="webdelibacte:date"
+			xmlPath="#{
       String date = currentElement.selectNodes('text()')[0].getText().trim();
       if (date.length() == 10) {
         return Fn.parseDate(date, 'yyyy-MM-dd')
       }
       return Fn.parseDate(date, 'yyyy-MM-dd HH:mm:ss')
-      }"/>
-  <attributeConfig tagName="numeroACTE" docProperty="webdelibacte:numero" xmlPath="text()"/>
-  <attributeConfig tagName="themeACTE" docProperty="webdelibacte:theme" xmlPath="text()"/>
-  <attributeConfig tagName="emetteurACTE" docProperty="webdelibacte:emetteur" xmlPath="text()"/>
-  <attributeConfig tagName="redacteurACTE" docProperty="webdelibacte:redacteur" xmlPath="text()"/>
-  <attributeConfig tagName="rapporteurACTE" docProperty="webdelibacte:rapporteur" xmlPath="text()"/>
-  <attributeConfig tagName="cantonACTE" docProperty="webdelibacte:canton" xmlPath="text()"/>
-  <attributeConfig tagName="communeACTE" docProperty="webdelibacte:commune" xmlPath="text()"/>
-  <attributeConfig tagName="typeseanceACTE" docProperty="webdelibacte:type" xmlPath="text()"/>
-  <attributeConfig tagName="listeCommissions" docProperty="webdelibacte:commissions" xmlPath="text()"/>
+      }" />
+		<attributeConfig tagName="numeroACTE" docProperty="webdelibacte:numero"
+			xmlPath="text()" />
+		<attributeConfig tagName="themeACTE" docProperty="webdelibacte:theme"
+			xmlPath="text()" />
+		<attributeConfig tagName="emetteurACTE" docProperty="webdelibacte:emetteur"
+			xmlPath="text()" />
+		<attributeConfig tagName="redacteurACTE" docProperty="webdelibacte:redacteur"
+			xmlPath="text()" />
+		<attributeConfig tagName="rapporteurACTE" docProperty="webdelibacte:rapporteur"
+			xmlPath="text()" />
+		<attributeConfig tagName="cantonACTE" docProperty="webdelibacte:canton"
+			xmlPath="text()" />
+		<attributeConfig tagName="communeACTE" docProperty="webdelibacte:commune"
+			xmlPath="text()" />
+		<attributeConfig tagName="typeseanceACTE" docProperty="webdelibacte:type"
+			xmlPath="text()" />
+		<attributeConfig tagName="listeCommissions"
+			docProperty="webdelibacte:commissions" xmlPath="text()" />
+		<attributeConfig tagName="//document[@type='TexteActe']"
+			docProperty="webdelibacte:texte_acte">
+			<mapping documentProperty="filename">@nom</mapping>
+			<mapping documentProperty="mimetype">mimetype/text()</mapping>
+			<mapping documentProperty="encoding">encoding/text()</mapping>
+			<mapping documentProperty="content">@nom</mapping>
+		</attributeConfig>
+		<attributeConfig tagName="//document[@type='Rapport']"
+			docProperty="webdelibacte:rapport">
+			<mapping documentProperty="filename">@nom</mapping>
+			<mapping documentProperty="mimetype">mimetype/text()</mapping>
+			<mapping documentProperty="encoding">encoding/text()</mapping>
+			<mapping documentProperty="content">@nom</mapping>
+		</attributeConfig>
 
-  <!-- SIGNATURE -->
-  <attributeConfig tagName="//document[@type='signature']" docProperty="dc:source" xmlPath="@refDocument"/>
 
- </extension>
+
+		<!-- SIGNATURE -->
+		<attributeConfig tagName="//document[@type='signature']"
+			docProperty="dc:source" xmlPath="@refDocument" />
+		<attributeConfig tagName="//document[@type='signature']"
+			docProperty="file:content">
+			<mapping documentProperty="filename">@nom</mapping>
+			<mapping documentProperty="mimetype">mimetype/text()</mapping>
+			<mapping documentProperty="encoding">encoding/text()</mapping>
+			<mapping documentProperty="content">@nom</mapping>
+		</attributeConfig>
+
+		<!-- ANNEXE -->
+		<attributeConfig tagName="//document[@type='Annexe']"
+			docProperty="webdelibdocument:type" xmlPath="@type" />
+		<attributeConfig tagName="//document[@type='Annexe']"
+			docProperty="file:content">
+			<mapping documentProperty="filename">@nom</mapping>
+			<mapping documentProperty="mimetype">mimetype/text()</mapping>
+			<mapping documentProperty="encoding">encoding/text()</mapping>
+			<mapping documentProperty="content">@nom</mapping>
+		</attributeConfig>
+
+	</extension>
 
 </component>
