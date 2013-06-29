@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-Vendor: Nuxeo
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: .
+Bundle-Version: 5.7-I20130506_1515
+Bundle-Name: org.nuxeo.adullact.importer
+Nuxeo-Component: OSGI-INF/ImporterMapping-service.xml
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: org.nuxeo.adullact.importer
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+

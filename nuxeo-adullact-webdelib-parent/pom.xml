@@ -13,6 +13,7 @@
   <packaging>pom</packaging>
   <description/>
   <modules>
+    <module>nuxeoAdulactImporter</module>
     <module>nuxeo-adullact-webdelib-core</module>
     <module>nuxeo-adullact-webdelib-mp</module>
   </modules>
