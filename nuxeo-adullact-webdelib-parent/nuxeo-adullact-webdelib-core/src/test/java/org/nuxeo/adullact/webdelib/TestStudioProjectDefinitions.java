@@ -18,9 +18,9 @@ package org.nuxeo.adullact.webdelib;
 
 import static org.junit.Assert.assertNotNull;
 import static org.nuxeo.adullact.webdelib.WebDelibConstants.DOC_TYPE_ACTE;
-import static org.nuxeo.adullact.webdelib.WebDelibConstants.DOC_TYPE_SIGNATURE;
 import static org.nuxeo.adullact.webdelib.WebDelibConstants.DOC_TYPE_DOMAIN;
 import static org.nuxeo.adullact.webdelib.WebDelibConstants.DOC_TYPE_SEANCE;
+import static org.nuxeo.adullact.webdelib.WebDelibConstants.DOC_TYPE_SIGNATURE;
 import static org.nuxeo.adullact.webdelib.WebDelibConstants.DOC_TYPE_STRUCTURE;
 import static org.nuxeo.adullact.webdelib.WebDelibConstants.STUDIO_SYMBOLIC_NAME;
 

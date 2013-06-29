@@ -17,7 +17,8 @@
 package org.nuxeo.adullact.webdelib;
 
 import static org.nuxeo.adullact.webdelib.WebDelibConstants.DOC_TYPE_DOMAIN;
-import static org.nuxeo.adullact.webdelib.WebDelibConstants.*;
+import static org.nuxeo.adullact.webdelib.WebDelibConstants.DOMAIN_NAME;
+import static org.nuxeo.adullact.webdelib.WebDelibConstants.DOMAIN_PATH;
 
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.ClientRuntimeException;
