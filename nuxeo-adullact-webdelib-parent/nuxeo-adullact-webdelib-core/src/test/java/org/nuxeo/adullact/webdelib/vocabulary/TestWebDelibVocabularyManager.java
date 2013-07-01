@@ -31,6 +31,7 @@ import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.DocumentModelList;
 import org.nuxeo.ecm.core.api.model.PropertyException;
+import org.nuxeo.ecm.core.event.EventService;
 import org.nuxeo.ecm.core.storage.sql.DatabaseHelper;
 import org.nuxeo.ecm.core.test.DefaultRepositoryInit;
 import org.nuxeo.ecm.core.test.annotations.Granularity;
@@ -38,6 +39,7 @@ import org.nuxeo.ecm.core.test.annotations.RepositoryConfig;
 import org.nuxeo.ecm.directory.Session;
 import org.nuxeo.ecm.directory.api.DirectoryService;
 import org.nuxeo.ecm.platform.test.PlatformFeature;
+import org.nuxeo.runtime.api.Framework;
 import org.nuxeo.runtime.test.runner.Deploy;
 import org.nuxeo.runtime.test.runner.Features;
 import org.nuxeo.runtime.test.runner.FeaturesRunner;
@@ -82,6 +84,7 @@ public class TestWebDelibVocabularyManager {
         doc.putContextData(XML_IMPORTER_INITIALIZATION, true);
         doc = session.createDocument(doc);
         session.save();
+        waitFullText();
 
         entries = getEntries();
         assertEquals(0, entries.size());
@@ -91,6 +94,7 @@ public class TestWebDelibVocabularyManager {
         doc.setPropertyValue("dc:title", "      ");
         doc = session.createDocument(doc);
         session.save();
+        waitFullText();
 
         entries = getEntries();
         assertEquals(0, entries.size());
@@ -184,6 +188,7 @@ public class TestWebDelibVocabularyManager {
         doc.setPropertyValue("dc:title", title);
         doc = session.createDocument(doc);
         session.save();
+        waitFullText();
     }
 
     private DocumentModelList getEntries() throws ClientException {
@@ -203,5 +208,12 @@ public class TestWebDelibVocabularyManager {
     @After
     public void tearDown() throws SQLException {
         DatabaseHelper.DATABASE.tearDown();
+    }
+
+    private void waitFullText() {
+        Framework.getLocalService(EventService.class).waitForAsyncCompletion();
+
+        DatabaseHelper.DATABASE.sleepForFulltext();
+
     }
 }

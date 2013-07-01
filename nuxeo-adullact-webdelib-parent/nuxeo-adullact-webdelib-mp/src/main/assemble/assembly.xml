@@ -36,6 +36,11 @@
       <artifact:resolveFile key="org.nuxeo.adullact:nuxeoAdullactImporter::jar" />
     </copy>
 
+    <copy todir="${marketplace}/install/lib" overwrite="true">
+      <artifact:resolveFile key="jaxen:jaxen::jar" />
+    </copy>
+
+
     <zip destfile="${outdir}/${maven.project.artifactId}-${maven.project.version}.zip"
          basedir="${marketplace}" />
     <artifact:attach file="${outdir}/${maven.project.artifactId}-${maven.project.version}.zip"
