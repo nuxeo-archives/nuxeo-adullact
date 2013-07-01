@@ -16,13 +16,10 @@
  */
 package org.nuxeo.adullact.webdelib.vocabulary;
 
-import static org.nuxeo.adullact.importer.ImporterServiceImpl.XML_IMPORTER_INITIALIZATION;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.nuxeo.adullact.importer.ImporterServiceImpl.XML_IMPORTER_INITIALIZATION;
 
-import java.sql.SQLException;
-
-import org.junit.After;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -73,12 +70,11 @@ public class TestWebDelibVocabularyManager {
         assertNotNull(service);
     }
 
-    @Ignore
     @Test
     public void shouldNotAddEntryInVocabularyWhenDocCreatedWithEmptyValue()
             throws ClientException {
         DocumentModelList entries = getEntries();
-        assertEquals(0, entries.size());
+        assertEquals(5, entries.size());
 
         DocumentModel doc = session.createDocumentModel("File");
         doc.putContextData(XML_IMPORTER_INITIALIZATION, true);
@@ -87,7 +83,7 @@ public class TestWebDelibVocabularyManager {
         waitFullText();
 
         entries = getEntries();
-        assertEquals(0, entries.size());
+        assertEquals(5, entries.size());
 
         doc = session.createDocumentModel("File");
         doc.putContextData(XML_IMPORTER_INITIALIZATION, true);
@@ -97,29 +93,27 @@ public class TestWebDelibVocabularyManager {
         waitFullText();
 
         entries = getEntries();
-        assertEquals(0, entries.size());
+        assertEquals(5, entries.size());
     }
 
-    @Ignore
     @Test
     public void shouldAddEntryInVocabularyWhenDocCreated()
             throws ClientException {
         DocumentModelList entries = getEntries();
-        assertEquals(0, entries.size());
+        assertEquals(5, entries.size());
 
         createDoc("toto");
 
         entries = getEntries();
-        assertEquals(1, entries.size());
+        assertEquals(6, entries.size());
         DocumentModel entry = getEntry("toto");
         assertNotNull(entry);
         assertEquals("toto", entry.getPropertyValue("label"));
         assertEquals(new Long(1), entry.getPropertyValue("ordering"));
-        assertEquals(new Long(1), entry.getPropertyValue("obsolete"));
+        assertEquals(new Long(0), entry.getPropertyValue("obsolete"));
 
     }
 
-    @Ignore
     @Test
     public void shouldRemoveEntryInVocabularyWhenDocRemoved()
             throws ClientException {
@@ -129,22 +123,22 @@ public class TestWebDelibVocabularyManager {
         createDoc("titi");
         entry = getEntry("titi");
         assertEquals(new Long(2), entry.getPropertyValue("ordering"));
-        assertEquals(new Long(1), entry.getPropertyValue("obsolete"));
+        assertEquals(new Long(0), entry.getPropertyValue("obsolete"));
 
         removeOneDoc("titi");
         entry = getEntry("titi");
         assertEquals(new Long(1), entry.getPropertyValue("ordering"));
-        assertEquals(new Long(1), entry.getPropertyValue("obsolete"));
+        assertEquals(new Long(0), entry.getPropertyValue("obsolete"));
 
         removeOneDoc("titi");
         entry = getEntry("titi");
         assertEquals(new Long(0), entry.getPropertyValue("ordering"));
-        assertEquals(new Long(0), entry.getPropertyValue("obsolete"));
+        assertEquals(new Long(1), entry.getPropertyValue("obsolete"));
 
         createDoc("titi");
         entry = getEntry("titi");
         assertEquals(new Long(1), entry.getPropertyValue("ordering"));
-        assertEquals(new Long(1), entry.getPropertyValue("obsolete"));
+        assertEquals(new Long(0), entry.getPropertyValue("obsolete"));
     }
 
     // Our removing strategy don't remove structure but should improve to manage
@@ -203,11 +197,6 @@ public class TestWebDelibVocabularyManager {
         DocumentModel entry = dirSession.getEntry(id);
         return entry;
 
-    }
-
-    @After
-    public void tearDown() throws SQLException {
-        DatabaseHelper.DATABASE.tearDown();
     }
 
     private void waitFullText() {

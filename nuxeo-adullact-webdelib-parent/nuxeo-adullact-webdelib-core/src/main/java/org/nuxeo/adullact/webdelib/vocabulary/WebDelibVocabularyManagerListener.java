@@ -18,6 +18,7 @@
 package org.nuxeo.adullact.webdelib.vocabulary;
 
 import static org.nuxeo.adullact.importer.ImporterServiceImpl.XML_IMPORTER_INITIALIZATION;
+import static org.nuxeo.ecm.core.api.event.DocumentEventTypes.ABOUT_TO_CREATE;
 import static org.nuxeo.ecm.core.api.event.DocumentEventTypes.ABOUT_TO_REMOVE;
 import static org.nuxeo.ecm.core.api.event.DocumentEventTypes.BEFORE_DOC_UPDATE;
 
@@ -41,7 +42,7 @@ public class WebDelibVocabularyManagerListener implements EventListener {
 
         String eventName = event.getName();
         if (!ABOUT_TO_REMOVE.equals(eventName)
-                && !BEFORE_DOC_UPDATE.equals(eventName)) {
+                && !BEFORE_DOC_UPDATE.equals(eventName) && !ABOUT_TO_CREATE.equals(eventName)) {
             return;
         }
 
@@ -51,6 +52,11 @@ public class WebDelibVocabularyManagerListener implements EventListener {
         }
 
         WebDelibVocabularyManager service = Framework.getLocalService(WebDelibVocabularyManager.class);
+
+        if (ABOUT_TO_CREATE.equals(eventName)) {
+            service.documentAdded(source);
+            return;
+        }
 
         if (ABOUT_TO_REMOVE.equals(eventName)) {
             service.documentRemoved(source);
