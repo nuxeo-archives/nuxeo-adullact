@@ -4,11 +4,11 @@
   <parent>
     <groupId>org.nuxeo.ecm.platform</groupId>
     <artifactId>nuxeo-features-parent</artifactId>
-    <version>5.7-SNAPSHOT</version>
+    <version>5.7.1</version>
   </parent>
   <groupId>org.nuxeo.adullact.webdelib</groupId>
   <artifactId>nuxeo-adullact-webdelib-parent</artifactId>
-  <version>5.7-SNAPSHOT</version>
+  <version>5.7.1</version>
   <name>Parent Project for adullact webdelib integration</name>
   <packaging>pom</packaging>
   <description/>
@@ -18,9 +18,9 @@
     <module>nuxeo-adullact-webdelib-mp</module>
   </modules>
   <properties>
-    <nuxeo.adullact.webdelib.version>5.7-SNAPSHOT</nuxeo.adullact.webdelib.version>
-    <nuxeo.adullact.webdelib.studio.version>0.0.0-SNAPSHOT</nuxeo.adullact.webdelib.studio.version>
-    <nuxeo.xml.parser.version>5.7-SNAPSHOT</nuxeo.xml.parser.version>
+    <nuxeo.adullact.webdelib.version>5.7.1</nuxeo.adullact.webdelib.version>
+    <nuxeo.adullact.webdelib.studio.version>1.0.0-20130629</nuxeo.adullact.webdelib.studio.version>
+    <nuxeo.xml.parser.version>5.7.1</nuxeo.xml.parser.version>
   </properties>
   <dependencyManagement>
     <dependencies>
