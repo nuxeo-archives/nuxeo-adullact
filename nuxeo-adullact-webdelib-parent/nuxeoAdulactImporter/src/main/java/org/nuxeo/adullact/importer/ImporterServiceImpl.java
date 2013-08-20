@@ -222,6 +222,12 @@ public class ImporterServiceImpl {
             AttributeConfig conf) throws Exception {
 
         String targetDocProperty = conf.getTargetDocProperty();
+
+        if (log.isErrorEnabled()) {
+            log.error(String.format(MSG_UPDATE_PROPERTY, targetDocProperty,
+                    el.getUniquePath(), doc.getPathAsString(), doc.getType(),
+                    conf.toString()));
+        }
         Property property = doc.getProperty(targetDocProperty);
 
         if (property.isScalar()) {

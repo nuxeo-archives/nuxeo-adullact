@@ -149,13 +149,18 @@ public class WebDelibVocabularyManagerImpl extends DefaultComponent implements
     }
 
     private long addEntry(String directory, String id) throws ClientException {
+        if (getDirService() == null) {
+            log.error("Can't get the directory service, so can't update directory.");
+            return -1;
+        }
         Session dirSession = getDirService().open(directory);
 
         if (dirSession == null) {
-            throw new ClientException(
+            log.error(
                     "Can't open session on followg directory, please "
                             + "check WebDelib Vocabulary Manager configuration: "
                             + directory);
+            return -1;
         }
 
         DocumentModel entry = null;
@@ -185,9 +190,6 @@ public class WebDelibVocabularyManagerImpl extends DefaultComponent implements
     public DirectoryService getDirService() throws ClientException {
         if (dirService == null) {
             dirService = Framework.getLocalService(DirectoryService.class);
-            if (dirService == null) {
-                throw new ClientException("Can't fetch the Directory Service");
-            }
         }
         return dirService;
     }
