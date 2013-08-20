@@ -75,49 +75,15 @@
       }
       return Fn.parseDate(date, 'yyyy-MM-dd HH:mm:ss')
       }" />
-		<attributeConfig tagName="titre" docProperty="dc:title"
-			xmlPath="text()" />
+    <attributeConfig tagName="dateConvocation"
+      docProperty="webdelibseance:date_convocation"
+      xmlPath="#{
       String date = currentElement.selectNodes('text()')[0].getText().trim();
       if (date.length() == 10) {
         return Fn.parseDate(date, 'yyyy-MM-dd')
       }
       return Fn.parseDate(date, 'yyyy-MM-dd HH:mm:ss')
       }" />
-		<attributeConfig tagName="//document[@type='TexteActe']"
-			docProperty="webdelibacte:texte_acte">
-			<mapping documentProperty="filename">@nom</mapping>
-			<mapping documentProperty="mimetype">mimetype/text()</mapping>
-			<mapping documentProperty="encoding">encoding/text()</mapping>
-			<mapping documentProperty="content">@nom</mapping>
-		</attributeConfig>
-		<attributeConfig tagName="//document[@type='Rapport']"
-			docProperty="webdelibacte:rapport">
-			<mapping documentProperty="filename">@nom</mapping>
-			<mapping documentProperty="mimetype">mimetype/text()</mapping>
-			<mapping documentProperty="encoding">encoding/text()</mapping>
-			<mapping documentProperty="content">@nom</mapping>
-		</attributeConfig>
-
-
-
-		<attributeConfig tagName="//document[@type='signature']"
-			docProperty="file:content">
-			<mapping documentProperty="filename">@nom</mapping>
-			<mapping documentProperty="mimetype">mimetype/text()</mapping>
-			<mapping documentProperty="encoding">encoding/text()</mapping>
-			<mapping documentProperty="content">@nom</mapping>
-		</attributeConfig>
-
-		<!-- ANNEXE -->
-		<attributeConfig tagName="//document[@type='Annexe']"
-			docProperty="webdelibdocument:type" xmlPath="@type" />
-		<attributeConfig tagName="//document[@type='Annexe']"
-			docProperty="file:content">
-			<mapping documentProperty="filename">@nom</mapping>
-			<mapping documentProperty="mimetype">mimetype/text()</mapping>
-			<mapping documentProperty="encoding">encoding/text()</mapping>
-			<mapping documentProperty="content">@nom</mapping>
-		</attributeConfig>
     <attributeConfig tagName="seance" docProperty="webdelibseance:idSeance"
       xmlPath="@idSeance" />
     <attributeConfig tagName="//seance/document[@type='convocation']"
@@ -153,7 +119,28 @@
     <!-- ACTE -->
     <attributeConfig tagName="dossierActe" docProperty="webdelib_common:adu_id"
       xmlPath="../@idDepot" />
+    <attributeConfig tagName="//dossierActe" docProperty="webdelibacte:idActe"
+        xmlPath="@idActe" />
+
+    <attributeConfig tagName="titre" docProperty="dc:title"
+      xmlPath="#{
+                String titre = currentElement.getStringValue();
+                if (titre == null || ''.equals(titre.trim())) {
+                  return currentDocument.getTitle();
+                }
+                return titre;
+              }"/>
+    <attributeConfig tagName="libelle" docProperty="dc:title"
+      xmlPath="#{
+                String titre = currentElement.getStringValue();
+                if (titre == null || ''.equals(titre.trim())) {
+                  return currentDocument.getTitle();
+                }
+                return titre;
+              }"/>
     <attributeConfig tagName="description" docProperty="dc:description"
+      xmlPath="text()" />
+    <attributeConfig tagName="natureACTE" docProperty="webdelibacte:nature"
       xmlPath="text()" />
     <attributeConfig tagName="dateACTE" docProperty="webdelibacte:date"
       xmlPath="#{

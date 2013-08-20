@@ -1,72 +1,112 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <depot idDepot="3" xmlns:webdelibdossier="http://www.adullact.org/webdelib/infodossier/1.0" xmlns:xm="http://www.w3.org/2005/05/xmlmine" date="10/11/2012">
-  <seance idSeance="12">
-    <typeSeance>Conseil Général</typeSeance>
-    <dateSeance>2013-02-07 14:00:00</dateSeance>
-    <dateConvocation>2012-11-30 18:16:01</dateConvocation>
-    <document nom="convocation.pdf" type="convocation">
-      <signature formatSignature="p7s">true</signature>
-      <mimetype>application/pdf</mimetype>
-      <encoding>utf-8</encoding>
-    </document> 
-    <document nom="odj.pdf" type="odj">
+  <seance idSeance="12"> <!--identifiant de la seance-->
+    <typeSeance>Conseil Général</typeSeance> <!--type de la séance-->
+    <dateSeance>2013-02-07 14:00:00</dateSeance> <!--date de la séance-->
+    <dateConvocation>2012-11-30 18:16:01</dateConvocation> <!--date d'envoi de la convocation à la séance-->
+    <document nom="convocation.pdf" type="convocation"> <!--nom du fichier de convocation-->
       <mimetype>application/pdf</mimetype>
       <encoding>utf-8</encoding>
     </document>
-    <document nom="pv.pdf" type="pv_sommaire">
+    <document nom="odj.pdf" type="odj"> <!--nom du fichier de l'ordre du jour-->
       <mimetype>application/pdf</mimetype>
       <encoding>utf-8</encoding>
     </document>
-    <document nom="pvcomplet.pdf" type="pv_complet">
+    <document nom="pv.pdf" type="pv_sommaire"> <!--nom du fichier du procès verbal sommaire-->
+      <mimetype>application/pdf</mimetype>
+      <encoding>utf-8</encoding>
+    </document>
+    <document nom="pvcomplet.pdf" type="pv_complet"> <!--nom du fichier du procès verbal complet-->
       <mimetype>application/pdf</mimetype>
       <encoding>utf-8</encoding>
     </document>
   </seance>
-  <dossierActe idActe="38" refSeance="12">
-    <titre>Changement des horaires d'ouverture de la mairie</titre>
-    // informations supplémentaires
-    <description>Projet chambre des notaires</description>
-    <natureACTE>Délibération</natureACTE>
-    <dateACTE>2013-02-07 14:00:00</dateACTE>
+  <dossierActe idActe="38" refSeance="12"> <!--identifiant de l'acte et de la séance-->
+    <libelle>Changement des horaires d'ouverture de la mairie</libelle> <!--libellé de l'acte issu du champ "libelle" de webdelib-->
+    <titre />
+    // informations supplémentaires <!--Les informations supplémentaires rattachées à l'acte issues du champ "titre" de webdelib-->
+    <natureACTE>Délibération</natureACTE> <!--nature de l'acte-->
+    <dateACTE>2013-02-07 14:00:00</dateACTE> <!--date de création de l'acte-->
     <numeroACTE/>
-    <themeACTE>Administration Generale</themeACTE>
-    <emetteurACTE>Direction Informatique</emetteurACTE>
-    <redacteurACTE>Marc Marchal</redacteurACTE>
-    <rapporteurACTE>Pascal PERTUSA</rapporteurACTE>
-    <cantonACTE>Basse ville</cantonACTE>
-    <communeACTE>Valence</communeACTE>
-    <typeseanceACTE>Commission Ressources</typeseanceACTE>
-    <listeCommissions>Commission Ressources : 2013-02-07 14:00:00, Commission Ressources : 2013-03-29 16:00:00, test FD : 2013-04-05 17:17:00, </listeCommissions>
-    <document idDocument="1" nom="38-document.pdf" type="TexteActe">
-      <signature formatSignature="p7s">true</signature>
+    <themeACTE>Administration Generale</themeACTE> <!--thème de l'acte-->
+    <emetteurACTE>Direction Informatique</emetteurACTE> <!--Service rédacteur de l'acte-->
+    <redacteurACTE>Marc Marchal</redacteurACTE> <!--agent rédacteur de l'acte-->
+    <rapporteurACTE>Pascal PERTUSA</rapporteurACTE> <!--élu rapporteur du projet-->
+    <cantonACTE>Basse ville</cantonACTE> <!--information supplémentaire rattachée à l'acte issue d'un champ supp. de webdelib -->
+    <communeACTE>Valence</communeACTE> <!--information supplémentaire rattachée à l'acte issue d'un champ supp. de webdelib -->
+    <typeseanceACTE>Commission Ressources</typeseanceACTE> <!-- type de la séance -->
+    <listeCommissions>Commission Ressources : 2013-02-07 14:00:00, Commission Ressources : 2013-03-29 16:00:00, test FD : 2013-04-05 17:17:00, </listeCommissions> <!-- liste des séances auquelles est inscrit le projet -->
+    <description>Projet chambre des notaires</description>
+    <document idDocument="1" nom="38-document.pdf" type="TexteActe"><!-- fichier de la délibération-->
+      <signature formatSignature="p7s">true</signature><!-- signature éléctronique -->
       <mimetype>application/pdf</mimetype>
       <encoding>utf-8</encoding>
     </document>
-    <document idDocument="2" nom="38-document.pdf2" type="Rapport">
-      <signature formatSignature="p7s">true</signature>
+    <document idDocument="2" nom="38-document.pdf" type="ActeTampon"><!-- fichier de l'acte tamponé après acquitement par la préfécture -->
+      <signature>false</signature><!-- pas de signature éléctronique -->
       <mimetype>application/pdf</mimetype>
       <encoding>utf-8</encoding>
     </document>
-    <document idDocument="3" nom="courrier_simple.pdf" type="Annexe">
-      <signature>false</signature>
+    <document idDocument="3" nom="38-rapport.pdf" type="Rapport"><!-- fichier du rapport de projet -->
+      <signature formatSignature="p7s">true</signature><!-- signature éléctronique -->
       <mimetype>application/pdf</mimetype>
       <encoding>utf-8</encoding>
     </document>
-    <document idDocument="4" nom="DECISION.pdf" type="Annexe">
-      <mimetype>application/pdf2</mimetype>
+    <document idDocument="4" nom="annexe.pdf" type="Annexe"><!-- fichier de l'annexe de projet -->
+      <signature>false</signature><!-- pas de signature éléctronique -->
+      <mimetype>application/pdf</mimetype>
       <encoding>utf-8</encoding>
     </document>
-    <document idDocument="5" nom="signature.zip" type="signature" refDocument="1">
+    <document idDocument="5" nom="piecejointe.pdf" type="Annexe"><!-- fichier de pièce jointe du projet -->
+      <transmisprefecture>true</transmisprefecture><!-- transmis en prefecture -->
+      <mimetype>application/pdf</mimetype>
+      <encoding>utf-8</encoding>
+    </document>
+    <document idDocument="6" nom="signature.zip" type="signature" refDocument="1"><!-- fichier du certificat de signature détachée de la délibération[id=1] -->
       <mimetype>application/zip</mimetype>
       <encoding>utf-8</encoding>
     </document>
-    <document idDocument="6" nom="signature.zip" type="signature" refDocument="2">
+    <document idDocument="7" nom="signature.zip" type="signature" refDocument="3"><!-- fichier du certificat de signature détachée du rapport[id=3] -->
       <mimetype>application/zip</mimetype>
+      <encoding>utf-8</encoding>
+    </document>
+    <document idDocument="8" nom="ARacte.xml" type="ARacte"><!-- fichier xml de l'acquitement par la prefecture -->
+      <mimetype>application/xml</mimetype>
+      <encoding>utf-8</encoding>
+    </document>
+    <document idDocument="9" nom="courriersimple.pdf" type="courriersimple"><!-- courrier simple envoyé par la prefecture post-acquitement -->
+      <mimetype>application/pdf</mimetype>
+      <encoding>utf-8</encoding>
+    </document>
+    <document idDocument="10" nom="piececomplementaire.pdf" type="piececomplementaire"><!-- demande de pièce complémentaire envoyé par la prefecture post-acquitement -->
+      <mimetype>application/pdf</mimetype>
+      <encoding>utf-8</encoding>
+    </document>
+    <document idDocument="11" nom="lettreobservation.pdf" type="lettreobservation"><!-- lettre d'observation envoyé par la prefecture post-acquitement -->
+      <mimetype>application/pdf</mimetype>
+      <encoding>utf-8</encoding>
+    </document>
+    <document idDocument="12" nom="defereta.pdf" type="defereTA"><!-- déféré au tribunal administratif envoyé par la prefecture post-acquitement -->
+      <mimetype>application/pdf</mimetype>
+      <encoding>utf-8</encoding>
+    </document>
+    <document idDocument="13" nom="reponsecourriersimple.pdf" type="courriersimple" refDocument="9"><!-- réponse au courrier simple envoyé par la prefecture [id=9] -->
+      <mimetype>application/pdf</mimetype>
+      <encoding>utf-8</encoding>
+    </document>
+    <document idDocument="14" nom="reponsepiececomplementaire.pdf" type="piececomplementaire" refDocument="10"><!-- réponse à la demande de pièce complémentaire envoyé par la prefecture [id=10] -->
+      <mimetype>application/pdf</mimetype>
+      <encoding>utf-8</encoding>
+    </document>
+    <document idDocument="15" nom="reponselettreobservation.pdf" type="lettreobservation" refDocument="11"><!-- réponse à une lettre d'observation envoyé par la prefecture [id=11] -->
+      <mimetype>application/pdf</mimetype>
       <encoding>utf-8</encoding>
     </document>
   </dossierActe>
   <dossierActe idActe="59" refSeance="12">
-    <titre>Projet chambre des notaires</titre>
+    <libelle>Projet chambre des notaires</libelle>
+    <titre/>
+    <description>Projet chambre des notaires</description>
     <natureACTE>Délibération</natureACTE>
     <dateACTE>2013-02-07 14:00:00</dateACTE>
     <numeroACTE>DELIB_0001</numeroACTE>
@@ -87,9 +127,14 @@
       <mimetype>application/pdf</mimetype>
       <encoding>utf-8</encoding>
     </document>
+    <document idDocument="3" nom="ARacte.xml" type="ARacte">
+      <mimetype>application/xml</mimetype>
+      <encoding>utf-8</encoding>
+    </document>
   </dossierActe>
   <dossierActe idActe="37" refSeance="12">
-    <titre>Éclairage du terrain de foot</titre>
+    <libelle>Éclairage du terrain de foot</libelle>
+    <titre/>
     <description/>
     <natureACTE>Délibération</natureACTE>
     <dateACTE>2013-02-07 14:00:00</dateACTE>
@@ -110,9 +155,14 @@
       <mimetype>application/pdf</mimetype>
       <encoding>utf-8</encoding>
     </document>
+    <document idDocument="3" nom="ARacte.xml" type="ARacte">
+      <mimetype>application/xml</mimetype>
+      <encoding>utf-8</encoding>
+    </document>
   </dossierActe>
   <dossierActe idActe="149">
-    <titre>Tu le verras celui-là ?</titre>
+    <libelle>Refection de la cantine</libelle>
+    <titre/>
     <description/>
     <natureACTE>Arrete</natureACTE>
     <dateACTE>2013-02-09</dateACTE>
@@ -124,18 +174,23 @@
     <cantonACTE/>
     <communeACTE>Valence</communeACTE>
     <listeCommissions/>
-    <document idDocument="1" nom="149-.pdf" type="TexteActe">
+    <document idDocument="1" nom="149.pdf" type="TexteActe">
       <mimetype>application/pdf</mimetype>
       <encoding>utf-8</encoding>
     </document>
-    <document idDocument="2" nom="149-.pdf" type="Rapport">
+    <document idDocument="2" nom="149.pdf" type="Rapport">
       <description/>
       <mimetype>application/pdf</mimetype>
       <encoding>utf-8</encoding>
     </document>
+    <document idDocument="3" nom="ARacte.xml" type="ARacte">
+      <mimetype>application/xml</mimetype>
+      <encoding>utf-8</encoding>
+    </document>
   </dossierActe>
   <dossierActe idActe="205" refSeance="12">
-    <titre>test ticket</titre>
+    <libelle>test ticket</libelle>
+    <titre/>
     <description/>
     <natureACTE>Délibération</natureACTE>
     <dateACTE>2013-02-07 14:00:00</dateACTE>
@@ -148,12 +203,16 @@
     <communeACTE>Valence</communeACTE>
     <listeCommissions>Commission Ressources : 2013-02-07 14:00:00, </listeCommissions>
     <typeseanceACTE>Commission Ressources</typeseanceACTE>
-    <document idDocument="1" nom="205-.pdf" type="TexteActe">
+    <document idDocument="1" nom="205.pdf" type="TexteActe">
       <mimetype>application/pdf</mimetype>
       <encoding>utf-8</encoding>
     </document>
-    <document idDocument="2" nom="205-.pdf" type="Rapport">
+    <document idDocument="2" nom="205.pdf" type="Rapport">
       <mimetype>application/pdf</mimetype>
+      <encoding>utf-8</encoding>
+    </document>
+    <document idDocument="3" nom="ARacte.xml" type="ARacte">
+      <mimetype>application/xml</mimetype>
       <encoding>utf-8</encoding>
     </document>
   </dossierActe>

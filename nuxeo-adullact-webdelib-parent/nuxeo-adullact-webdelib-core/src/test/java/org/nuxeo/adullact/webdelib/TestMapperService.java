@@ -20,9 +20,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static org.nuxeo.adullact.webdelib.WebDelibConstants.DOC_TYPE_ACTE;
-import static org.nuxeo.adullact.webdelib.WebDelibConstants.DOC_TYPE_SEANCE;
-import static org.nuxeo.adullact.webdelib.WebDelibConstants.DOC_TYPE_SIGNATURE;
 import static org.nuxeo.adullact.webdelib.WebDelibConstants.STUDIO_SYMBOLIC_NAME;
 
 import java.io.File;
@@ -38,6 +35,8 @@ import org.nuxeo.ecm.core.api.Blob;
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
+import org.nuxeo.ecm.core.api.PathRef;
+import org.nuxeo.ecm.core.event.EventService;
 import org.nuxeo.ecm.core.test.CoreFeature;
 import org.nuxeo.ecm.core.test.DefaultRepositoryInit;
 import org.nuxeo.ecm.core.test.annotations.Granularity;
@@ -51,7 +50,7 @@ import com.google.inject.Inject;
 
 @RunWith(FeaturesRunner.class)
 @Features(CoreFeature.class)
-@Deploy({ "org.nuxeo.adullact.importer",
+@Deploy({ "org.nuxeo.ecm.automation.core", "org.nuxeo.adullact.importer",
         "org.nuxeo.ecm.platform.content.template",
         "nuxeo-adullact-webdelib-core", STUDIO_SYMBOLIC_NAME })
 @RepositoryConfig(cleanup = Granularity.METHOD, init = DefaultRepositoryInit.class)
@@ -61,6 +60,9 @@ public class TestMapperService {
 
     @Inject
     CoreSession session;
+
+    @Inject
+    EventService eventService;
 
     @Inject
     XmlImporterSevice importerService;
@@ -78,6 +80,7 @@ public class TestMapperService {
         importer.importDocuments(root, xml);
 
         session.save();
+        eventService.waitForAsyncCompletion();
 
         checkImport();
     }
@@ -120,24 +123,30 @@ public class TestMapperService {
         checkImport();
     }
 
-
-
     public void checkImport() throws ClientException {
+        // ****** STATISTICS *******
+        List<DocumentModel> docs = session.query("SELECT * FROM WebDelibSeance");
+        assertEquals(1, docs.size());
+        docs = session.query("SELECT * FROM WebDelibActe");
+        assertEquals(5, docs.size());
+        docs = session.query("SELECT * FROM WebDelibSignature");
+        assertEquals(2, docs.size());
+        docs = session.query("SELECT * FROM WebDelibDocument");
+        assertEquals(25, docs.size());
+
+
         // ****** SEANCES *******
-        List<DocumentModel> docs = session.query("select * from "
-                + DOC_TYPE_SEANCE);
-        assertEquals("we should have only one Seance", 1, docs.size());
-        DocumentModel seanceDoc = docs.get(0);
-        assertEquals("/2013/02/07/WebDelibSeance-1",
-                seanceDoc.getPathAsString());
+        DocumentModel seanceDoc = session.getDocument(new PathRef(
+                "/2013/02/07/WebDelibSeance-1"));
         assertEquals("Conseil Général",
                 seanceDoc.getPropertyValue("webdelibseance:type"));
-        assertEquals("3",
-                seanceDoc.getPropertyValue("webdelib_common:adu_id"));
+        assertEquals("3", seanceDoc.getPropertyValue("webdelib_common:adu_id"));
         assertEqualsDate("2013-02-07 14:00:00",
                 seanceDoc.getPropertyValue("webdelibseance:date_seance"));
         assertEqualsDate("2012-11-30 18:16:01",
                 seanceDoc.getPropertyValue("webdelibseance:date_convocation"));
+        assertEquals("Conseil Général - 07/02/2013",
+                seanceDoc.getPropertyValue("dc:title"));
         assertEquals("12",
                 seanceDoc.getPropertyValue("webdelibseance:idSeance"));
         assertEqualsFile("convocation.pdf", "application/pdf", "utf-8",
@@ -149,70 +158,170 @@ public class TestMapperService {
         assertEqualsFile("pvcomplet.pdf", "application/pdf", "utf-8",
                 seanceDoc.getPropertyValue("webdelibseance:pv_complet_file"));
 
-        // ****** ACTES *******
-        docs = session.query("select * from " + DOC_TYPE_ACTE
-                + " ORDER BY dc:created");
-        assertEquals("we should have 5 actes", 5, docs.size());
-        docs = session.query("select * from " + DOC_TYPE_ACTE
-                + " WHERE ecm:name = 'Acte-38' ORDER BY dc:created");
-        DocumentModel acte = docs.get(0);
-        assertEquals("/2013/02/07/WebDelibSeance-1/Acte-38",
-                acte.getPathAsString());
-        assertEquals("3",
-                acte.getPropertyValue("webdelib_common:adu_id"));
+        // ****** ACTES 38 *******
+        DocumentModel acte38 = session.getDocument(new PathRef(
+                "/2013/02/07/WebDelibSeance-1/Acte-38"));
+        assertEquals("38", acte38.getPropertyValue("webdelibacte:idActe"));
+        assertEquals("3", acte38.getPropertyValue("webdelib_common:adu_id"));
+        assertNull(acte38.getPropertyValue("webdelibacte:numero"));
         assertEquals("Changement des horaires d'ouverture de la mairie",
-                acte.getPropertyValue("dc:title"));
-        assertEquals("Projet chambre des notaires",
-                acte.getPropertyValue("dc:description"));
-         assertEqualsDate("2013-02-07 14:00:00",
-                acte.getPropertyValue("webdelibacte:date"));
-        assertNull(acte.getPropertyValue("webdelibacte:numero"));
+                acte38.getPropertyValue("dc:title"));
+        assertEquals("Délibération",
+                acte38.getPropertyValue("webdelibacte:nature"));
+        assertEqualsDate("2013-02-07 14:00:00",
+                acte38.getPropertyValue("webdelibacte:date"));
         assertEquals("Administration Generale",
-                acte.getPropertyValue("webdelibacte:theme"));
+                acte38.getPropertyValue("webdelibacte:theme"));
         assertEquals("Direction Informatique",
-                acte.getPropertyValue("webdelibacte:emetteur"));
+                acte38.getPropertyValue("webdelibacte:emetteur"));
         assertEquals("Marc Marchal",
-                acte.getPropertyValue("webdelibacte:redacteur"));
+                acte38.getPropertyValue("webdelibacte:redacteur"));
         assertEquals("Pascal PERTUSA",
-                acte.getPropertyValue("webdelibacte:rapporteur"));
+                acte38.getPropertyValue("webdelibacte:rapporteur"));
         assertEquals("Basse ville",
-                acte.getPropertyValue("webdelibacte:canton"));
-        assertEquals("Valence", acte.getPropertyValue("webdelibacte:commune"));
+                acte38.getPropertyValue("webdelibacte:canton"));
+        assertEquals("Valence", acte38.getPropertyValue("webdelibacte:commune"));
         assertEquals("Commission Ressources",
-                acte.getPropertyValue("webdelibacte:type"));
+                acte38.getPropertyValue("webdelibacte:type"));
         assertEquals(
                 "Commission Ressources : 2013-02-07 14:00:00, Commission Ressources"
                         + " : 2013-03-29 16:00:00, test FD : 2013-04-05 17:17:00, ",
-                acte.getPropertyValue("webdelibacte:commissions"));
+                acte38.getPropertyValue("webdelibacte:commissions"));
+        assertEquals("Projet chambre des notaires",
+                acte38.getPropertyValue("dc:description"));
 
-        // Acte sans seance
-        docs = session.query("select * from " + DOC_TYPE_ACTE
-                + " WHERE ecm:name = 'Acte-149' ORDER BY dc:created");
-        acte = docs.get(0);
-        assertEquals("3",
-                acte.getPropertyValue("webdelib_common:adu_id"));
-        assertEquals("Tu le verras celui-là ?",
-                acte.getPropertyValue("dc:title"));
-        assertNull(acte.getPropertyValue("dc:description"));
-        assertEqualsDate("2013-02-09 00:00:00", acte.getPropertyValue("webdelibacte:date"));
-        assertNull(acte.getPropertyValue("webdelibacte:numero"));
-        assertNull(acte.getPropertyValue("webdelibacte:theme"));
-        assertEquals("DGS", acte.getPropertyValue("webdelibacte:emetteur"));
+        docs = session.query("SELECT * FROM WebDelibDocument WHERE ecm:path STARTSWITH '/2013/02/07/WebDelibSeance-1/Acte-38/'");
+        assertEquals(13, docs.size());
+        docs = session.query("SELECT * FROM WebDelibSignature WHERE ecm:path STARTSWITH '/2013/02/07/WebDelibSeance-1/Acte-38/'");
+        assertEquals(2, docs.size());
+
+        // ****** ACTES 59 *******
+        DocumentModel acte59 = session.getDocument(new PathRef(
+                "/2013/02/07/WebDelibSeance-1/Acte-59"));
+        assertEquals("3", acte59.getPropertyValue("webdelib_common:adu_id"));
+        assertEquals("59", acte59.getPropertyValue("webdelibacte:idActe"));
+        assertEquals("Projet chambre des notaires",
+                acte59.getPropertyValue("dc:title"));
+        assertEquals("Projet chambre des notaires",
+                acte59.getPropertyValue("dc:description"));
+        assertEqualsDate("2013-02-07 14:00:00",
+                acte59.getPropertyValue("webdelibacte:date"));
+        assertEquals("DELIB_0001",
+                acte59.getPropertyValue("webdelibacte:numero"));
+        assertEquals("Technologies d'Information et de Communication",
+                acte59.getPropertyValue("webdelibacte:theme"));
+        assertEquals("Direction Informatique",
+                acte59.getPropertyValue("webdelibacte:emetteur"));
+        assertEquals("redac1 redac1",
+                acte59.getPropertyValue("webdelibacte:redacteur"));
+        assertEquals("Paul ARNOUX",
+                acte59.getPropertyValue("webdelibacte:rapporteur"));
+        assertEquals("Basse ville",
+                acte59.getPropertyValue("webdelibacte:canton"));
+        assertEquals("Valence", acte59.getPropertyValue("webdelibacte:commune"));
+        assertEquals("Commission Ressources",
+                acte59.getPropertyValue("webdelibacte:type"));
+
+        docs = session.query("SELECT * FROM WebDelibDocument WHERE ecm:path STARTSWITH '/2013/02/07/WebDelibSeance-1/Acte-59/'");
+        assertEquals(3, docs.size());
+        docs = session.query("SELECT * FROM WebDelibSignature WHERE ecm:path STARTSWITH '/2013/02/07/WebDelibSeance-1/Acte-59/'");
+        assertEquals(0, docs.size());
+
+        // ****** ACTES 59 *******
+        DocumentModel acte37 = session.getDocument(new PathRef(
+                "/2013/02/07/WebDelibSeance-1/Acte-37"));
+        assertEquals("3", acte37.getPropertyValue("webdelib_common:adu_id"));
+        assertEquals("37", acte37.getPropertyValue("webdelibacte:idActe"));
+        assertEquals("Éclairage du terrain de foot",
+                acte37.getPropertyValue("dc:title"));
+        assertNull(acte37.getPropertyValue("dc:description"));
+        assertEqualsDate("2013-02-07 14:00:00",
+                acte37.getPropertyValue("webdelibacte:date"));
+        assertEquals("DELIB_0003",
+                acte37.getPropertyValue("webdelibacte:numero"));
+        assertEquals("Habitat, Urbanisme, Logement",
+                acte37.getPropertyValue("webdelibacte:theme"));
+        assertEquals("Direction Informatique",
+                acte37.getPropertyValue("webdelibacte:emetteur"));
+        assertEquals("Marc Marchal",
+                acte37.getPropertyValue("webdelibacte:redacteur"));
+        assertEquals("Claude BRES",
+                acte37.getPropertyValue("webdelibacte:rapporteur"));
+        assertEquals("Basse ville",
+                acte37.getPropertyValue("webdelibacte:canton"));
+        assertEquals("Valence", acte37.getPropertyValue("webdelibacte:commune"));
+        assertEquals("Commission Ressources : 2013-02-07 14:00:00, ",
+                acte37.getPropertyValue("webdelibacte:commissions"));
+        assertEquals("Commission Ressources",
+                acte37.getPropertyValue("webdelibacte:type"));
+
+        docs = session.query("SELECT * FROM WebDelibDocument WHERE ecm:path STARTSWITH '/2013/02/07/WebDelibSeance-1/Acte-37/'");
+        assertEquals(3, docs.size());
+        docs = session.query("SELECT * FROM WebDelibSignature WHERE ecm:path STARTSWITH '/2013/02/07/WebDelibSeance-1/Acte-37/'");
+        assertEquals(0, docs.size());
+
+        // ****** ACTES 149 *******
+        DocumentModel acte149 = session.getDocument(new PathRef(
+                "/2013/02/09/Autres/Acte-149"));
+        assertEquals("3", acte149.getPropertyValue("webdelib_common:adu_id"));
+        assertEquals("149", acte149.getPropertyValue("webdelibacte:idActe"));
+        assertEquals("Refection de la cantine",
+                acte149.getPropertyValue("dc:title"));
+        assertNull(acte149.getPropertyValue("dc:description"));
+        assertEquals("Arrete", acte149.getPropertyValue("webdelibacte:nature"));
+        assertEqualsDate("2013-02-09 00:00:00",
+                acte149.getPropertyValue("webdelibacte:date"));
+        assertNull(acte149.getPropertyValue("webdelibacte:numero"));
+        assertNull(acte149.getPropertyValue("webdelibacte:theme"));
+        assertEquals("DGS", acte149.getPropertyValue("webdelibacte:emetteur"));
         assertEquals("Brigitte Liège",
-                acte.getPropertyValue("webdelibacte:redacteur"));
-        assertEquals(" ", acte.getPropertyValue("webdelibacte:rapporteur"));
-        assertNull(acte.getPropertyValue("webdelibacte:canton"));
-        assertEquals("Valence", acte.getPropertyValue("webdelibacte:commune"));
-        assertNull(acte.getPropertyValue("webdelibacte:type"));
-        assertEquals("/2013/02/09/Autres/Acte-149", acte.getPathAsString());
+                acte149.getPropertyValue("webdelibacte:redacteur"));
+        assertEquals(" ", acte149.getPropertyValue("webdelibacte:rapporteur"));
+        assertNull(acte149.getPropertyValue("webdelibacte:canton"));
+        assertEquals("Valence",
+                acte149.getPropertyValue("webdelibacte:commune"));
+        assertNull(acte149.getPropertyValue("webdelibacte:commissions"));
+        assertNull(acte149.getPropertyValue("webdelibacte:type"));
+
+        docs = session.query("SELECT * FROM WebDelibDocument WHERE ecm:path STARTSWITH '/2013/02/09/Autres/Acte-149/'");
+        assertEquals(3, docs.size());
+        docs = session.query("SELECT * FROM WebDelibSignature WHERE ecm:path STARTSWITH '/2013/02/09/Autres/Acte-149/'");
+        assertEquals(0, docs.size());
+
+        // ****** ACTES 205 *******
+        DocumentModel acte205 = session.getDocument(new PathRef(
+                "/2013/02/07/WebDelibSeance-1/Acte-205"));
+        assertEquals("3", acte205.getPropertyValue("webdelib_common:adu_id"));
+        assertEquals("205", acte205.getPropertyValue("webdelibacte:idActe"));
+        assertEquals("test ticket", acte205.getPropertyValue("dc:title"));
+        assertNull(acte205.getPropertyValue("dc:description"));
+        assertEquals("Délibération",
+                acte205.getPropertyValue("webdelibacte:nature"));
+        assertEqualsDate("2013-02-07 14:00:00",
+                acte205.getPropertyValue("webdelibacte:date"));
+        assertNull(acte205.getPropertyValue("webdelibacte:numero"));
+        assertEquals("Sports, Jeunesse, Education Populaire",
+                acte205.getPropertyValue("webdelibacte:theme"));
+        assertEquals("Direction Informatique",
+                acte205.getPropertyValue("webdelibacte:emetteur"));
+        assertEquals("Marc Marchal",
+                acte205.getPropertyValue("webdelibacte:redacteur"));
+        assertEquals(" ", acte205.getPropertyValue("webdelibacte:rapporteur"));
+        assertEquals("Basse ville",
+                acte205.getPropertyValue("webdelibacte:canton"));
+        assertEquals("Valence",
+                acte205.getPropertyValue("webdelibacte:commune"));
+        assertEquals("Commission Ressources : 2013-02-07 14:00:00, ",
+                acte205.getPropertyValue("webdelibacte:commissions"));
+        assertEquals("Commission Ressources",
+                acte205.getPropertyValue("webdelibacte:type"));
+
+        docs = session.query("SELECT * FROM WebDelibDocument WHERE ecm:path STARTSWITH '/2013/02/07/WebDelibSeance-1/Acte-205'");
+        assertEquals(3, docs.size());
+        docs = session.query("SELECT * FROM WebDelibSignature WHERE ecm:path STARTSWITH '/2013/02/07/WebDelibSeance-1/Acte-205/'");
+        assertEquals(0, docs.size());
 
 
-        // ****** DOCUMENTS *******
-        docs = session.query("select * from " + DOC_TYPE_SIGNATURE
-                + " ORDER BY dc:created");
-        assertEquals("we should have 2 files", 2, docs.size());
-        DocumentModel signature = docs.get(0);
-        assertNotNull(signature.getPropertyValue("dc:source"));
     }
 
     private void assertEqualsFile(String filename, String mimetype,

@@ -2,6 +2,7 @@
 <component name="org.nuxeo.adullact.contentTemplate.contrib">
 
 	<require>org.nuxeo.ecm.platform.content.template.service.ContentTemplateService.defaultContrib</require>
+	<require>studio.extensions.adullact-webdelib</require>
 
 	<extension
 		target="org.nuxeo.ecm.platform.content.template.service.ContentTemplateService"

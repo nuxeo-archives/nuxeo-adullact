@@ -63,7 +63,11 @@ public class ImporterServiceImpl {
             + "Try to create document in %s with name %s based on \"%s\" fragment "
             + "with the following conf: %s\n";
 
-    private static final String MSG_UPDATE_PROPERTY = "**PROPERTY UPDATE**\nValue found for %s in %s is \"%s\". With the following conf: %s";
+    private static final String MSG_UPDATE_PROPERTY_TRACE = "**PROPERTY UPDATE**\n"
+            + "Value found for %s in %s is \"%s\". With the following conf: %s";
+
+    private static final String MSG_UPDATE_PROPERTY = "**PROPERTY UPDATE**\n"
+            + "Try to set value into %s property based on %s element on document \"%s\" (%s). Conf activated: %s";
 
     public static final Log log = LogFactory.getLog(ImporterServiceImpl.class);
 
@@ -223,8 +227,8 @@ public class ImporterServiceImpl {
 
         String targetDocProperty = conf.getTargetDocProperty();
 
-        if (log.isErrorEnabled()) {
-            log.error(String.format(MSG_UPDATE_PROPERTY, targetDocProperty,
+        if (log.isDebugEnabled()) {
+            log.debug(String.format(MSG_UPDATE_PROPERTY, targetDocProperty,
                     el.getUniquePath(), doc.getPathAsString(), doc.getType(),
                     conf.toString()));
         }
