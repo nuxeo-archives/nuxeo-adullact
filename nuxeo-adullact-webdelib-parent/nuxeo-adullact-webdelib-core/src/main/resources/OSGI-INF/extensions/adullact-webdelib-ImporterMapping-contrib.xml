@@ -168,13 +168,17 @@
       xmlPath="text()" />
     <attributeConfig tagName="listeCommissions"
       docProperty="webdelibacte:commissions" xmlPath="text()" />
-    <!-- attributeConfig tagName="//dossierActe/document[@type='TexteActe']"
-      docProperty="webdelibacte:texte_acte">
+    <attributeConfig tagName="//dossierActe/document"
+      docProperty="file:content">
       <mapping documentProperty="filename">@nom</mapping>
       <mapping documentProperty="mimetype">mimetype/text()</mapping>
       <mapping documentProperty="encoding">encoding/text()</mapping>
       <mapping documentProperty="content">@nom</mapping>
-    </attributeConfig -->
+    </attributeConfig>
+
+    <!-- ACTE SUB-DOCUMENTS -->
+    <attributeConfig tagName="//dossierActe/document"
+      docProperty="webdelibdocument:type" xmlPath="@type" />
 
     <!-- SIGNATURE -->
     <attributeConfig tagName="//document[@type='signature']"

@@ -194,6 +194,7 @@ public class TestMapperService {
         assertEquals(13, docs.size());
         docs = session.query("SELECT * FROM WebDelibSignature WHERE ecm:path STARTSWITH '/2013/02/07/WebDelibSeance-1/Acte-38/'");
         assertEquals(2, docs.size());
+        assertEqualsFile("signature.zip", "application/zip", "utf-8", docs.get(0).getPropertyValue("file:content"));
 
         // ****** ACTES 59 *******
         DocumentModel acte59 = session.getDocument(new PathRef(
