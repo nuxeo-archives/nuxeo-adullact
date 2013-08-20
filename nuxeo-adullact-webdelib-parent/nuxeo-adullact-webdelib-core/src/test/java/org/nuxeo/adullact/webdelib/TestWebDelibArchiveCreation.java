@@ -17,7 +17,6 @@
 package org.nuxeo.adullact.webdelib;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.nuxeo.adullact.webdelib.WebDelibConstants.DOC_TYPE_ARCHIVE;
 import static org.nuxeo.adullact.webdelib.WebDelibConstants.DOC_TYPE_SEANCE;
 import static org.nuxeo.adullact.webdelib.WebDelibConstants.DOMAIN_PATH;
@@ -67,11 +66,6 @@ public class TestWebDelibArchiveCreation {
 
         archive = session.createDocument(archive);
         session.save();
-    }
-
-    @Test
-    public void shouldInitializeTitle() throws Exception {
-        assertTrue(((String) archive.getPropertyValue("dc:title")).startsWith("Import créé par Administrator - "));
     }
 
     @Test

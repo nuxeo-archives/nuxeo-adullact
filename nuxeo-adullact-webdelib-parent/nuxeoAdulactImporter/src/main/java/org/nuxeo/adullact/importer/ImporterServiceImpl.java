@@ -56,9 +56,11 @@ import org.nuxeo.ecm.core.schema.types.ListType;
  */
 public class ImporterServiceImpl {
 
-    private static final String MSG_NO_ELEMENT_FOUND = "**CREATION**\nNo element \"%s\" found in %s, use the DOC_TYPE-INDEX value";
+    private static final String MSG_NO_ELEMENT_FOUND = "**CREATION**\n"
+            + "No element \"%s\" found in %s, use the DOC_TYPE-INDEX value";
 
-    private static final String MSG_CREATION = "**CREATION**\nTry to create document in %s with name %s based on \"%s\" fragment "
+    private static final String MSG_CREATION = "**CREATION**\n"
+            + "Try to create document in %s with name %s based on \"%s\" fragment "
             + "with the following conf: %s\n";
 
     private static final String MSG_UPDATE_PROPERTY = "**PROPERTY UPDATE**\nValue found for %s in %s is \"%s\". With the following conf: %s";
@@ -224,9 +226,10 @@ public class ImporterServiceImpl {
 
         if (property.isScalar()) {
             Object value = resolveAndEvaluateXmlNode(el, conf.getSingleXpath());
-            if (log.isDebugEnabled()) {
-                log.debug(String.format(MSG_UPDATE_PROPERTY, targetDocProperty,
-                        el.getUniquePath(), value, conf.toString()));
+            if (log.isTraceEnabled()) {
+                log.trace(String.format(MSG_UPDATE_PROPERTY_TRACE,
+                        targetDocProperty, el.getUniquePath(), value,
+                        conf.toString()));
             }
             property.setValue(value);
 
@@ -234,16 +237,16 @@ public class ImporterServiceImpl {
 
             if (property instanceof BlobProperty) {
                 Object value = resolveBlob(el, conf);
-                if (log.isDebugEnabled()) {
-                    log.debug(String.format(MSG_UPDATE_PROPERTY,
+                if (log.isTraceEnabled()) {
+                    log.trace(String.format(MSG_UPDATE_PROPERTY_TRACE,
                             targetDocProperty, el.getUniquePath(), value,
                             conf.toString()));
                 }
                 property.setValue(value);
             } else {
                 Object value = resolveComplex(el, conf);
-                if (log.isDebugEnabled()) {
-                    log.debug(String.format(MSG_UPDATE_PROPERTY,
+                if (log.isTraceEnabled()) {
+                    log.trace(String.format(MSG_UPDATE_PROPERTY_TRACE,
                             targetDocProperty, el.getUniquePath(), value,
                             conf.toString()));
                 }
@@ -256,8 +259,8 @@ public class ImporterServiceImpl {
             @SuppressWarnings("unchecked")
             List<Serializable> values = (List<Serializable>) property.getValue();
             if (values == null) {
-                if (log.isDebugEnabled()) {
-                    log.debug(String.format(MSG_UPDATE_PROPERTY,
+                if (log.isTraceEnabled()) {
+                    log.trace(String.format(MSG_UPDATE_PROPERTY_TRACE,
                             targetDocProperty, el.getUniquePath(),
                             "%NO_VALUE%", conf.toString()));
                 }
@@ -266,8 +269,8 @@ public class ImporterServiceImpl {
             if (lType.getFieldType().isSimpleType()) {
                 Serializable value = (Serializable) resolveAndEvaluateXmlNode(
                         el, conf.getSingleXpath());
-                if (log.isDebugEnabled()) {
-                    log.debug(String.format(MSG_UPDATE_PROPERTY,
+                if (log.isTraceEnabled()) {
+                    log.trace(String.format(MSG_UPDATE_PROPERTY_TRACE,
                             targetDocProperty, el.getUniquePath(), value,
                             conf.toString()));
                 }
@@ -275,8 +278,8 @@ public class ImporterServiceImpl {
 
             } else {
                 Serializable value = (Serializable) resolveComplex(el, conf);
-                if (log.isDebugEnabled()) {
-                    log.debug(String.format(MSG_UPDATE_PROPERTY,
+                if (log.isTraceEnabled()) {
+                    log.trace(String.format(MSG_UPDATE_PROPERTY_TRACE,
                             targetDocProperty, el.getUniquePath(), value,
                             conf.toString()));
                 }

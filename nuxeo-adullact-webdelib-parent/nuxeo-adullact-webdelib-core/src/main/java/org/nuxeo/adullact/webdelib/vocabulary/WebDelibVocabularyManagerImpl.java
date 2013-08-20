@@ -154,7 +154,7 @@ public class WebDelibVocabularyManagerImpl extends DefaultComponent implements
         if (dirSession == null) {
             throw new ClientException(
                     "Can't open session on followg directory, please "
-                            + "check WebDelib Voca Manager configuration: "
+                            + "check WebDelib Vocabulary Manager configuration: "
                             + directory);
         }
 
