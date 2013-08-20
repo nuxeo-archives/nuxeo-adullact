@@ -74,7 +74,7 @@ public class TestWebDelibVocabularyManager {
     public void shouldNotAddEntryInVocabularyWhenDocCreatedWithEmptyValue()
             throws ClientException {
         DocumentModelList entries = getEntries();
-        assertEquals(5, entries.size());
+        int n = entries.size();
 
         DocumentModel doc = session.createDocumentModel("File");
         doc.putContextData(XML_IMPORTER_INITIALIZATION, true);
@@ -83,7 +83,7 @@ public class TestWebDelibVocabularyManager {
         waitFullText();
 
         entries = getEntries();
-        assertEquals(5, entries.size());
+        assertEquals(n, entries.size());
 
         doc = session.createDocumentModel("File");
         doc.putContextData(XML_IMPORTER_INITIALIZATION, true);
@@ -93,19 +93,19 @@ public class TestWebDelibVocabularyManager {
         waitFullText();
 
         entries = getEntries();
-        assertEquals(5, entries.size());
+        assertEquals(n, entries.size());
     }
 
     @Test
     public void shouldAddEntryInVocabularyWhenDocCreated()
             throws ClientException {
         DocumentModelList entries = getEntries();
-        assertEquals(5, entries.size());
+        int n = entries.size();
 
         createDoc("toto");
 
         entries = getEntries();
-        assertEquals(6, entries.size());
+        assertEquals(n + 1, entries.size());
         DocumentModel entry = getEntry("toto");
         assertNotNull(entry);
         assertEquals("toto", entry.getPropertyValue("label"));
