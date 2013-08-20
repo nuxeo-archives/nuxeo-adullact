@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.nuxeo.adullact.webdelib</groupId>
     <artifactId>nuxeo-adullact-webdelib-parent</artifactId>
-    <version>5.7-SNAPSHOT</version>
+    <version>5.7.2</version>
   </parent>
   <artifactId>nuxeo-adullact-webdelib-core</artifactId>
   <name>WebDelib Integration Core Project</name>
