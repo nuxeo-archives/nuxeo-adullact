@@ -33,7 +33,7 @@
           <artifact groupId="org.nuxeo.adullact.webdelib" scope="!test" type="!pom" />
         </includes>
       </artifact:set>
-      <artifact:resolveFile key="org.nuxeo.adullact:nuxeoAdullactImporter::jar" />
+      <artifact:resolveFile key="org.nuxeo.ecm.platform:nuxeo-importer-xml-parser::jar" />
     </copy>
 
     <copy todir="${marketplace}/install/lib" overwrite="true">

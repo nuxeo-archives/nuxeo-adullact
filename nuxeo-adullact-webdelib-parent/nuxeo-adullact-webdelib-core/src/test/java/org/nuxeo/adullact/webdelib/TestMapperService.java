@@ -29,7 +29,6 @@ import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.nuxeo.adullact.importer.XmlImporterSevice;
 import org.nuxeo.common.utils.FileUtils;
 import org.nuxeo.ecm.core.api.Blob;
 import org.nuxeo.ecm.core.api.ClientException;
@@ -41,6 +40,7 @@ import org.nuxeo.ecm.core.test.CoreFeature;
 import org.nuxeo.ecm.core.test.DefaultRepositoryInit;
 import org.nuxeo.ecm.core.test.annotations.Granularity;
 import org.nuxeo.ecm.core.test.annotations.RepositoryConfig;
+import org.nuxeo.ecm.platform.importer.xml.parser.XmlImporterService;
 import org.nuxeo.runtime.api.Framework;
 import org.nuxeo.runtime.test.runner.Deploy;
 import org.nuxeo.runtime.test.runner.Features;
@@ -50,7 +50,7 @@ import com.google.inject.Inject;
 
 @RunWith(FeaturesRunner.class)
 @Features(CoreFeature.class)
-@Deploy({ "org.nuxeo.ecm.automation.core", "org.nuxeo.adullact.importer",
+@Deploy({ "org.nuxeo.ecm.automation.core", "nuxeo-importer-xml-parser",
         "org.nuxeo.ecm.platform.content.template",
         "nuxeo-adullact-webdelib-core", STUDIO_SYMBOLIC_NAME })
 @RepositoryConfig(cleanup = Granularity.METHOD, init = DefaultRepositoryInit.class)
@@ -65,7 +65,7 @@ public class TestMapperService {
     EventService eventService;
 
     @Inject
-    XmlImporterSevice importerService;
+    XmlImporterService importerService;
 
     @Test
     public void testImportXML() throws Exception {
@@ -75,7 +75,7 @@ public class TestMapperService {
 
         DocumentModel root = session.getRootDocument();
 
-        XmlImporterSevice importer = Framework.getLocalService(XmlImporterSevice.class);
+        XmlImporterService importer = Framework.getLocalService(XmlImporterService.class);
         assertNotNull(importer);
         importer.importDocuments(root, xml);
 
@@ -94,7 +94,7 @@ public class TestMapperService {
 
         DocumentModel root = session.getRootDocument();
 
-        XmlImporterSevice importer = Framework.getLocalService(XmlImporterSevice.class);
+        XmlImporterService importer = Framework.getLocalService(XmlImporterService.class);
         assertNotNull(importer);
         importer.importDocuments(root, zip);
 
@@ -112,7 +112,7 @@ public class TestMapperService {
 
         DocumentModel root = session.getRootDocument();
 
-        XmlImporterSevice importer = Framework.getLocalService(XmlImporterSevice.class);
+        XmlImporterService importer = Framework.getLocalService(XmlImporterService.class);
         assertNotNull(importer);
         importer.importDocuments(root, xml);
         session.save();

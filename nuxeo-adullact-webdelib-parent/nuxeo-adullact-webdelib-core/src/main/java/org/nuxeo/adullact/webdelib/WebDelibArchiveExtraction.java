@@ -29,7 +29,6 @@ import java.io.Serializable;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.nuxeo.adullact.importer.XmlImporterSevice;
 import org.nuxeo.common.utils.ZipUtils;
 import org.nuxeo.ecm.core.api.Blob;
 import org.nuxeo.ecm.core.api.ClientException;
@@ -40,6 +39,7 @@ import org.nuxeo.ecm.core.api.impl.blob.FileBlob;
 import org.nuxeo.ecm.core.event.Event;
 import org.nuxeo.ecm.core.event.EventListener;
 import org.nuxeo.ecm.core.event.impl.DocumentEventContext;
+import org.nuxeo.ecm.platform.importer.xml.parser.XmlImporterService;
 import org.nuxeo.runtime.api.Framework;
 
 public class WebDelibArchiveExtraction implements EventListener {
@@ -98,7 +98,7 @@ public class WebDelibArchiveExtraction implements EventListener {
         }
         DocumentModel root = session.getDocument(new PathRef(DOMAIN_PATH));
 
-        XmlImporterSevice importer = Framework.getLocalService(XmlImporterSevice.class);
+        XmlImporterService importer = Framework.getLocalService(XmlImporterService.class);
         try {
             importer.importDocuments(root, zipFile);
         } catch (Exception e) {

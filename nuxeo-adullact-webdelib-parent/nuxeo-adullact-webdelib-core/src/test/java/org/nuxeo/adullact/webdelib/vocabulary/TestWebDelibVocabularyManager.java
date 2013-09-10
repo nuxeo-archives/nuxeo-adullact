@@ -18,7 +18,7 @@ package org.nuxeo.adullact.webdelib.vocabulary;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.nuxeo.adullact.importer.ImporterServiceImpl.XML_IMPORTER_INITIALIZATION;
+import static org.nuxeo.ecm.platform.importer.xml.parser.ImporterServiceImpl.XML_IMPORTER_INITIALIZATION;
 
 import org.junit.Ignore;
 import org.junit.Test;

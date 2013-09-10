@@ -17,7 +17,7 @@
 
 package org.nuxeo.adullact.webdelib.vocabulary;
 
-import static org.nuxeo.adullact.importer.ImporterServiceImpl.XML_IMPORTER_INITIALIZATION;
+import static org.nuxeo.ecm.platform.importer.xml.parser.ImporterServiceImpl.XML_IMPORTER_INITIALIZATION;
 import static org.nuxeo.ecm.core.api.event.DocumentEventTypes.ABOUT_TO_CREATE;
 import static org.nuxeo.ecm.core.api.event.DocumentEventTypes.ABOUT_TO_REMOVE;
 import static org.nuxeo.ecm.core.api.event.DocumentEventTypes.BEFORE_DOC_UPDATE;

@@ -41,7 +41,7 @@ import com.google.inject.Inject;
 @RunWith(FeaturesRunner.class)
 @Features(CoreFeature.class)
 @Deploy({ "org.nuxeo.ecm.platform.content.template",
-        "org.nuxeo.adullact.importer", "org.nuxeo.ecm.automation.core",
+        "nuxeo-importer-xml-parser", "org.nuxeo.ecm.automation.core",
         "nuxeo-adullact-webdelib-core", STUDIO_SYMBOLIC_NAME })
 @RepositoryConfig(cleanup = Granularity.METHOD, init = DefaultRepositoryInit.class)
 public class TestWebDelibArchiveTitle {

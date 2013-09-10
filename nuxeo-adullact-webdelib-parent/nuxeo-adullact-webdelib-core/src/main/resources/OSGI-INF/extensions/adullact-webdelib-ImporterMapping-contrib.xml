@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <component
-  name="org.nuxeo.adullact.importer.ImporterComponent.adullact.contrib"
+  name="org.nuxeo.ecm.platform.importer.xml.parser.ImporterComponent.adullact.contrib"
   version="1.0">
 
-  <extension target="org.nuxeo.adullact.importer.ImporterComponent"
+  <extension target="org.nuxeo.ecm.platform.importer.xml.parser.ImporterComponent"
     point="documentMapping">
 
     <docConfig tagName="seance">
@@ -57,7 +57,7 @@
 
   </extension>
 
-  <extension target="org.nuxeo.adullact.importer.ImporterComponent"
+  <extension target="org.nuxeo.ecm.platform.importer.xml.parser.ImporterComponent"
     point="attributeMapping">
 
     <!-- SEANCE -->

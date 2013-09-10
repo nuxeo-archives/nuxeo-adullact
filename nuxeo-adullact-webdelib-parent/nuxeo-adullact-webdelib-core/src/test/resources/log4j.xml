@@ -25,6 +25,10 @@
     <priority value="DEBUG" />
   </category>
 
+  <category name="org.nuxeo.ecm.platform.importer.xml.parser">
+    <priority value="DEBUG" />
+  </category>
+
 
   <root>
     <priority value="ERROR" />
