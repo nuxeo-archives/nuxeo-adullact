@@ -39,7 +39,7 @@ import org.nuxeo.ecm.core.api.impl.blob.FileBlob;
 import org.nuxeo.ecm.core.event.Event;
 import org.nuxeo.ecm.core.event.EventListener;
 import org.nuxeo.ecm.core.event.impl.DocumentEventContext;
-import org.nuxeo.ecm.platform.importer.xml.parser.XmlImporterService;
+import org.nuxeo.ecm.platform.importer.xml.parser.XMLImporterService;
 import org.nuxeo.runtime.api.Framework;
 
 public class WebDelibArchiveExtraction implements EventListener {
@@ -98,7 +98,7 @@ public class WebDelibArchiveExtraction implements EventListener {
         }
         DocumentModel root = session.getDocument(new PathRef(DOMAIN_PATH));
 
-        XmlImporterService importer = Framework.getLocalService(XmlImporterService.class);
+        XMLImporterService importer = Framework.getLocalService(XMLImporterService.class);
         try {
             importer.importDocuments(root, zipFile);
         } catch (Exception e) {

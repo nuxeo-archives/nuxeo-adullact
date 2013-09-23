@@ -40,7 +40,7 @@ import org.nuxeo.ecm.core.test.CoreFeature;
 import org.nuxeo.ecm.core.test.DefaultRepositoryInit;
 import org.nuxeo.ecm.core.test.annotations.Granularity;
 import org.nuxeo.ecm.core.test.annotations.RepositoryConfig;
-import org.nuxeo.ecm.platform.importer.xml.parser.XmlImporterService;
+import org.nuxeo.ecm.platform.importer.xml.parser.XMLImporterService;
 import org.nuxeo.runtime.api.Framework;
 import org.nuxeo.runtime.test.runner.Deploy;
 import org.nuxeo.runtime.test.runner.Features;
@@ -65,7 +65,7 @@ public class TestMapperService {
     EventService eventService;
 
     @Inject
-    XmlImporterService importerService;
+    XMLImporterService importerService;
 
     @Test
     public void testImportXML() throws Exception {
@@ -75,7 +75,7 @@ public class TestMapperService {
 
         DocumentModel root = session.getRootDocument();
 
-        XmlImporterService importer = Framework.getLocalService(XmlImporterService.class);
+        XMLImporterService importer = Framework.getLocalService(XMLImporterService.class);
         assertNotNull(importer);
         importer.importDocuments(root, xml);
 
@@ -94,7 +94,7 @@ public class TestMapperService {
 
         DocumentModel root = session.getRootDocument();
 
-        XmlImporterService importer = Framework.getLocalService(XmlImporterService.class);
+        XMLImporterService importer = Framework.getLocalService(XMLImporterService.class);
         assertNotNull(importer);
         importer.importDocuments(root, zip);
 
@@ -112,7 +112,7 @@ public class TestMapperService {
 
         DocumentModel root = session.getRootDocument();
 
-        XmlImporterService importer = Framework.getLocalService(XmlImporterService.class);
+        XMLImporterService importer = Framework.getLocalService(XMLImporterService.class);
         assertNotNull(importer);
         importer.importDocuments(root, xml);
         session.save();

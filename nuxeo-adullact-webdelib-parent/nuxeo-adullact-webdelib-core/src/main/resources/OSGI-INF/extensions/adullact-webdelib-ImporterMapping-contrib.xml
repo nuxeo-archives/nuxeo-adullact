@@ -1,9 +1,12 @@
 <?xml version="1.0"?>
 <component
-  name="org.nuxeo.ecm.platform.importer.xml.parser.ImporterComponent.adullact.contrib"
+  name="org.nuxeo.ecm.platform.importer.xml.parser.XMLImporterComponent.adullact.contrib"
   version="1.0">
 
-  <extension target="org.nuxeo.ecm.platform.importer.xml.parser.ImporterComponent"
+  <require>org.nuxeo.ecm.platform.importer.xml.parser.XMLImporterComponent</require>
+
+  <extension
+    target="org.nuxeo.ecm.platform.importer.xml.parser.XMLImporterComponent"
     point="documentMapping">
 
     <docConfig tagName="seance">
@@ -57,7 +60,8 @@
 
   </extension>
 
-  <extension target="org.nuxeo.ecm.platform.importer.xml.parser.ImporterComponent"
+  <extension
+    target="org.nuxeo.ecm.platform.importer.xml.parser.XMLImporterComponent"
     point="attributeMapping">
 
     <!-- SEANCE -->
@@ -120,7 +124,7 @@
     <attributeConfig tagName="dossierActe" docProperty="webdelib_common:adu_id"
       xmlPath="../@idDepot" />
     <attributeConfig tagName="//dossierActe" docProperty="webdelibacte:idActe"
-        xmlPath="@idActe" />
+      xmlPath="@idActe" />
 
     <attributeConfig tagName="titre" docProperty="dc:title"
       xmlPath="#{
@@ -129,7 +133,7 @@
                   return currentDocument.getTitle();
                 }
                 return titre;
-              }"/>
+              }" />
     <attributeConfig tagName="libelle" docProperty="dc:title"
       xmlPath="#{
                 String titre = currentElement.getStringValue();
@@ -137,7 +141,7 @@
                   return currentDocument.getTitle();
                 }
                 return titre;
-              }"/>
+              }" />
     <attributeConfig tagName="description" docProperty="dc:description"
       xmlPath="text()" />
     <attributeConfig tagName="natureACTE" docProperty="webdelibacte:nature"
@@ -149,7 +153,7 @@
                   return Fn.parseDate(date, 'yyyy-MM-dd')
                 }
                 return Fn.parseDate(date, 'yyyy-MM-dd HH:mm:ss')
-              }"/>
+              }" />
     <attributeConfig tagName="numeroACTE" docProperty="webdelibacte:numero"
       xmlPath="text()" />
     <attributeConfig tagName="themeACTE" docProperty="webdelibacte:theme"
